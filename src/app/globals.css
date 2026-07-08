@@ -1,0 +1,107 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #090909;
+  --text-primary: #ffffff;
+  --text-secondary: #8a8a8a;
+  --text-tertiary: #555555;
+  --accent-color: #FFD43B;
+  --accent-glow: rgba(255, 212, 59, 0.15);
+  --font-display: 'General Sans', sans-serif;
+  --font-body: 'Satoshi', sans-serif;
+  --header-height: 90px;
+  --border-color: rgba(255, 255, 255, 0.07);
+}
+
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-accent: var(--accent-color);
+  --color-accent-glow: var(--accent-glow);
+  --color-border-custom: var(--border-color);
+  
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  
+  --animate-marquee-ltr: marquee-ltr 45s linear infinite;
+  --animate-marquee-rtl: marquee-rtl 45s linear infinite;
+}
+
+@keyframes marquee-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+html {
+  scroll-behavior: initial;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  background-color: var(--bg-primary);
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari/Edge */
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* Noise overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Custom scroll line animate */
+.scroll-line-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
+  transform: translateY(-100%);
+  animation: scroll-line-anim 2.5s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scroll-line-anim {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(100%); }
+}
+
+/* CSS-based ambient glow */
+.ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 212, 59, 0.04) 0%, rgba(9, 9, 9, 0) 65%);
+}
