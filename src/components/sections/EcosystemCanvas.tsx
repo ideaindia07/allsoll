@@ -80,10 +80,8 @@ function EcosystemScene({ progress, mouseX, mouseY }: SceneProps) {
   const lineProgress = normalizedProg > 0.25 ? Math.min(1, (normalizedProg - 0.25) / 0.5) : 0;
   const nodeAlpha = normalizedProg > 0.65 ? Math.min(1, (normalizedProg - 0.65) / 0.35) : 0;
 
-  const startTimeRef = useRef(typeof window !== 'undefined' ? performance.now() : 0);
-
-  useFrame(() => {
-    const time = (performance.now() - startTimeRef.current) * 0.001;
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
 
     if (groupRef.current) {
       // Slow orbital rotate

@@ -1,163 +1,145 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 interface Project {
-  id: string;
-  num: string;
   title: string;
-  category: string;
-  image: string;
+  tag: string;
+  img: string;
 }
 
 const projects: Project[] = [
   {
-    id: 'sas',
-    num: '01',
     title: 'SAS',
-    category: 'Brand Identity & Digital Strategy',
-    image: 'https://allsoll.com/SAS.png',
+    tag: 'Brand Identity & Digital Strategy',
+    img: 'https://allsoll.com/SAS.png',
   },
   {
-    id: 'bookit',
-    num: '02',
     title: 'BOOKIT',
-    category: 'Website Design & Development',
-    image: 'https://allsoll.com/Bookit.png',
+    tag: 'Website Design & Development',
+    img: 'https://allsoll.com/Bookit.png',
   },
   {
-    id: 'empiras',
-    num: '03',
     title: 'EMPIRAS',
-    category: 'Luxury Marketing & Brand Photoshoots',
-    image: 'https://allsoll.com/empiras.png',
+    tag: 'Luxury Marketing & Brand Photoshoots',
+    img: 'https://allsoll.com/empiras.png',
   },
   {
-    id: 'vicinity',
-    num: '04',
     title: 'VICINITY',
-    category: 'Social Media & Omnipresence Strategy',
-    image: 'https://allsoll.com/Vicinity.png',
+    tag: 'Social Media & Omnipresence Strategy',
+    img: 'https://allsoll.com/Vicinity.png',
   },
 ];
 
 export default function SelectedWork() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Smooth springs for tracking mouse positions of floating visual
-  const previewX = useSpring(mouseX, { damping: 30, stiffness: 280, mass: 0.5 });
-  const previewY = useSpring(mouseY, { damping: 30, stiffness: 280, mass: 0.5 });
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Stagger list element fade up reveals
-    gsap.from('.work-item-reveal', {
+    // Calculate exact scrollable distance dynamically to prevent black screen
+    const track = trackRef.current;
+    const trigger = triggerRef.current;
+    if (!track || !trigger) return;
+
+    const pinTimeline = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 80%',
-        end: 'bottom 90%',
-        toggleActions: 'play none none none',
+        trigger: trigger,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`, // 8% padding on left/right
+        scrub: true,
+        pin: true,
+        invalidateOnRefresh: true,
       },
-      y: 80,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.2,
-      ease: 'power4.out',
     });
 
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
+    // Translate the track horizontally
+    pinTimeline.to(track, {
+      x: () => {
+        const offset = window.innerWidth * 0.08; // Match 8% padding
+        return -(track.scrollWidth - window.innerWidth + offset * 2);
+      },
+      ease: 'none',
+    });
 
-    window.addEventListener('mousemove', handleGlobalMouseMove);
-    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
-  }, [mouseX, mouseY]);
+    // Translate the title slightly to create parallax/editorial effect
+    if (titleRef.current) {
+      pinTimeline.to(titleRef.current, {
+        x: () => -window.innerWidth * 0.15,
+        ease: 'none',
+      }, 0);
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.trigger === triggerRef.current) {
+          trigger.kill();
+        }
+      });
+    };
+  }, []);
 
   return (
     <section
-      ref={containerRef}
+      ref={triggerRef}
       id="work"
-      className="relative w-full min-h-screen py-[140px] px-[8%] bg-bg-primary z-20"
+      className="relative w-full bg-bg-primary z-20 overflow-hidden"
     >
-      <div className="max-w-[1200px] mb-20">
-        <span className="font-body text-[11px] font-semibold tracking-[0.3em] text-text-secondary uppercase block mb-5">// WORK GALLERY</span>
-        <h2 className="font-display text-4xl md:text-6xl font-semibold leading-tight tracking-tight">
-          Presence is the new market share.
-        </h2>
-      </div>
-
-      <div
-        className="border-t border-border-custom max-w-[1600px] mx-auto relative"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setActiveProject(null);
-        }}
-      >
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="work-item-reveal border-b border-border-custom py-[50px] hover:py-[65px] flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group"
-            onMouseEnter={() => setActiveProject(project)}
+      <div className="h-screen flex flex-col justify-center overflow-hidden">
+        {/* Gallery Title & Subtitle */}
+        <div className="max-w-[1800px] mx-auto px-[8%] w-full mb-10 select-none">
+          <p className="text-xs uppercase tracking-[0.3em] text-accent font-bold mb-4">
+            // The Work
+          </p>
+          <h2
+            ref={titleRef}
+            className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter max-w-5xl text-white leading-tight will-change-transform"
           >
-            <div className="font-display text-lg font-medium text-text-tertiary mr-10 select-none">
-              {project.num}
-            </div>
+            Presence is the new{' '}
+            <span className="text-accent">Market Share.</span>
+          </h2>
+        </div>
 
-            <div className="flex-grow select-none group-hover:translate-x-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              <h3 className="font-display text-3xl md:text-5xl lg:text-[5.5rem] font-semibold leading-none tracking-tight group-hover:text-accent transition-colors duration-300">
-                {project.title}
-              </h3>
-              <p className="font-body text-sm md:text-[15px] text-text-secondary mt-3">
-                {project.category}
-              </p>
-            </div>
-
-            <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-text-secondary transition-all duration-500 group-hover:bg-text-primary group-hover:border-text-primary group-hover:text-bg-primary group-hover:scale-110">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 group-hover:rotate-45 transition-transform duration-500">
-                <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          </div>
-        ))}
-
-        {/* Floating preview box */}
-        <AnimatePresence>
-          {isHovered && activeProject && (
-            <motion.div
-              className="fixed w-[380px] h-[240px] pointer-events-none z-30 rounded-xl overflow-hidden shadow-2xl origin-center"
-              style={{
-                left: previewX,
-                top: previewY,
-                x: '-50%',
-                y: '-50%',
-              }}
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.6, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        {/* Horizontal Card Track */}
+        <div
+          ref={trackRef}
+          className="flex gap-6 md:gap-8 pl-[8%] pr-[8%] will-change-transform w-fit"
+        >
+          {projects.map((project, i) => (
+            <div
+              key={project.title}
+              className="relative group shrink-0 w-[80vw] md:w-[45vw] h-[50vh] rounded-2xl overflow-hidden border border-white/10"
             >
-              <div className="relative w-full h-full bg-[#121212]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={activeProject.image}
-                  alt={activeProject.title}
-                  className="absolute top-0 left-0 w-full h-full object-cover"
-                />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.img}
+                alt={project.title}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent opacity-80" />
+              
+              {/* Text Meta info */}
+              <div className="absolute bottom-0 left-0 p-8 select-none">
+                <span className="text-xs uppercase tracking-[0.2em] text-accent font-bold">
+                  {project.tag}
+                </span>
+                <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-semibold mt-2 text-white">
+                  {project.title}
+                </h3>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+              {/* Index number label */}
+              <span className="absolute top-6 right-8 font-display text-5xl md:text-6xl font-bold text-white/10 select-none">
+                0{i + 1}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
