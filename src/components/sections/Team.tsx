@@ -14,27 +14,27 @@ interface Member {
 
 const teamData: Member[] = [
   {
-    name: 'Kashish Verma',
+    name: 'Shree Verma',
     role: 'Founder & Presence Strategist',
-    img: 'https://images.unsplash.com/photo-1532170579297-281918c8ae72?q=80&w=600&auto=format&fit=crop',
+    img: '/team_shree.png',
     bio: 'Pioneering presence architecture to build long-term, indestructible digital authority.',
   },
   {
     name: 'Arjun Mehta',
     role: 'Head of Digital PR',
-    img: 'https://images.unsplash.com/photo-1675629799514-da5137694e7d?q=80&w=600&auto=format&fit=crop',
+    img: '/team_arjun.png',
     bio: 'Positioning brands at the epicenter of public discussions and mainstream media attention.',
   },
   {
     name: 'Sofia Rao',
     role: 'Creative Director',
-    img: 'https://images.unsplash.com/photo-1675726205553-4e348f24da2c?q=80&w=600&auto=format&fit=crop',
+    img: '/team_sofia.png',
     bio: 'Directing cinematic guidelines across platforms to evoke luxury perception at first glance.',
   },
   {
     name: 'Leo Martins',
     role: 'Influence & Partnerships',
-    img: 'https://images.unsplash.com/photo-1532171875345-9712d9d4f65a?q=80&w=600&auto=format&fit=crop',
+    img: '/team_leo.png',
     bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
   },
 ];

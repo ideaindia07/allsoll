@@ -14,22 +14,22 @@ const projects: Project[] = [
   {
     title: 'SAS',
     tag: 'Brand Identity & Digital Strategy',
-    img: 'https://allsoll.com/SAS.png',
+    img: '/project_sas.png',
   },
   {
     title: 'BOOKIT',
     tag: 'Website Design & Development',
-    img: 'https://allsoll.com/Bookit.png',
+    img: '/project_bookit.png',
   },
   {
     title: 'EMPIRAS',
     tag: 'Luxury Marketing & Brand Photoshoots',
-    img: 'https://allsoll.com/empiras.png',
+    img: '/project_empiras.png',
   },
   {
     title: 'VICINITY',
     tag: 'Social Media & Omnipresence Strategy',
-    img: 'https://allsoll.com/Vicinity.png',
+    img: '/project_vicinity.png',
   },
 ];
 
