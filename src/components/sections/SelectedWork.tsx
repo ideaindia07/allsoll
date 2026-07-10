@@ -50,9 +50,10 @@ export default function SelectedWork() {
       scrollTrigger: {
         trigger: trigger,
         start: 'top top',
-        end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`, // 8% padding on left/right
+        end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`,
         scrub: true,
         pin: true,
+        // pinSpacing: false,
         invalidateOnRefresh: true,
       },
     });
@@ -122,7 +123,7 @@ export default function SelectedWork() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent opacity-80" />
-              
+
               {/* Text Meta info */}
               <div className="absolute bottom-0 left-0 p-8 select-none">
                 <span className="text-xs uppercase tracking-[0.2em] text-accent font-bold">

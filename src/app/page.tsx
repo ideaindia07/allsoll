@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import CustomCursor from "@/components/ui/CustomCursor";
 import Hero from "@/components/sections/Hero";
+import ScrollMorphSection from "@/components/sections/ScrollMorphSection";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Ecosystem3D from "@/components/sections/Ecosystem3D";
 import Touchpoints from "@/components/sections/Touchpoints";
@@ -26,7 +27,10 @@ export default function Home() {
         {/* Section 1: Hero */}
         <Hero />
         
-        {/* Section 2: Selected Work */}
+        {/* Section 2: Scroll Morph Portfolio Showcase */}
+        <ScrollMorphSection />
+
+        {/* Section 3: Selected Work */}
         <SelectedWork />
         
         {/* Section 4: Three.js/WebGL Ecosystem Network */}

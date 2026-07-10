@@ -56,6 +56,7 @@ export default function Touchpoints() {
         end: 'bottom bottom',
         scrub: true,
         pin: true,
+        pinSpacing: false,
         invalidateOnRefresh: true,
       },
       x: () => {
@@ -83,7 +84,7 @@ export default function Touchpoints() {
   }, []);
 
   return (
-    <div ref={triggerRef} className="relative w-full h-[250vh] bg-bg-primary z-20">
+    <div ref={triggerRef} className="relative w-full h-[200vh] bg-bg-primary z-20">
       <div
         ref={trackRef}
         className="sticky top-0 w-full h-screen flex items-center overflow-hidden px-[4%]"
