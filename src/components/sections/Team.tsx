@@ -39,24 +39,32 @@ const teamData: Member[] = [
   },
 ];
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 export default function Team() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from('.team-card-item', {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-      y: 80,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.12,
-      ease: 'power4.out',
-    });
+    const ctx = gsap.context(() => {
+      gsap.from('.team-card-item', {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.12,
+        ease: 'power4.out',
+      });
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -95,7 +103,7 @@ export default function Team() {
               {/* Image Overlay */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={member.img}
+                src={`${basePath}${member.img}`}
                 alt={member.name}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110 transition-all duration-700 ease-out"

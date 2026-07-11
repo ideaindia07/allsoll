@@ -12,33 +12,43 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    gsap.from(headerRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power4.out',
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current, {
+        y: -100,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power4.out',
+      });
 
-    // Magnetic hover — desktop only
-    const elements = [leftLinkRef.current, logoLinkRef.current, rightLinkRef.current];
-    elements.forEach(el => {
-      if (!el) return;
-      const handleMouseMove = (e: MouseEvent) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(el, { x: x * 0.15, y: y * 0.15, duration: 0.35, ease: 'power2.out' });
-      };
-      const handleMouseLeave = () => {
-        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.35)' });
-      };
-      el.addEventListener('mousemove', handleMouseMove);
-      el.addEventListener('mouseleave', handleMouseLeave);
+      // Magnetic hover — desktop only
+      const elements = [leftLinkRef.current, logoLinkRef.current, rightLinkRef.current];
+      const cleanups = elements.map(el => {
+        if (!el) return null;
+        const handleMouseMove = (e: MouseEvent) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(el, { x: x * 0.15, y: y * 0.15, duration: 0.35, ease: 'power2.out' });
+        };
+        const handleMouseLeave = () => {
+          gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.35)' });
+        };
+        el.addEventListener('mousemove', handleMouseMove);
+        el.addEventListener('mouseleave', handleMouseLeave);
+        return () => {
+          el.removeEventListener('mousemove', handleMouseMove);
+          el.removeEventListener('mouseleave', handleMouseLeave);
+        };
+      });
+
       return () => {
-        el.removeEventListener('mousemove', handleMouseMove);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+        cleanups.forEach(cleanup => cleanup && cleanup());
       };
-    });
+    }, headerRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, []);
 
   // Lock body scroll when menu is open

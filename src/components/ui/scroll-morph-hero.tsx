@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 // ─── Real client logos from /public ──────────────────────────────────────────
 const LOGOS = [
   "/BharatVenture Logo.png",
@@ -9,7 +11,7 @@ const LOGOS = [
   "/Infinity Logo white.png",
   "/Panacea logo.png",
   "/SAS logo.png",
-];
+].map(path => `${basePath}${path}`);
 
 // Cycle logos to fill all 10 cards
 const IMAGES = Array.from({ length: 10 }, (_, i) => LOGOS[i % LOGOS.length]);

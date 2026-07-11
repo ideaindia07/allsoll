@@ -44,39 +44,45 @@ function StatRow({ stat, index }: { stat: Stat; index: number }) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Dynamic numeric counter
-    ScrollTrigger.create({
-      trigger: rowRef.current,
-      start: 'top 85%',
-      onEnter: () => {
-        const obj = { value: 0 };
-        gsap.to(obj, {
-          value: stat.target,
-          duration: 2.5,
-          ease: 'power4.out',
-          onUpdate: () => {
-            setVal(Math.floor(obj.value));
-          },
-        });
-      },
-    });
-
-    // Mask sliding reveal for numbers & label
-    gsap.fromTo(
-      rowRef.current,
-      { opacity: 0, y: 50 },
-      {
-        scrollTrigger: {
-          trigger: rowRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
+    const ctx = gsap.context(() => {
+      // Dynamic numeric counter
+      ScrollTrigger.create({
+        trigger: rowRef.current,
+        start: 'top 85%',
+        onEnter: () => {
+          const obj = { value: 0 };
+          gsap.to(obj, {
+            value: stat.target,
+            duration: 2.5,
+            ease: 'power4.out',
+            onUpdate: () => {
+              setVal(Math.floor(obj.value));
+            },
+          });
         },
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-      }
-    );
+      });
+
+      // Mask sliding reveal for numbers & label
+      gsap.fromTo(
+        rowRef.current,
+        { opacity: 0, y: 50 },
+        {
+          scrollTrigger: {
+            trigger: rowRef.current,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+        }
+      );
+    }, rowRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, [stat.target]);
 
   return (
@@ -115,20 +121,26 @@ export default function ImpactStats() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Expand the divider lines
-    gsap.fromTo(
-      '.impact-top-border',
-      { scaleX: 0 },
-      {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-        },
-        scaleX: 1,
-        duration: 1.8,
-        ease: 'power4.inOut',
-      }
-    );
+    const ctx = gsap.context(() => {
+      // Expand the divider lines
+      gsap.fromTo(
+        '.impact-top-border',
+        { scaleX: 0 },
+        {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%',
+          },
+          scaleX: 1,
+          duration: 1.8,
+          ease: 'power4.inOut',
+        }
+      );
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, []);
 
   return (

@@ -20,31 +20,33 @@ export default function Hero() {
       setStartReveal(true);
     }, 450);
 
-    // Zoom background video on scroll
-    gsap.to(videoWrapperRef.current, {
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-      scale: 1.15,
-      y: 80,
-      ease: 'none',
-    });
+    const ctx = gsap.context(() => {
+      // Zoom background video on scroll
+      gsap.to(videoWrapperRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+        scale: 1.15,
+        y: 80,
+        ease: 'none',
+      });
 
-    // Fade out content on scroll
-    gsap.to(contentRef.current, {
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-      y: -100,
-      opacity: 0,
-      ease: 'none',
-    });
+      // Fade out content on scroll
+      gsap.to(contentRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+        y: -100,
+        opacity: 0,
+        ease: 'none',
+      });
+    }, sectionRef);
 
     // Mouse movement parallax effect
     const section = sectionRef.current;
@@ -75,6 +77,7 @@ export default function Hero() {
 
     return () => {
       clearTimeout(timer);
+      ctx.revert();
       section.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);

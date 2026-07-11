@@ -44,8 +44,10 @@ export default function Touchpoints() {
   const panelsRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener('resize', check);
@@ -57,38 +59,48 @@ export default function Touchpoints() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.to(panelsRef.current, {
-      scrollTrigger: {
-        trigger: triggerRef.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-        pin: true,
-        pinSpacing: false,
-        invalidateOnRefresh: true,
-      },
-      x: () => {
-        const panelsWidth = panelsRef.current?.scrollWidth || 0;
-        const introWidth = 400;
-        const totalScrollable = panelsWidth + introWidth + (window.innerWidth * 0.08) - window.innerWidth;
-        return -totalScrollable;
-      },
-      ease: 'none',
-    });
+    const ctx = gsap.context(() => {
+      gsap.to(panelsRef.current, {
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          pin: true,
+          pinSpacing: false,
+          invalidateOnRefresh: true,
+        },
+        x: () => {
+          const panelsWidth = panelsRef.current?.scrollWidth || 0;
+          const introWidth = 400;
+          const totalScrollable = panelsWidth + introWidth + (window.innerWidth * 0.08) - window.innerWidth;
+          return -totalScrollable;
+        },
+        ease: 'none',
+      });
 
-    gsap.from('.touchpoint-card', {
-      scrollTrigger: {
-        trigger: triggerRef.current,
-        start: 'top top',
-        end: '+=50%',
-        scrub: true,
-      },
-      x: 100,
-      opacity: 0,
-      stagger: 0.15,
-      ease: 'power2.out',
-    });
+      gsap.from('.touchpoint-card', {
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: 'top top',
+          end: '+=50%',
+          scrub: true,
+        },
+        x: 100,
+        opacity: 0,
+        stagger: 0.15,
+        ease: 'power2.out',
+      });
+    }, triggerRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, [isMobile]);
+
+  if (!hasMounted) {
+    return <section id="services" className="relative w-full min-h-screen bg-bg-primary z-20" />;
+  }
 
   // ─── Mobile: vertical stacked panels ─────────────────────────────────────
   if (isMobile) {

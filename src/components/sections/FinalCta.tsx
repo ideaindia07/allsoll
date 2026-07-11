@@ -10,34 +10,35 @@ export default function FinalCta() {
     const btn = btnRef.current;
     if (!btn) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+    const ctx = gsap.context(() => {
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
 
-      gsap.to(btn, {
-        x: x * 0.25,
-        y: y * 0.25,
-        duration: 0.35,
-        ease: 'power2.out',
-      });
-    };
+        gsap.to(btn, {
+          x: x * 0.25,
+          y: y * 0.25,
+          duration: 0.35,
+          ease: 'power2.out',
+        });
+      };
 
-    const handleMouseLeave = () => {
-      gsap.to(btn, {
-        x: 0,
-        y: 0,
-        duration: 0.6,
-        ease: 'elastic.out(1, 0.35)',
-      });
-    };
+      const handleMouseLeave = () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1, 0.35)',
+        });
+      };
 
-    btn.addEventListener('mousemove', handleMouseMove);
-    btn.addEventListener('mouseleave', handleMouseLeave);
+      btn.addEventListener('mousemove', handleMouseMove);
+      btn.addEventListener('mouseleave', handleMouseLeave);
+    }, btnRef);
 
     return () => {
-      btn.removeEventListener('mousemove', handleMouseMove);
-      btn.removeEventListener('mouseleave', handleMouseLeave);
+      ctx.revert();
     };
   }, []);
 

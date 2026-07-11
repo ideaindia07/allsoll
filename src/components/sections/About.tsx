@@ -26,56 +26,62 @@ export default function About() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Left title mask reveals
-    gsap.from('.about-title-reveal', {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-      y: '100%',
-      duration: 1.2,
-      stagger: 0.1,
-      ease: 'power4.out',
-    });
-
-    // Right paragraphs entrance animations
-    gsap.from('.about-p-reveal', {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top 75%',
-        toggleActions: 'play none none none',
-      },
-      y: 30,
-      opacity: 0,
-      duration: 1.0,
-      stagger: 0.2,
-      ease: 'power3.out',
-    });
-
-    // Timeline bar height progress animation
-    gsap.to(progressBarRef.current, {
-      scrollTrigger: {
-        trigger: timelineRef.current,
-        start: 'top 65%',
-        end: 'bottom 65%',
-        scrub: true,
-      },
-      height: '100%',
-      ease: 'none',
-    });
-
-    // Active Node triggers on Scroll
-    const nodes = gsap.utils.toArray('.timeline-node-item');
-    nodes.forEach((node: any) => {
-      ScrollTrigger.create({
-        trigger: node,
-        start: 'top 65%',
-        end: 'bottom 65%',
-        onEnter: () => node.classList.add('active-node'),
-        onLeaveBack: () => node.classList.remove('active-node'),
+    const ctx = gsap.context(() => {
+      // Left title mask reveals
+      gsap.from('.about-title-reveal', {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+        y: '100%',
+        duration: 1.2,
+        stagger: 0.1,
+        ease: 'power4.out',
       });
-    });
+
+      // Right paragraphs entrance animations
+      gsap.from('.about-p-reveal', {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 75%',
+          toggleActions: 'play none none none',
+        },
+        y: 30,
+        opacity: 0,
+        duration: 1.0,
+        stagger: 0.2,
+        ease: 'power3.out',
+      });
+
+      // Timeline bar height progress animation
+      gsap.to(progressBarRef.current, {
+        scrollTrigger: {
+          trigger: timelineRef.current,
+          start: 'top 65%',
+          end: 'bottom 65%',
+          scrub: true,
+        },
+        height: '100%',
+        ease: 'none',
+      });
+
+      // Active Node triggers on Scroll
+      const nodes = gsap.utils.toArray('.timeline-node-item');
+      nodes.forEach((node: any) => {
+        ScrollTrigger.create({
+          trigger: node,
+          start: 'top 65%',
+          end: 'bottom 65%',
+          onEnter: () => node.classList.add('active-node'),
+          onLeaveBack: () => node.classList.remove('active-node'),
+        });
+      });
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, []);
 
   return (

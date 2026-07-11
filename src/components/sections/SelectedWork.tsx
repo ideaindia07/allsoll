@@ -17,13 +17,17 @@ const projects: Project[] = [
   { title: 'VICINITY', tag: 'Social Media & Omnipresence Strategy', img: '/project_vicinity.png' },
 ];
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 export default function SelectedWork() {
   const triggerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener('resize', check);
@@ -35,43 +39,47 @@ export default function SelectedWork() {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const track = trackRef.current;
-    const trigger = triggerRef.current;
-    if (!track || !trigger) return;
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      const trigger = triggerRef.current;
+      if (!track || !trigger) return;
 
-    const pinTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: trigger,
-        start: 'top top',
-        end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`,
-        scrub: true,
-        pin: true,
-        // pinSpacing: false,
-        invalidateOnRefresh: true,
-      },
-    });
+      const pinTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: trigger,
+          start: 'top top',
+          end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`,
+          scrub: true,
+          pin: true,
+          // pinSpacing: false,
+          invalidateOnRefresh: true,
+        },
+      });
 
-    pinTimeline.to(track, {
-      x: () => {
-        const offset = window.innerWidth * 0.08;
-        return -(track.scrollWidth - window.innerWidth + offset * 2);
-      },
-      ease: 'none',
-    });
-
-    if (titleRef.current) {
-      pinTimeline.to(titleRef.current, {
-        x: () => -window.innerWidth * 0.15,
+      pinTimeline.to(track, {
+        x: () => {
+          const offset = window.innerWidth * 0.08;
+          return -(track.scrollWidth - window.innerWidth + offset * 2);
+        },
         ease: 'none',
-      }, 0);
-    }
+      });
+
+      if (titleRef.current) {
+        pinTimeline.to(titleRef.current, {
+          x: () => -window.innerWidth * 0.15,
+          ease: 'none',
+        }, 0);
+      }
+    }, triggerRef);
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === triggerRef.current) t.kill();
-      });
+      ctx.revert();
     };
   }, [isMobile]);
+
+  if (!hasMounted) {
+    return <section id="work" className="relative w-full min-h-screen bg-bg-primary z-20" />;
+  }
 
   // ─── Mobile: vertical stacked cards ──────────────────────────────────────
   if (isMobile) {
@@ -95,7 +103,7 @@ export default function SelectedWork() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={project.img}
+                src={`${basePath}${project.img}`}
                 alt={project.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -150,7 +158,7 @@ export default function SelectedWork() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={project.img}
+                src={`${basePath}${project.img}`}
                 alt={project.title}
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

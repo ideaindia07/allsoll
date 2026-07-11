@@ -18,29 +18,32 @@ export default function Ecosystem3D() {
  
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
- 
-    const scrollPin = gsap.to({}, {
-      scrollTrigger: {
-        trigger: triggerRef.current,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-        pin: true,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setScrollProgress(self.progress);
+
+    const ctx = gsap.context(() => {
+      gsap.to({}, {
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          pin: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            setScrollProgress(self.progress);
+          },
         },
-      },
-    });
- 
+      });
+    }, triggerRef);
+
     const handleMouseMove = (e: MouseEvent) => {
       setMouseX((e.clientX / window.innerWidth) * 2 - 1);
       setMouseY(-((e.clientY / window.innerHeight) * 2 - 1));
     };
- 
+
     window.addEventListener('mousemove', handleMouseMove);
- 
+
     return () => {
+      ctx.revert();
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
