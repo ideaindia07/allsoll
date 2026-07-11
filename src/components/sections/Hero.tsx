@@ -83,7 +83,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full h-screen flex items-center justify-center overflow-hidden px-[8%]"
+      className="relative w-full h-screen flex items-center justify-center overflow-hidden px-6 md:px-[8%]"
     >
       <div
         ref={videoWrapperRef}
@@ -102,20 +102,20 @@ export default function Hero() {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-bg-primary/40 to-bg-primary/95" />
       </div>
 
-      <div ref={contentRef} className="relative z-10 max-w-[1200px] text-center mt-10">
-        <h1 className="font-display text-[4.5rem] md:text-[6.5rem] lg:text-[8rem] font-bold leading-[0.95] uppercase tracking-tighter mb-10 overflow-hidden select-none">
+      <div ref={contentRef} className="relative z-10 max-w-[1200px] text-center mt-10 w-full">
+        <h1 className="font-display text-[3rem] sm:text-[4.5rem] md:text-[6.5rem] lg:text-[8rem] font-bold leading-[0.95] uppercase tracking-tighter mb-8 md:mb-10 overflow-hidden select-none">
           <SplitText text="Become" trigger={startReveal} delay={0.2} className="block md:inline-block" />
           <SplitText text="Impossible" trigger={startReveal} delay={0.4} className="text-accent block md:inline-block" />
           <SplitText text="to Ignore." trigger={startReveal} delay={0.6} className="block md:inline-block" />
         </h1>
 
-        <div className="max-w-[800px] mx-auto flex flex-col gap-3">
-          <p className="font-body text-lg md:text-xl lg:text-2xl font-light text-text-secondary leading-relaxed select-none">
+        <div className="max-w-[800px] mx-auto flex flex-col gap-3 px-2">
+          <p className="font-body text-base sm:text-lg md:text-xl lg:text-2xl font-light text-text-secondary leading-relaxed select-none">
             <SplitText text="We curate" trigger={startReveal} delay={0.8} />{' '}
             <SplitText text="omnipresence" trigger={startReveal} delay={1.0} className="text-accent" />{' '}
             <SplitText text="for ambitious brands." trigger={startReveal} delay={1.2} />
           </p>
-          <p className="font-body text-base md:text-lg lg:text-xl font-light text-text-secondary leading-relaxed select-none">
+          <p className="font-body text-sm md:text-base lg:text-xl font-light text-text-secondary leading-relaxed select-none">
             <SplitText
               text="Across visibility, credibility, culture, community, and technology."
               trigger={startReveal}

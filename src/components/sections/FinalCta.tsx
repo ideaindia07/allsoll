@@ -59,8 +59,8 @@ export default function FinalCta() {
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-bg-primary via-transparent to-bg-primary" />
       </div>
 
-      <div className="relative z-10 text-center max-w-[1200px] px-4 select-none">
-        <h2 className="font-display text-[3.2rem] md:text-[6vw] lg:text-[7.5rem] font-bold leading-[0.95] uppercase tracking-tighter mb-20 text-white">
+      <div className="relative z-10 text-center max-w-[1200px] px-6 md:px-4 select-none">
+        <h2 className="font-display text-[2.5rem] sm:text-[3.2rem] md:text-[6vw] lg:text-[7.5rem] font-bold leading-[0.95] uppercase tracking-tighter mb-12 md:mb-20 text-white">
           Ready to become <br />
           <span className="text-accent">impossible to ignore?</span>
         </h2>
@@ -69,9 +69,9 @@ export default function FinalCta() {
           <a
             ref={btnRef}
             href="mailto:presence@allsoll.com"
-            className="group btn-large flex items-center justify-center w-[280px] h-[280px] rounded-full border border-white/15 text-text-primary font-display text-[16px] font-semibold tracking-wider uppercase relative overflow-hidden transition-colors duration-500 hover:border-accent cursor-none"
+            className="group btn-large flex items-center justify-center w-[200px] h-[200px] md:w-[280px] md:h-[280px] rounded-full border border-white/15 text-text-primary font-display text-[14px] md:text-[16px] font-semibold tracking-wider uppercase relative overflow-hidden transition-colors duration-500 hover:border-accent cursor-none"
           >
-            <span className="relative z-10 transition-colors duration-500 group-hover:text-bg-primary max-w-[180px] text-center leading-snug">
+            <span className="relative z-10 transition-colors duration-500 group-hover:text-bg-primary max-w-[140px] md:max-w-[180px] text-center leading-snug">
               Let&apos;s Build Presence
             </span>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-0 h-0 bg-accent z-0 transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-[110%] group-hover:h-[110%]" />

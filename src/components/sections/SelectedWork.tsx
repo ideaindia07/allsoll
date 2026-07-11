@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -11,37 +11,30 @@ interface Project {
 }
 
 const projects: Project[] = [
-  {
-    title: 'SAS',
-    tag: 'Brand Identity & Digital Strategy',
-    img: '/project_sas.png',
-  },
-  {
-    title: 'BOOKIT',
-    tag: 'Website Design & Development',
-    img: '/project_bookit.png',
-  },
-  {
-    title: 'EMPIRAS',
-    tag: 'Luxury Marketing & Brand Photoshoots',
-    img: '/project_empiras.png',
-  },
-  {
-    title: 'VICINITY',
-    tag: 'Social Media & Omnipresence Strategy',
-    img: '/project_vicinity.png',
-  },
+  { title: 'SAS', tag: 'Brand Identity & Digital Strategy', img: '/project_sas.png' },
+  { title: 'BOOKIT', tag: 'Website Design & Development', img: '/project_bookit.png' },
+  { title: 'EMPIRAS', tag: 'Luxury Marketing & Brand Photoshoots', img: '/project_empiras.png' },
+  { title: 'VICINITY', tag: 'Social Media & Omnipresence Strategy', img: '/project_vicinity.png' },
 ];
 
 export default function SelectedWork() {
   const triggerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // mobile uses vertical stack — no GSAP pin needed
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // Calculate exact scrollable distance dynamically to prevent black screen
     const track = trackRef.current;
     const trigger = triggerRef.current;
     if (!track || !trigger) return;
@@ -58,16 +51,14 @@ export default function SelectedWork() {
       },
     });
 
-    // Translate the track horizontally
     pinTimeline.to(track, {
       x: () => {
-        const offset = window.innerWidth * 0.08; // Match 8% padding
+        const offset = window.innerWidth * 0.08;
         return -(track.scrollWidth - window.innerWidth + offset * 2);
       },
       ease: 'none',
     });
 
-    // Translate the title slightly to create parallax/editorial effect
     if (titleRef.current) {
       pinTimeline.to(titleRef.current, {
         x: () => -window.innerWidth * 0.15,
@@ -76,14 +67,58 @@ export default function SelectedWork() {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === triggerRef.current) {
-          trigger.kill();
-        }
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.trigger === triggerRef.current) t.kill();
       });
     };
-  }, []);
+  }, [isMobile]);
 
+  // ─── Mobile: vertical stacked cards ──────────────────────────────────────
+  if (isMobile) {
+    return (
+      <section id="work" className="relative w-full bg-bg-primary z-20 py-16 px-6">
+        <div className="mb-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#FFD43B] font-bold mb-3">
+            // The Work
+          </p>
+          <h2 className="font-display text-4xl font-bold tracking-tighter text-white leading-tight">
+            Presence is the new{' '}
+            <span className="text-[#FFD43B]">Market Share.</span>
+          </h2>
+        </div>
+
+        <div className="flex flex-col gap-5">
+          {projects.map((project, i) => (
+            <div
+              key={project.title}
+              className="relative w-full h-[55vw] min-h-[200px] rounded-2xl overflow-hidden border border-white/10"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.img}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-5">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#FFD43B] font-bold">
+                  {project.tag}
+                </span>
+                <h3 className="font-display text-xl font-semibold mt-1 text-white">
+                  {project.title}
+                </h3>
+              </div>
+              <span className="absolute top-4 right-5 font-display text-4xl font-bold text-white/10">
+                0{i + 1}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // ─── Desktop: horizontal GSAP scroll ─────────────────────────────────────
   return (
     <section
       ref={triggerRef}
@@ -91,7 +126,6 @@ export default function SelectedWork() {
       className="relative w-full bg-bg-primary z-20 overflow-hidden"
     >
       <div className="h-screen flex flex-col justify-center overflow-hidden">
-        {/* Gallery Title & Subtitle */}
         <div className="max-w-[1800px] mx-auto px-[8%] w-full mb-10 select-none">
           <p className="text-xs uppercase tracking-[0.3em] text-accent font-bold mb-4">
             // The Work
@@ -105,7 +139,6 @@ export default function SelectedWork() {
           </h2>
         </div>
 
-        {/* Horizontal Card Track */}
         <div
           ref={trackRef}
           className="flex gap-6 md:gap-8 pl-[8%] pr-[8%] will-change-transform w-fit"
@@ -124,7 +157,6 @@ export default function SelectedWork() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent opacity-80" />
 
-              {/* Text Meta info */}
               <div className="absolute bottom-0 left-0 p-8 select-none">
                 <span className="text-xs uppercase tracking-[0.2em] text-accent font-bold">
                   {project.tag}
@@ -134,7 +166,6 @@ export default function SelectedWork() {
                 </h3>
               </div>
 
-              {/* Index number label */}
               <span className="absolute top-6 right-8 font-display text-5xl md:text-6xl font-bold text-white/10 select-none">
                 0{i + 1}
               </span>

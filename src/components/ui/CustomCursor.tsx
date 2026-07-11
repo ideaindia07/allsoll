@@ -7,6 +7,7 @@ export default function CustomCursor() {
   const [cursorText, setCursorText] = useState('');
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -17,6 +18,12 @@ export default function CustomCursor() {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Detect touch/pointer-coarse devices — skip cursor entirely on mobile
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      setIsTouch(true);
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -69,7 +76,7 @@ export default function CustomCursor() {
     };
   }, [mouseX, mouseY, isVisible]);
 
-  if (!isVisible) return null;
+  if (isTouch || !isVisible) return null;
 
   return (
     <motion.div

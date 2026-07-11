@@ -41,14 +41,22 @@ const panelsData: Panel[] = [
 
 export default function Touchpoints() {
   const triggerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // Horizontal scrolling layout logic
     gsap.to(panelsRef.current, {
       scrollTrigger: {
         trigger: triggerRef.current,
@@ -61,14 +69,13 @@ export default function Touchpoints() {
       },
       x: () => {
         const panelsWidth = panelsRef.current?.scrollWidth || 0;
-        const introWidth = 400; // block intro spacer
+        const introWidth = 400;
         const totalScrollable = panelsWidth + introWidth + (window.innerWidth * 0.08) - window.innerWidth;
         return -totalScrollable;
       },
       ease: 'none',
     });
 
-    // Stagger fade in panels on scroll entrance
     gsap.from('.touchpoint-card', {
       scrollTrigger: {
         trigger: triggerRef.current,
@@ -81,14 +88,59 @@ export default function Touchpoints() {
       stagger: 0.15,
       ease: 'power2.out',
     });
-  }, []);
+  }, [isMobile]);
 
+  // ─── Mobile: vertical stacked panels ─────────────────────────────────────
+  if (isMobile) {
+    return (
+      <section id="services" className="relative w-full bg-bg-primary z-20 py-16 px-6">
+        <div className="mb-10">
+          <span className="font-body text-[11px] font-semibold tracking-[0.3em] text-white/40 uppercase block mb-4">
+            // THE METHODOLOGY
+          </span>
+          <h2 className="font-display text-4xl font-bold uppercase leading-[0.95] tracking-tighter text-white">
+            Every Touchpoint Matters.
+          </h2>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          {panelsData.map((panel, index) => (
+            <motion.div
+              key={panel.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="w-full bg-white/[0.03] border border-white/8 rounded-2xl p-6"
+            >
+              <span className="font-display text-sm text-white/30 font-medium mb-2 block">
+                {panel.num}
+              </span>
+              <h3 className="font-display text-2xl font-semibold text-[#FFD43B] mb-4">
+                {panel.title}
+              </h3>
+              <ul className="flex flex-col gap-3">
+                {panel.services.map((service, sIndex) => (
+                  <li
+                    key={sIndex}
+                    className="font-body text-sm text-white/60 relative pl-4"
+                  >
+                    <span className="absolute left-0 text-white/30">—</span>
+                    {service}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // ─── Desktop: GSAP horizontal scroll ─────────────────────────────────────
   return (
     <div ref={triggerRef} className="relative w-full h-[200vh] bg-bg-primary z-20">
-      <div
-        ref={trackRef}
-        className="sticky top-0 w-full h-screen flex items-center overflow-hidden px-[4%]"
-      >
+      <div className="sticky top-0 w-full h-screen flex items-center overflow-hidden px-[4%]">
         <div className="flex gap-[8vw] items-center h-full w-max py-[15vh]">
           {/* Left Intro Block */}
           <div className="w-[400px] flex-shrink-0 flex flex-col justify-center select-none">
@@ -111,12 +163,8 @@ export default function Touchpoints() {
             {panelsData.map((panel, index) => {
               const isActive = hoveredIndex === index;
               const isAnyHovered = hoveredIndex !== null;
-
-              // Smooth dynamic flex expansion configuration
               let flexValue = '1';
-              if (isAnyHovered) {
-                flexValue = isActive ? '1.8' : '0.7';
-              }
+              if (isAnyHovered) flexValue = isActive ? '1.8' : '0.7';
 
               return (
                 <motion.div
@@ -128,7 +176,6 @@ export default function Touchpoints() {
                   onMouseLeave={() => setHoveredIndex(null)}
                   transition={{ type: 'spring', damping: 25, stiffness: 220 }}
                 >
-                  {/* Active background glowing gradients */}
                   <div
                     className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent pointer-events-none transition-opacity duration-500"
                     style={{ opacity: isActive ? 1 : 0 }}

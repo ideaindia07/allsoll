@@ -82,12 +82,12 @@ function StatRow({ stat, index }: { stat: Stat; index: number }) {
   return (
     <div
       ref={rowRef}
-      className="w-full py-16 md:py-24 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-8 select-none overflow-hidden"
+      className="w-full py-10 md:py-24 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5 md:gap-8 select-none overflow-hidden"
     >
       {/* Massive number layout matching the 146% jump graphic */}
       <div 
         ref={numRef}
-        className="font-display text-[6.5rem] md:text-[9.5rem] lg:text-[13rem] font-bold leading-none tracking-tighter text-white flex items-baseline select-none"
+        className="font-display text-[4.5rem] sm:text-[6.5rem] md:text-[9.5rem] lg:text-[13rem] font-bold leading-none tracking-tighter text-white flex items-baseline select-none"
       >
         <span>{val}</span>
         <span className="text-accent ml-1 font-light">{stat.suffix}</span>
@@ -135,7 +135,7 @@ export default function ImpactStats() {
     <section
       ref={containerRef}
       id="stats"
-      className="relative w-full py-40 px-[8%] bg-bg-primary z-20 overflow-hidden"
+      className="relative w-full py-16 md:py-40 px-6 md:px-[8%] bg-bg-primary z-20 overflow-hidden"
     >
       <div className="max-w-[1600px] mx-auto relative z-10">
         {/* Subtitle / Header info */}

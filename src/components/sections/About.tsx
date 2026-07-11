@@ -1,4 +1,4 @@
-'use client';
+ 'use client';
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
@@ -82,13 +82,13 @@ export default function About() {
     <section
       ref={containerRef}
       id="about"
-      className="relative w-full py-40 px-[8%] bg-bg-primary z-20"
+      className="relative w-full py-20 md:py-40 px-6 md:px-[8%] bg-bg-primary z-20"
     >
       <div className="max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           {/* Left Side (Sticky typography) */}
           <div className="lg:sticky lg:top-[150px] h-fit">
-            <h2 className="font-display text-5xl md:text-7xl lg:text-[6.5rem] font-bold leading-[0.95] uppercase tracking-tighter text-white select-none">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-[6.5rem] font-bold leading-[0.95] uppercase tracking-tighter text-white select-none">
               <span className="block overflow-hidden">
                 <span className="about-title-reveal inline-block">We build</span>
               </span>
@@ -103,7 +103,7 @@ export default function About() {
 
           {/* Right Side */}
           <div className="flex flex-col">
-            <p className="about-p-reveal font-body text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-10 text-white select-none">
+            <p className="about-p-reveal font-body text-lg sm:text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-8 md:mb-10 text-white select-none">
               Allsoll was founded on a realization: advertising is dead. Today&apos;s consumer is immune to algorithms and ads. They don&apos;t buy products; they align with cultures.
             </p>
             <p className="about-p-reveal font-body text-base md:text-lg text-text-secondary leading-relaxed mb-20 select-none">

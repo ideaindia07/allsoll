@@ -79,7 +79,7 @@ export default function TrustedBrands() {
     <section 
       ref={sectionRef}
       id="partners" 
-      className="relative w-full py-40 bg-bg-primary overflow-hidden z-20"
+      className="relative w-full py-20 md:py-40 bg-bg-primary overflow-hidden z-20"
     >
       <div className="w-full max-w-[1800px] mx-auto px-[8%] select-none">
         <span className="font-body text-[11px] font-semibold tracking-[0.3em] text-text-secondary uppercase block mb-5">
@@ -97,7 +97,7 @@ export default function TrustedBrands() {
             {row1Brands.concat(row1Brands).map((brand, index) => (
               <div
                 key={index}
-                className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-text-secondary hover:text-white transition-colors duration-300 flex items-center cursor-none py-2"
+                className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-text-secondary hover:text-white transition-colors duration-300 flex items-center cursor-none py-2"
                 onMouseEnter={() => setHoveredBrand(brand)}
                 onMouseLeave={() => setHoveredBrand(null)}
               >
@@ -114,7 +114,7 @@ export default function TrustedBrands() {
             {row2Brands.concat(row2Brands).map((brand, index) => (
               <div
                 key={index}
-                className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-text-secondary hover:text-white transition-colors duration-300 flex items-center cursor-none py-2"
+                className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-text-secondary hover:text-white transition-colors duration-300 flex items-center cursor-none py-2"
                 onMouseEnter={() => setHoveredBrand(brand)}
                 onMouseLeave={() => setHoveredBrand(null)}
               >
