@@ -109,6 +109,7 @@ interface SceneProps {
   progress: number;
   mouseX: number;
   mouseY: number;
+  isMobile: boolean;
 }
 
 // Builds a meandering, hand-drawn-feeling wire from the core out to a node,
@@ -138,7 +139,7 @@ function buildWavyCurve(endX: number, endY: number, seed: number) {
   return curve;
 }
 
-function EcosystemScene({ progress, mouseX, mouseY }: SceneProps) {
+function EcosystemScene({ progress, mouseX, mouseY, isMobile }: SceneProps) {
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const ring1Ref = useRef<THREE.Group>(null);
@@ -353,34 +354,39 @@ function EcosystemScene({ progress, mouseX, mouseY }: SceneProps) {
                     const isRight = endX > 0.1 && !isTop && !isBottom;
 
                     let alignClass = 'text-left';
-                    let translateOffset = 'translate(110px, -15px)';
+                    let translateOffset = isMobile ? 'translate(68px, -10px)' : 'translate(110px, -15px)';
 
                     if (isTop) {
                       alignClass = 'text-center';
-                      translateOffset = 'translate(0px, -60px)';
+                      translateOffset = isMobile ? 'translate(0px, -32px)' : 'translate(0px, -60px)';
                     } else if (isBottom) {
                       alignClass = 'text-center';
-                      translateOffset = 'translate(0px, 55px)';
+                      translateOffset = isMobile ? 'translate(0px, 28px)' : 'translate(0px, 55px)';
                     } else if (isLeft) {
                       alignClass = 'text-right';
-                      translateOffset = 'translate(-115px, -15px)';
+                      translateOffset = isMobile ? 'translate(-68px, -10px)' : 'translate(-115px, -15px)';
                     } else if (isRight) {
                       alignClass = 'text-left';
-                      translateOffset = 'translate(115px, -15px)';
+                      translateOffset = isMobile ? 'translate(68px, -10px)' : 'translate(115px, -15px)';
                     }
 
                     return (
                       <div
-                        className={`flex flex-col gap-0.5 select-none w-[170px] ${alignClass}`}
-                        style={{ opacity: nodeAlpha, transform: translateOffset }}
+                        className={`flex flex-col gap-0.5 select-none ${alignClass}`}
+                        style={{
+                          opacity: nodeAlpha,
+                          transform: translateOffset,
+                          width: isMobile ? '100px' : '170px'
+                        }}
                       >
-                        {/* <span className="text-white font-display text-[10.5px] font-bold tracking-[0.25em] uppercase"> */}
-                        <span className="text-white font-display text-[12px] font-medium tracking-wide uppercase px-1 py-2 select-none text-center bg-bg-primary/60 backdrop-blur-sm border border-white/5 rounded-md whitespace-nowrap">
+                        <span className="text-white font-display text-[9px] sm:text-[12px] font-medium tracking-wide uppercase px-1 py-1 sm:py-2 select-none text-center bg-bg-primary/70 backdrop-blur-sm border border-white/5 rounded-md whitespace-nowrap">
                           {nodeData[idx].label}
                         </span>
-                        <span className="text-white/55 font-body text-[13px] font-light leading-snug">
-                          {nodeData[idx].desc}
-                        </span>
+                        {!isMobile && (
+                          <span className="text-white/55 font-body text-[13px] font-light leading-snug">
+                            {nodeData[idx].desc}
+                          </span>
+                        )}
                       </div>
                     );
                   })()}
@@ -447,9 +453,10 @@ interface CanvasProps {
   scrollProgress: number;
   mouseX: number;
   mouseY: number;
+  isMobile: boolean;
 }
 
-export default function EcosystemCanvas({ scrollProgress, mouseX, mouseY }: CanvasProps) {
+export default function EcosystemCanvas({ scrollProgress, mouseX, mouseY, isMobile }: CanvasProps) {
   const normalizedProg = useMemo(() => {
     if (scrollProgress < 0.45) return 0;
     if (scrollProgress >= 0.82) return Math.max(0, 1 - (scrollProgress - 0.82) / 0.15);
@@ -457,12 +464,15 @@ export default function EcosystemCanvas({ scrollProgress, mouseX, mouseY }: Canv
   }, [scrollProgress]);
   const particleConverge = rangeProgress(normalizedProg, 0, 0.14);
 
+  // Position camera further back on mobile to fit the wide node orbit
+  const cameraZ = isMobile ? 7.8 : 4.3;
+
   return (
-    <Canvas camera={{ position: [0, 0, 4.3], fov: 60 }} gl={{ antialias: true }} className="w-full h-full">
+    <Canvas camera={{ position: [0, 0, cameraZ], fov: 60 }} gl={{ antialias: true }} className="w-full h-full">
       <ambientLight intensity={0.65} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <ParticleSwarm converge={particleConverge} />
-      <EcosystemScene progress={scrollProgress} mouseX={mouseX} mouseY={mouseY} />
+      <EcosystemScene progress={scrollProgress} mouseX={mouseX} mouseY={mouseY} isMobile={isMobile} />
     </Canvas>
   );
 }

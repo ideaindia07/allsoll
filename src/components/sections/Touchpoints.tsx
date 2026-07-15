@@ -55,7 +55,7 @@ export default function Touchpoints() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (!hasMounted || isMobile) return; // wait for mount and skip on mobile
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -96,7 +96,7 @@ export default function Touchpoints() {
     return () => {
       ctx.revert();
     };
-  }, [isMobile]);
+  }, [hasMounted, isMobile]);
 
   if (!hasMounted) {
     return <section id="services" className="relative w-full min-h-screen bg-bg-primary z-20" />;

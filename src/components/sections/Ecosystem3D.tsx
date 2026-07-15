@@ -16,6 +16,15 @@ export default function Ecosystem3D() {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
  
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -79,7 +88,7 @@ export default function Ecosystem3D() {
             showStage2 ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
           }`}
         >
-          <h2 className="font-display text-6xl md:text-[10rem] lg:text-[14rem] font-semibold uppercase leading-none tracking-tighter text-accent">
+          <h2 className="font-display text-5xl sm:text-6xl md:text-[10rem] lg:text-[14rem] font-semibold uppercase leading-none tracking-tighter text-accent">
             Presence.
           </h2>
         </div>
@@ -91,7 +100,7 @@ export default function Ecosystem3D() {
           }`}
         >
           {showCanvasLayout && (
-            <EcosystemCanvas scrollProgress={scrollProgress} mouseX={mouseX} mouseY={mouseY} />
+            <EcosystemCanvas scrollProgress={scrollProgress} mouseX={mouseX} mouseY={mouseY} isMobile={isMobile} />
           )}
         </div>
  

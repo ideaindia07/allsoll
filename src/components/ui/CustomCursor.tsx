@@ -79,27 +79,46 @@ export default function CustomCursor() {
   if (isTouch || !isVisible) return null;
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 rounded-full z-[10000] pointer-events-none -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference"
-      style={{
-        x: cursorX,
-        y: cursorY,
-        width: isHovered ? (cursorText ? 80 : 40) : 10,
-        height: isHovered ? (cursorText ? 80 : 40) : 10,
-        backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : '#FFD43B',
-        border: isHovered ? '1px solid rgba(255, 255, 255, 0.35)' : 'none',
-        backdropFilter: isHovered ? 'blur(3px)' : 'none',
-      }}
-      animate={{
-        scale: isHovered ? 1.05 : 1,
-      }}
-      transition={{ type: 'spring', damping: 20, stiffness: 200 }}
-    >
-      {cursorText && (
-        <span className="text-white text-[11px] font-display font-semibold tracking-wider text-center select-none uppercase">
-          {cursorText}
-        </span>
-      )}
-    </motion.div>
+    <>
+      {/* Outer trailing ring */}
+      <motion.div
+        className="fixed top-0 left-0 rounded-full z-[10000] pointer-events-none -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          width: isHovered ? (cursorText ? 80 : 40) : 32,
+          height: isHovered ? (cursorText ? 80 : 40) : 32,
+          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+          border: isHovered ? '1px solid rgba(255, 255, 255, 0.35)' : '1.5px solid #FFD43B',
+          backdropFilter: isHovered ? 'blur(3px)' : 'none',
+        }}
+        animate={{
+          scale: isHovered ? 1.05 : 1,
+        }}
+        transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+      >
+        {cursorText && (
+          <span className="text-white text-[11px] font-display font-semibold tracking-wider text-center select-none uppercase">
+            {cursorText}
+          </span>
+        )}
+      </motion.div>
+
+      {/* Inner instant solid yellow dot */}
+      <motion.div
+        className="fixed top-0 left-0 rounded-full z-[10000] pointer-events-none -translate-x-1/2 -translate-y-1/2 mix-blend-difference bg-[#FFD43B]"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          width: 8,
+          height: 8,
+        }}
+        animate={{
+          scale: isHovered ? 0 : 1,
+          opacity: isHovered ? 0 : 1,
+        }}
+        transition={{ duration: 0.2 }}
+      />
+    </>
   );
 }

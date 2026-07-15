@@ -35,7 +35,7 @@ export default function SelectedWork() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return; // mobile uses vertical stack — no GSAP pin needed
+    if (!hasMounted || isMobile) return; // wait for mount and skip on mobile
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -48,7 +48,7 @@ export default function SelectedWork() {
         scrollTrigger: {
           trigger: trigger,
           start: 'top top',
-          end: () => `+=${track.scrollWidth - window.innerWidth + window.innerWidth * 0.16}`,
+          end: () => `+=${track.scrollWidth - window.innerWidth}`,
           scrub: true,
           pin: true,
           // pinSpacing: false,
@@ -58,8 +58,7 @@ export default function SelectedWork() {
 
       pinTimeline.to(track, {
         x: () => {
-          const offset = window.innerWidth * 0.08;
-          return -(track.scrollWidth - window.innerWidth + offset * 2);
+          return -(track.scrollWidth - window.innerWidth);
         },
         ease: 'none',
       });
@@ -75,7 +74,7 @@ export default function SelectedWork() {
     return () => {
       ctx.revert();
     };
-  }, [isMobile]);
+  }, [hasMounted, isMobile]);
 
   if (!hasMounted) {
     return <section id="work" className="relative w-full min-h-screen bg-bg-primary z-20" />;
@@ -149,7 +148,7 @@ export default function SelectedWork() {
 
         <div
           ref={trackRef}
-          className="flex gap-6 md:gap-8 pl-[8%] pr-[8%] will-change-transform w-fit"
+          className="flex gap-6 md:gap-8 pl-[8%] pr-[8%] will-change-transform w-max"
         >
           {projects.map((project, i) => (
             <div
