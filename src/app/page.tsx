@@ -12,6 +12,8 @@ import ImpactStats from "@/components/sections/ImpactStats";
 import About from "@/components/sections/About";
 import Team from "@/components/sections/Team";
 import FinalCta from "@/components/sections/FinalCta";
+import ValueCards from "@/components/sections/ValueCards";
+import VerticalMarqueeSection from "@/components/sections/VerticalMarqueeSection";
 
 export default function Home() {
   return (
@@ -30,8 +32,14 @@ export default function Home() {
         {/* Section 2: Scroll Morph Portfolio Showcase */}
         <ScrollMorphSection />
 
+        {/* Section: Core Values Cards */}
+        <ValueCards />
+
         {/* Section 3: Selected Work */}
         <SelectedWork />
+
+        {/* Section: Vertical Marquee Showcase */}
+        <VerticalMarqueeSection />
         
         {/* Section 4: Three.js/WebGL Ecosystem Network */}
         <Ecosystem3D />
