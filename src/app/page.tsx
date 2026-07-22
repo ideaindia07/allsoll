@@ -5,7 +5,6 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import Hero from "@/components/sections/Hero";
 import ScrollMorphSection from "@/components/sections/ScrollMorphSection";
 import SelectedWork from "@/components/sections/SelectedWork";
-import Ecosystem3D from "@/components/sections/Ecosystem3D";
 import Touchpoints from "@/components/sections/Touchpoints";
 import TrustedBrands from "@/components/sections/TrustedBrands";
 import ImpactStats from "@/components/sections/ImpactStats";
@@ -13,7 +12,7 @@ import About from "@/components/sections/About";
 import Team from "@/components/sections/Team";
 import FinalCta from "@/components/sections/FinalCta";
 import ValueCards from "@/components/sections/ValueCards";
-import VerticalMarqueeSection from "@/components/sections/VerticalMarqueeSection";
+import { DemoOne } from "@/components/sections/demo";
 
 export default function Home() {
   return (
@@ -37,15 +36,12 @@ export default function Home() {
 
         {/* Section 3: Selected Work */}
         <SelectedWork />
-
-        {/* Section: Vertical Marquee Showcase */}
-        <VerticalMarqueeSection />
-        
-        {/* Section 4: Three.js/WebGL Ecosystem Network */}
-        <Ecosystem3D />
         
         {/* Section 5: Methodology Flex Column Slider */}
         <Touchpoints />
+        
+        {/* Interactive Selector Demo */}
+        <DemoOne />
         
         {/* Section 6: Trusted Synergies Marquees */}
         <TrustedBrands />

@@ -129,7 +129,7 @@ export default function Touchpoints() {
   return (
     <div ref={triggerRef} className="relative w-full h-[200vh] bg-bg-primary z-20">
       <div className="sticky top-0 w-full h-screen flex items-center overflow-hidden px-[4%]">
-        <div className="flex gap-[2vw] items-center h-full w-max py-[15vh]">
+        <div className="flex gap-[2vw] items-center h-full w-max py-[10vh]">
           {/* Left Intro Block */}
           <div className="w-[400px] flex-shrink-0 flex flex-col justify-center select-none">
             <span className="font-body text-[11px] font-semibold tracking-[0.3em] text-text-secondary uppercase block mb-5">

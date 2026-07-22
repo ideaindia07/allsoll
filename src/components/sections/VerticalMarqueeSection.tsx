@@ -15,7 +15,7 @@ const imagesCol2 = [
   "/Growth Stories_1.2.png",
   "/Growth Stories_2.2.png",
   "/Growth Stories_3.2.png",
-  "/Growth Stories_4.2.png",
+  "/Growth Stories_4.2.png", 
 ];
 
 export default function VerticalMarqueeSection() {
