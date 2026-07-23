@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import CustomCursor from "@/components/ui/CustomCursor";
-import Hero from "@/components/sections/Hero";
+import Hero from "@/components/Hero";
 import ScrollMorphSection from "@/components/sections/ScrollMorphSection";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Touchpoints from "@/components/sections/Touchpoints";

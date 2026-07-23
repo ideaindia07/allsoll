@@ -51,7 +51,7 @@ export function usePinnedTimeline({
       scrollTriggerRef.current = ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=500%',
+        end: '+=150%',
         pin: true,
         scrub: 1,
         anticipatePin: 1,

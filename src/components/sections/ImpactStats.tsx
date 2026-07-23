@@ -125,9 +125,9 @@ function StatRow({ stat, index }: { stat: Stat; index: number }) {
 
       {/* Label and description aligned to the right (infographic style) */}
       <div className="max-w-[450px] flex flex-col gap-3">
-        <span className="font-body text-[11px] font-bold tracking-[0.25em] text-accent uppercase">
+        {/* <span className="font-body text-[11px] font-bold tracking-[0.25em] text-accent uppercase">
           // Stat 0{index + 1}
-        </span>
+        </span> */}
         <h3 className="font-display text-xl md:text-2xl font-semibold text-white tracking-tight">
           {stat.label}
         </h3>

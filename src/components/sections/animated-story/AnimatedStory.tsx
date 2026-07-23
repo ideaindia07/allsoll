@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePinnedTimeline } from '../../../hooks/usePinnedTimeline';
-import CircleAnimation from './CircleAnimation';
 import CenterContent from './CenterContent';
 
 export interface StoryCard {
@@ -139,8 +138,6 @@ export default function AnimatedStory({ logoSrc }: { logoSrc?: string }) {
           </div>
         ))}
       </div>
-
-      <CircleAnimation active={circleComplete} wrapperRef={circleWrapperRef} counterRefs={counterRefs} />
 
       <CenterContent revealed={circleComplete} logoSrc={logoSrc} />
     </section>

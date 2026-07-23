@@ -16,7 +16,7 @@ export default function Footer() {
               Navigation
             </span>
             <div className="flex flex-col gap-3">
-            {['Work', 'Ecosystem', 'Services', 'About', 'Team'].map((item) => (
+              {['Work', 'Ecosystem', 'Services', 'About', 'Team'].map((item) => (
                 <a
                   key={item}
                   href={item === 'About' ? '/about' : `#${item.toLowerCase()}`}

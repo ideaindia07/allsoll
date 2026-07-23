@@ -88,17 +88,21 @@ export default function Header() {
           <a
             ref={logoLinkRef}
             href="#hero"
-            className="font-display font-bold text-xl md:text-2xl tracking-[0.15em] text-text-primary uppercase select-none flex items-center gap-0.5 cursor-none"
+            className="select-none flex items-center justify-center cursor-none"
           >
-            <span>All</span>
-            <span className="text-accent">Soll</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/AllSoll_logo.png"
+              alt="AllSoll"
+              className="h-36 w-auto object-contain"
+            />
           </a>
 
           {/* Right: Contact (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-4">
             <a
               ref={rightLinkRef}
-              href="#cta"
+              href="/contact"
               className="hidden md:flex font-body text-[15px] font-medium text-text-secondary hover:text-text-primary transition-colors cursor-none items-center gap-2"
             >
               <span>✉️</span>

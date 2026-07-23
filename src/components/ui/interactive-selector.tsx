@@ -84,12 +84,12 @@ const InteractiveSelector = () => {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-primary font-sans text-white">
       {/* Header Section */}
-      {/* <div className="w-full max-w-2xl px-6 mt-8 mb-2 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 tracking-tight drop-shadow-lg animate-fadeInTop delay-300">Escape in Style</h1>
-        <p className="text-lg md:text-xl text-gray-300 font-medium max-w-xl mx-auto animate-fadeInTop delay-600">Discover luxurious camping experiences in nature’s most breathtaking spots.</p>
-      </div> */}
+      <div className="w-full max-w-2xl px-6 mt-4 mb-2 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3 tracking-tight drop-shadow-lg animate-fadeInTop delay-300">Growth <span className='text-accent'>Stories</span> Across Industries</h1>
+        {/* <p className="text-lg md:text-xl text-gray-300 font-medium max-w-xl mx-auto animate-fadeInTop delay-600">Discover luxurious camping experiences in nature’s most breathtaking spots.</p> */}
+      </div>
 
-      {/* <div className="h-12"></div> */}
+      <div className="h-12"></div>
 
       {/* Options Container */}
       <div className="options flex w-full max-w-[1200px] min-w-[200px] h-[600px] mx-0 items-stretch overflow-hidden relative">
