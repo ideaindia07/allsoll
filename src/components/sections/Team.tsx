@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 interface Member {
   name: string;
   role: string;

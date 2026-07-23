@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 
 interface Node {
   num: string;
@@ -92,23 +93,26 @@ export default function About() {
         <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-brand-purple/25 blur-[150px] rounded-full -z-10" />
         <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-brand-yellow/20 blur-[150px] rounded-full -z-10" />
 
-        <img
-          src={blobYellow}
+        <Image
+          src="/assets/blob-yellow.png"
           alt=""
+          width={128}
+          height={128}
           className="absolute top-[10%] right-[5%] w-20 md:w-32 opacity-40 float-slow"
-          loading="lazy"
         />
-        <img
-          src={blobPurple}
+        <Image
+          src="/assets/blob-purple.png"
           alt=""
+          width={96}
+          height={96}
           className="absolute top-[50%] left-[3%] w-16 md:w-24 opacity-40 float-medium"
-          loading="lazy"
         />
-        <img
-          src={blobRed}
+        <Image
+          src="/assets/blob-red.png"
           alt=""
+          width={80}
+          height={80}
           className="absolute bottom-[15%] right-[20%] w-14 md:w-20 opacity-40 float-fast"
-          loading="lazy"
         />
       </div>
 

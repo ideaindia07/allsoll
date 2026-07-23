@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const leftLinkRef = useRef<HTMLAnchorElement>(null);
@@ -92,7 +94,7 @@ export default function Header() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/AllSoll_logo.png"
+              src={`${basePath}/AllSoll_logo.png`}
               alt="AllSoll"
               className="h-36 w-auto object-contain"
             />
