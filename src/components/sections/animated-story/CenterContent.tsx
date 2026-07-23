@@ -13,11 +13,12 @@ const SENTENCE_ONE = ["WE DON'T", 'MANAGE CHANNELS'];
 const SENTENCE_TWO_PREFIX = ['WE'];
 const SENTENCE_TWO_ACCENT = 'ORCHESTRATE';
 const SENTENCE_TWO_SUFFIX = ['PRESENCE.'];
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
 
 export default function CenterContent({
   revealed,
-  logoSrc,
-  logoAlt = 'Company logo',
+  logoSrc = '/logo.svg',
+  logoAlt = 'Allsoll Logo',
 }: CenterContentProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const sentenceOneRef = useRef<HTMLDivElement>(null);
@@ -181,8 +182,10 @@ export default function CenterContent({
 
       {logoSrc && (
         <div ref={logoRef} className="mt-10 h-10 w-auto opacity-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoSrc} alt={logoAlt} className="h-10 w-auto object-contain" />
+          <div className="flex justify-center select-none pt-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${basePath}${logoSrc}`} alt={logoAlt} className="h-10 w-auto object-contain" />
+          </div>
         </div>
       )}
     </div>

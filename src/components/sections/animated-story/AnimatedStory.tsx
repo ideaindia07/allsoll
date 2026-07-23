@@ -19,6 +19,8 @@ const CARDS: StoryCard[] = [
   { id: '6', src: '/Webicon_6(6).png' },
 ];
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 type Breakpoint = { count: number; radius: number };
 
 function getBreakpoint(): Breakpoint {
@@ -132,7 +134,7 @@ export default function AnimatedStory({ logoSrc }: { logoSrc?: string }) {
               style={{ willChange: 'transform' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={card.src} alt={card.id} className="h-full w-full object-cover" />
+              <img src={`${basePath}${card.src}`} alt={card.id} className="h-full w-full object-cover" />
             </div>
           </div>
         ))}
