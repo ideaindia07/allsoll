@@ -16,25 +16,69 @@ const teamData: Member[] = [
   {
     name: 'Shree Verma',
     role: 'Founder & Presence Strategist',
-    img: '/team_shree.png',
+    img: '/team1(1).png',
     bio: 'Pioneering presence architecture to build long-term, indestructible digital authority.',
   },
   {
     name: 'Arjun Mehta',
     role: 'Head of Digital PR',
-    img: '/team_arjun.png',
+    img: '/team1(2).png',
     bio: 'Positioning brands at the epicenter of public discussions and mainstream media attention.',
   },
   {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(5).png',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
+
+  {
     name: 'Sofia Rao',
     role: 'Creative Director',
-    img: '/team_sofia.png',
+    img: '/team1(3).png',
     bio: 'Directing cinematic guidelines across platforms to evoke luxury perception at first glance.',
   },
   {
     name: 'Leo Martins',
     role: 'Influence & Partnerships',
-    img: '/team_leo.png',
+    img: '/team1(4).png',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
+  {
+    name: 'Arjun Mehta',
+    role: 'Head of Digital PR',
+    img: '/team1(12).png',
+    bio: 'Positioning brands at the epicenter of public discussions and mainstream media attention.',
+  },
+  {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(8).png',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
+
+  {
+    name: 'Sofia Rao',
+    role: 'Creative Director',
+    img: '/team1(9).png',
+    bio: 'Directing cinematic guidelines across platforms to evoke luxury perception at first glance.',
+  },
+  {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(10).png',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
+  {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(11).png',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
+  {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(6).png',
     bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
   },
 ];
@@ -71,17 +115,14 @@ export default function Team() {
     <section
       ref={containerRef}
       id="team"
-      className="relative w-full py-24 md:py-36 bg-[#0A0A0A] z-20"
+      className="relative w-full py-24 md:py-36 bg-primary z-20"
     >
       <div className="max-w-[1800px] mx-auto px-[8%]">
         {/* Header Block */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6 select-none">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-accent font-bold mb-4">
-              // Our Team
-            </p>
             <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter max-w-2xl text-white">
-              The Architects of <span className="text-accent">Presence.</span>
+              OUR TEAM <span className="text-accent">SEGMENT</span>
             </h2>
           </div>
           <p className="text-text-secondary max-w-sm text-sm leading-relaxed">
@@ -90,10 +131,10 @@ export default function Team() {
         </div>
 
         {/* Mapped Team Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-[1600px] mx-auto">
           {teamData.map((member, i) => (
             <motion.div
-              key={member.name}
+              key={`${member.name}-${i}`}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -111,7 +152,7 @@ export default function Team() {
               <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent pointer-events-none z-10" />
 
               {/* Hover Bio and Identity Details */}
-              <div className="absolute bottom-0 left-0 p-5 md:p-6 w-full translate-y-3 group-hover:translate-y-0 transition-transform duration-500 z-20 select-none">
+              {/* <div className="absolute bottom-0 left-0 p-5 md:p-6 w-full translate-y-3 group-hover:translate-y-0 transition-transform duration-500 z-20 select-none">
                 <h3 className="font-display text-lg md:text-xl font-semibold text-white">
                   {member.name}
                 </h3>
@@ -123,7 +164,7 @@ export default function Team() {
                     {member.bio}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
           ))}
         </div>
