@@ -128,7 +128,7 @@ const InteractiveSelector = () => {
               overflow: 'hidden',
               willChange: 'flex-grow, box-shadow, background-size, background-position'
             }}
-            onClick={() => handleOptionClick(index)}
+            onMouseEnter={() => handleOptionClick(index)}
           >
             {/* Crossfade Active Background Layer */}
             <div

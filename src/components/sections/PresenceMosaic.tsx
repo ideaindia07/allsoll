@@ -199,7 +199,7 @@ export default function PresenceMosaic() {
               tileRefs.current[ad.id] = el;
             }}
             className={`tile ${ad.className}`}
-            onClick={() => open(ad)}
+            onMouseEnter={() => open(ad)}
           >
             <Image src={`${basePath}${encodeURI(ad.src)}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
