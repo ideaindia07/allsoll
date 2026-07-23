@@ -73,13 +73,7 @@ export default function CenterContent({
         '-=0.2'
       );
 
-      // Phase 7 — logo fade + scale in below the text.
-      tl.to(logoRef.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
+
 
       tl.eventCallback('onComplete', () => {
         // Phase 8 — subtle infinite floating on the whole center block.
@@ -180,14 +174,7 @@ export default function CenterContent({
         </div>
       </div>
 
-      {logoSrc && (
-        <div ref={logoRef} className="mt-10 h-10 w-auto opacity-0">
-          <div className="flex justify-center select-none pt-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${basePath}${logoSrc}`} alt={logoAlt} className="h-10 w-auto object-contain" />
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }

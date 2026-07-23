@@ -122,7 +122,7 @@ export default function Team() {
         <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6 select-none">
           <div>
             <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter max-w-2xl text-white">
-              OUR TEAM <span className="text-accent">SEGMENT</span>
+              OUR <span className="text-accent">TEAM</span>
             </h2>
           </div>
           <p className="text-text-secondary max-w-sm text-sm leading-relaxed">

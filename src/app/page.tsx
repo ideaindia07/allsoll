@@ -48,7 +48,7 @@ export default function Home() {
         <ImpactStats />
 
         {/* Section 8: Split Statement Timeline Progress */}
-        <About />
+        {/* <About /> */}
 
         {/* Section 9: Team Cards Grayscale Hover */}
         <Team />

@@ -101,7 +101,7 @@ const InteractiveSelector = () => {
               ${activeIndex === index ? 'active' : ''}
             `}
             style={{
-              backgroundImage: `url('${basePath}${option.image}')`,
+              backgroundImage: `url('${basePath}${encodeURI(option.image)}')`,
               backgroundSize: activeIndex === index ? '336px 100%' : 'auto 100%',
               backgroundPosition: 'center',
               backfaceVisibility: 'hidden',
@@ -134,7 +134,7 @@ const InteractiveSelector = () => {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `url('${basePath}${option.activeImage}')`,
+                backgroundImage: `url('${basePath}${encodeURI(option.activeImage)}')`,
                 backgroundSize: '336px 100%',
                 backgroundPosition: 'center',
                 opacity: activeIndex === index ? 1 : 0,

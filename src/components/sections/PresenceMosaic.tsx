@@ -201,7 +201,7 @@ export default function PresenceMosaic() {
             className={`tile ${ad.className}`}
             onClick={() => open(ad)}
           >
-            <Image src={`${basePath}${ad.src}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
+            <Image src={`${basePath}${encodeURI(ad.src)}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
         ))}
       </div>
@@ -212,7 +212,7 @@ export default function PresenceMosaic() {
         <div className="trust-wrap" ref={trustRef}>
           <div className="trust-card relative">
             <Image 
-              src={`${basePath}${active.textBox}`} 
+              src={`${basePath}${encodeURI(active.textBox)}`} 
               alt={active.title} 
               width={400} 
               height={400} 
