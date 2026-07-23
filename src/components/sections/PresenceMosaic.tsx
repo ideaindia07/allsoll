@@ -3,6 +3,8 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 // Edit this array to change images, copy, or layout classes (t1..t5 control
 // size/rotation in the CSS below). Put real image files in /public/assets.
 const ADS = [
@@ -199,7 +201,7 @@ export default function PresenceMosaic() {
             className={`tile ${ad.className}`}
             onClick={() => open(ad)}
           >
-            <Image src={ad.src} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
+            <Image src={`${basePath}${ad.src}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
         ))}
       </div>
@@ -210,7 +212,7 @@ export default function PresenceMosaic() {
         <div className="trust-wrap" ref={trustRef}>
           <div className="trust-card relative">
             <Image 
-              src={active.textBox} 
+              src={`${basePath}${active.textBox}`} 
               alt={active.title} 
               width={400} 
               height={400} 

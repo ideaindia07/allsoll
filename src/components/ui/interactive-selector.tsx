@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Tent, Flame, Droplets, Bath, Mountain } from 'lucide-react';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 const InteractiveSelector = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animatedOptions, setAnimatedOptions] = useState<number[]>([]);
@@ -99,7 +101,7 @@ const InteractiveSelector = () => {
               ${activeIndex === index ? 'active' : ''}
             `}
             style={{
-              backgroundImage: `url('${option.image}')`,
+              backgroundImage: `url('${basePath}${option.image}')`,
               backgroundSize: activeIndex === index ? '336px 100%' : 'auto 100%',
               backgroundPosition: 'center',
               backfaceVisibility: 'hidden',
@@ -132,7 +134,7 @@ const InteractiveSelector = () => {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `url('${option.activeImage}')`,
+                backgroundImage: `url('${basePath}${option.activeImage}')`,
                 backgroundSize: '336px 100%',
                 backgroundPosition: 'center',
                 opacity: activeIndex === index ? 1 : 0,
