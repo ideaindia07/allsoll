@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "We don't manage marketing channels. We orchestrate omnipresence for ambitious, future-forward brands. Luxury, minimal, cinematic digital experience.",
 };
 
+import CustomCursor from '@/components/ui/CustomCursor';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,6 +21,7 @@ export default function RootLayout({
         {/* Ambient radial glow behind content */}
         <div className="ambient-glow" />
         
+        <CustomCursor />
         {children}
       </body>
     </html>
