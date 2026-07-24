@@ -90,11 +90,11 @@ export default function Header() {
           <a
             ref={logoLinkRef}
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer"
+            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer hover:scale-105 transition-transform duration-300"
           >
             <div className="relative flex">
               <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none font-bold text-white">All</span>
-              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none -mt-[2px] md:-mt-1 text-brand-yellow drop-shadow-sm mix-blend-difference font-bold">Soll</span>
+              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none -mt-[2px] md:-mt-1 text-brand-yellow drop-shadow-sm font-bold">Soll</span>
             </div>
           </a>
 
