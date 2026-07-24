@@ -6,8 +6,7 @@ import { ColorTheme } from '@/lib/theme'
 import { CrowdCanvas } from './CrowdCanvas';
 import MagneticButton from '@/components/ui/magnetic-button';
 import DynamicText from './DynamicText';
-// import heroVideo from '@/assets/GIF_Animation_From_Darkness_to_Color.mp4'; // Optional: decide if we want the video
-
+import cactusDoodle from '@/assets/doodle_cactus.png';
 const Hero = () => {
     const { bgPrimary, bgSecondary, textPrimary, textSecondary, border } = ColorTheme();
     const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +51,8 @@ const Hero = () => {
                     </h1>
 
                     {/* THAT MATTERS Container */}
-                    <div className="flex flex-col md:flex-row items-center md:items-baseline gap-4 md:-mt-4">
+                    <div className="flex flex-col md:flex-row items-center md:items-baseline gap-4 md:-mt-4 relative">
+                        <img src={cactusDoodle.src} alt="Cactus doodle" className="w-12 md:w-16 opacity-90 absolute top-[30%] right-[10%] md:right-[-50px] transform rotate-12 z-0 pointer-events-none" />
 
                         {/* THAT */}
                         <span className="text-[3rem] md:text-[5rem] lg:text-[7rem] font-serif italic text-brand-yellow drop-shadow-sm z-10 transform -translate-y-2 md:translate-y-0">

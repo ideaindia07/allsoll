@@ -72,44 +72,44 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className="site-header fixed top-0 left-0 w-full h-[70px] md:h-[90px] z-50 border-b border-border-custom bg-bg-primary/80 backdrop-blur-xl flex items-center"
+        className="fixed top-0 left-0 right-0 z-40 px-6 py-5 md:px-10 md:py-6 transition-all duration-300 w-full max-w-[100vw] overflow-x-hidden "
       >
-        <div className="w-full max-w-[1800px] mx-auto px-5 md:px-[6%] flex items-center justify-between">
-
+        <nav className="flex items-center justify-between max-w-[1800px] mx-auto">
           {/* Left: About (desktop only) */}
-          <a
-            ref={leftLinkRef}
-            href="/about"
-            className="hidden md:flex font-body text-[15px] font-medium text-text-secondary hover:text-text-primary transition-colors cursor-none items-center gap-2"
-          >
-            <span>👓</span>
-            <span>About</span>
-          </a>
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              ref={leftLinkRef}
+              href="/about"
+              className="px-5 py-2 rounded-full bg-secondary text-sm font-medium hover:bg-secondary/80 transition-colors flex items-center gap-2"
+            >
+              <span className="w-4 h-4 text-xs flex items-center justify-center">👓</span> About
+            </a>
+          </div>
 
           {/* Center: Logo */}
           <a
             ref={logoLinkRef}
-            href="#hero"
-            className="select-none flex items-center justify-center cursor-none"
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`${basePath}/AllSoll_logo.png`}
-              alt="AllSoll"
-              className="h-36 w-auto object-contain"
-            />
+            <div className="relative flex">
+              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none font-bold text-white">All</span>
+              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none -mt-[2px] md:-mt-1 text-brand-yellow drop-shadow-sm mix-blend-difference font-bold">Soll</span>
+            </div>
           </a>
 
           {/* Right: Contact (desktop) + Hamburger (mobile) */}
-          <div className="flex items-center gap-4">
-            <a
-              ref={rightLinkRef}
-              href="/contact"
-              className="hidden md:flex font-body text-[15px] font-medium text-text-secondary hover:text-text-primary transition-colors cursor-none items-center gap-2"
-            >
-              <span>✉️</span>
-              <span>Contact</span>
-            </a>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <span className="text-sm font-medium bg-transparent text-white">India | 10:33 am</span>
+              <a
+                ref={rightLinkRef}
+                href="/contact"
+                className="px-6 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors flex items-center gap-2 text-black bg-white"
+              >
+                <span className="w-4 h-4 bg-black/10 rounded-full flex items-center justify-center text-[8px]">✉️</span> Contact
+              </a>
+            </div>
 
             {/* Hamburger button — mobile only */}
             <button
@@ -134,7 +134,7 @@ export default function Header() {
               />
             </button>
           </div>
-        </div>
+        </nav>
       </header>
 
       {/* Mobile full-screen menu overlay */}

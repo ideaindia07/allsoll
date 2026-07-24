@@ -19,6 +19,8 @@ const nodesData: Node[] = [
   { num: '5', title: 'Growth', desc: 'Converting traffic into long-term customer equity through deep automation.' },
 ];
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -93,27 +95,27 @@ export default function About() {
         <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-brand-purple/25 blur-[150px] rounded-full -z-10" />
         <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-brand-yellow/20 blur-[150px] rounded-full -z-10" />
 
-        <Image
-          src="/assets/blob-yellow.png"
-          alt=""
-          width={128}
-          height={128}
-          className="absolute top-[10%] right-[5%] w-20 md:w-32 opacity-40 float-slow"
-        />
-        <Image
-          src="/assets/blob-purple.png"
-          alt=""
-          width={96}
-          height={96}
-          className="absolute top-[50%] left-[3%] w-16 md:w-24 opacity-40 float-medium"
-        />
-        <Image
-          src="/assets/blob-red.png"
-          alt=""
-          width={80}
-          height={80}
-          className="absolute bottom-[15%] right-[20%] w-14 md:w-20 opacity-40 float-fast"
-        />
+        <div className="absolute top-[10%] right-[5%] w-20 md:w-32 opacity-40 float-slow">
+          <img
+            src={`${basePath}/assets/blob-yellow.png`}
+            alt="yellow blob"
+            className="w-full h-full object-cover object-center opacity-40 mix-blend-screen animate-blob-slow blur-[80px]"
+          />
+        </div>
+        <div className="absolute top-[50%] left-[3%] w-16 md:w-24 opacity-40 float-medium">
+          <img
+            src={`${basePath}/assets/blob-purple.png`}
+            alt="purple blob"
+            className="w-full h-full object-cover object-center opacity-40 mix-blend-screen animate-blob-slower blur-[80px]"
+          />
+        </div>
+        <div className="absolute bottom-[15%] right-[20%] w-14 md:w-20 opacity-40 float-fast">
+          <img
+            src={`${basePath}/assets/blob-red.png`}
+            alt="red blob"
+            className="w-full h-full object-cover object-center opacity-30 mix-blend-screen animate-blob-slowest blur-[80px]"
+          />
+        </div>
       </div>
 
       <div className="relative z-10 max-w-[1800px] mx-auto">
