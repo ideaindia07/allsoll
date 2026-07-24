@@ -46,21 +46,21 @@ const Hero = () => {
                 >
                     {/* WORK */}
                     <div className=' mb-[-2vw]'> <DynamicText /> </div>
-                    <h1 className="text-[5rem] md:text-[8rem] lg:text-[11rem] text-[#fbf8f3] transform -rotate-2 origin-bottom-right tracking-tighter hover:text-brand-yellow transition-colors duration-500 cursor-default">
+                    <h1 className="text-[5.5rem] md:text-[9rem] lg:text-[12rem] text-[#fbf8f3] transform -rotate-2 origin-bottom-right tracking-tighter hover:text-brand-yellow transition-colors duration-500 cursor-default">
                         WORK
                     </h1>
 
                     {/* THAT MATTERS Container */}
-                    <div className="flex flex-col md:flex-row items-center md:items-baseline gap-4 md:-mt-4 relative">
+                    <div className="flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-4 -mt-4 md:-mt-10 lg:-mt-14 relative z-10">
                         <img src={cactusDoodle.src} alt="Cactus doodle" className="w-12 md:w-16 opacity-90 absolute top-[30%] right-[10%] md:right-[-50px] transform rotate-12 z-0 pointer-events-none" />
 
                         {/* THAT */}
-                        <span className="text-[3rem] md:text-[5rem] lg:text-[7rem] font-serif italic text-brand-yellow drop-shadow-sm z-10 transform -translate-y-2 md:translate-y-0">
+                        <span className="text-[3.5rem] md:text-[5.5rem] lg:text-[7.5rem] font-serif italic text-brand-yellow drop-shadow-sm z-10 transform -translate-y-2 md:translate-y-0 pr-1 md:pr-2">
                             that
                         </span>
 
                         {/* MATTERS */}
-                        <span className="text-[4.5rem] md:text-[7.5rem] lg:text-[10.5rem] text-[#fbf8f3] transform rotate-1 origin-bottom-left tracking-tighter hover:scale-105 transition-transform duration-300 inline-block cursor-default">
+                        <span className="text-[5rem] md:text-[8rem] lg:text-[11rem] text-[#fbf8f3] transform rotate-1 origin-bottom-left tracking-tighter hover:text-brand-yellow hover:scale-105 transition-all duration-500 inline-block cursor-default relative z-10">
                             MATTERS
                         </span>
                     </div>
