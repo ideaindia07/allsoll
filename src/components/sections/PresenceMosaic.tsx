@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 const ADS = [
   {

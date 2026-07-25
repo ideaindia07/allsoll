@@ -2,7 +2,7 @@
 import { Skiper30 } from './Skiper30'
 import React from 'react'
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 const GridCarousel = () => {
     const image = [

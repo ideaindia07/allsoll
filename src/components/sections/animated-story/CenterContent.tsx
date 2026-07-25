@@ -13,7 +13,7 @@ const SENTENCE_ONE = ["WE DON'T", 'MANAGE CHANNELS'];
 const SENTENCE_TWO_PREFIX = ['WE'];
 const SENTENCE_TWO_ACCENT = 'ORCHESTRATE';
 const SENTENCE_TWO_SUFFIX = ['PRESENCE.'];
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 export default function CenterContent({
   revealed,

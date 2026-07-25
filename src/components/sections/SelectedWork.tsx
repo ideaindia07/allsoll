@@ -21,7 +21,7 @@ const mobileProjects: Project[] = [
   { title: 'Archana', tag: 'Growth Story', img: '/Growth Stories_8.png' },
 ];
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 export default function SelectedWork() {
   const triggerRef = useRef<HTMLDivElement>(null);

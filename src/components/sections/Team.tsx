@@ -89,7 +89,7 @@ const teamData: Member[] = [
   },
 ];
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 export default function Team() {
   const containerRef = useRef<HTMLDivElement>(null);

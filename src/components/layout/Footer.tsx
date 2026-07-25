@@ -1,6 +1,6 @@
 'use client';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 export default function Footer() {
   return (

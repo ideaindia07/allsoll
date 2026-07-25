@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 const panelsData = [
   {
@@ -112,7 +112,7 @@ export default function Touchpoints() {
 // import { useEffect, useState } from 'react';
 // import { motion } from 'framer-motion';
 
-// const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+// const basePath = '';
 
 // const panelsData = [
 //   {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 const cards = [
   { id: "trust", title: "Trust", image: "/Text Box_2.png", link: "/trust" },

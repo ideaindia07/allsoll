@@ -18,7 +18,7 @@ const CARDS: StoryCard[] = [
   { id: '6', src: '/Webicon_6(6).png' },
 ];
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 type Breakpoint = { count: number; radius: number };
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Tent, Flame, Droplets, Bath, Mountain } from 'lucide-react';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 const InteractiveSelector = () => {
   const [activeIndex, setActiveIndex] = useState(0);

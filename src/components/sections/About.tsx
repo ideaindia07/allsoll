@@ -19,7 +19,7 @@ const nodesData: Node[] = [
   { num: '5', title: 'Growth', desc: 'Converting traffic into long-term customer equity through deep automation.' },
 ];
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);

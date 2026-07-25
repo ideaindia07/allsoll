@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+const basePath = '';
 
 // ─── Real client logos from /public ──────────────────────────────────────────
 const LOGOS = [
