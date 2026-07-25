@@ -32,13 +32,19 @@ export default function Footer() {
               Socials
             </span>
             <div className="flex flex-col gap-3">
-              {['LinkedIn', 'Instagram', 'YouTube'].map((item) => (
+              {[
+                { name: 'LinkedIn', url: 'https://www.linkedin.com/search/results/all/?keywords=ALLSOLL&origin=RICH_QUERY_TYPEAHEAD_HISTORY&heroEntityKey=urn%3Ali%3Aorganization%3A111861665&position=0' },
+                { name: 'Instagram', url: 'https://www.instagram.com/allsoll.global?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+                { name: 'YouTube', url: 'https://www.youtube.com/@allsoll.global' }
+              ].map((item) => (
                 <a
-                  key={item}
-                  href="#"
+                  key={item.name}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="font-body text-[15px] text-text-secondary hover:text-accent transition-colors duration-300 w-fit cursor-none"
                 >
-                  {item}
+                  {item.name}
                 </a>
               ))}
             </div>

@@ -26,6 +26,13 @@ const Linkedin = ({ size = 24 }: { size?: number }) => (
     <circle cx="4" cy="4" r="2"></circle>
   </svg>
 );
+
+const Youtube = ({ size = 24 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+  </svg>
+);
 import { motion } from "framer-motion";
 
 const Contact = () => {
@@ -96,13 +103,17 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4">
-              <a href="" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+              <a href="https://www.linkedin.com/search/results/all/?keywords=ALLSOLL&origin=RICH_QUERY_TYPEAHEAD_HISTORY&heroEntityKey=urn%3Ali%3Aorganization%3A111861665&position=0" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
                 <Linkedin size={18} />
                 <span className="sr-only">LinkedIn</span>
               </a>
-              <a href="#" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+              <a href="https://www.instagram.com/allsoll.global?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
                 <Instagram size={18} />
                 <span className="sr-only">Instagram</span>
+              </a>
+              <a href="https://www.youtube.com/@allsoll.global" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+                <Youtube size={18} />
+                <span className="sr-only">YouTube</span>
               </a>
             </div>
 

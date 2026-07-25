@@ -2,6 +2,8 @@
 import { Skiper30 } from './Skiper30'
 import React from 'react'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 const GridCarousel = () => {
     const image = [
         "/images/grid-carousel/art.png",
@@ -16,7 +18,7 @@ const GridCarousel = () => {
         "/images/grid-carousel/rainbow.png",
         "/images/grid-carousel/stamp.png",
         "/images/grid-carousel/ticket.png",
-    ];
+    ].map(path => `${basePath}${path}`);
     return (
         <div>
             <Skiper30 img={image} />
@@ -25,4 +27,3 @@ const GridCarousel = () => {
 }
 
 export default GridCarousel
-
