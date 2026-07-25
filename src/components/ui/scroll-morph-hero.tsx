@@ -19,8 +19,8 @@ const IMAGES = LOGOS;
 const TOTAL = IMAGES.length;
 
 // ─── Responsive ellipse radii (set via CSS var below, overridden on mobile) ──
-const CARD_W = 280;
-const CARD_H = 280;
+const CARD_W = 240;
+const CARD_H = 240;
 const RX = 360; // horizontal radius — wide ellipse
 const RY = 90;  // vertical squish → depth illusion
 
@@ -61,7 +61,7 @@ export default function EllipseCarousel({
         <motion.div
           key={i}
           className="absolute cursor-pointer group"
-          animate={{ x, y: y * 2.2, scale, opacity: 0.3 + depthT * 0.7 }}
+          animate={{ x, y: y * 1.8, scale, opacity: 0.3 + depthT * 0.7 }}
           transition={{ type: "spring", stiffness: 60, damping: 20 }}
           style={{ zIndex, width: cardW, height: cardH }}
         >

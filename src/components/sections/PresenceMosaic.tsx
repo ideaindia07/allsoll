@@ -330,9 +330,6 @@ export default function PresenceMosaic() {
               if (activeId === ad.id) close();
               else open(ad);
             }}
-            onMouseEnter={() => {
-              if (!activeId) open(ad);
-            }}
             onKeyDown={(e) => {
                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
@@ -342,6 +339,9 @@ export default function PresenceMosaic() {
             aria-label={`Open ${ad.title}`}
           >
             <Image src={`${basePath}${encodeURI(ad.src)}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
+            <div className="hover-overlay" aria-hidden="true">
+              <span>Click to view</span>
+            </div>
           </div>
         ))}
       </div>
@@ -407,19 +407,23 @@ export default function PresenceMosaic() {
           font-family: var(--font-caveat), cursive;
           font-weight: 700;
           font-size: clamp(38px, 4vw, 54px);
-          margin: 0 0 34px;
+          margin: 0 0 40px;
         }
         .copy {
-          display: flex;
-          gap: 60px;
-          margin-bottom: 56px;
+          display: grid;
+          grid-template-columns: 1.1fr 1fr;
+          gap: 80px;
+          margin-bottom: 80px;
+          padding-top: 40px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         .copy p {
-          flex: 1;
           margin: 0;
-          font-size: 14.5px;
-          line-height: 1.75;
-          max-width: 480px;
+          font-size: 18px;
+          line-height: 1.8;
+          color: rgba(255, 255, 255, 0.75);
+          font-weight: 300;
+          max-width: 600px;
         }
         .mosaic {
           position: relative;
@@ -442,6 +446,42 @@ export default function PresenceMosaic() {
         .tile:hover {
           transform: scale(1.015);
           box-shadow: 0 24px 44px rgba(0, 0, 0, 0.6);
+        }
+        .hover-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.45);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: 10;
+        }
+        .hover-overlay span {
+          color: white;
+          font-family: inherit;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding: 8px 18px;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 30px;
+          backdrop-filter: blur(4px);
+          transform: translateY(10px);
+          transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .tile:hover .hover-overlay {
+          opacity: 1;
+        }
+        .tile:hover .hover-overlay span {
+          transform: translateY(0);
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+        :global(.tile.flying) .hover-overlay {
+          opacity: 0 !important;
+          transition: none;
         }
         .tile.t1 { left: 300px; bottom: 0; width: 320px; height: 320px; z-index: 2; }
         .tile.t2 { left: 300px; top: 0; width: 320px; height: 320px; z-index: 3; }
@@ -497,7 +537,12 @@ export default function PresenceMosaic() {
         }
         @media (max-width: 900px) {
           .presence { padding: 32px 22px 70px; }
-          .copy { flex-direction: column; gap: 20px; }
+          .copy { 
+            grid-template-columns: 1fr; 
+            gap: 28px; 
+            padding-top: 24px;
+            margin-bottom: 50px;
+          }
           .mosaic { 
             width: 100%; 
             height: auto; 

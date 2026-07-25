@@ -95,26 +95,7 @@ export default function Team() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const ctx = gsap.context(() => {
-      gsap.from('.team-card-item', {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.12,
-        ease: 'power4.out',
-      });
-    }, containerRef);
-
-    return () => {
-      ctx.revert();
-    };
+    // GSAP removed to prevent conflict with Framer Motion
   }, []);
 
   return (

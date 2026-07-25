@@ -60,12 +60,12 @@ export default function Header() {
   }, [menuOpen]);
 
   const navLinks = [
-    { label: 'Work', href: '#work' },
-    { label: 'Services', href: '#services' },
-    { label: 'Partners', href: '#partners' },
+    { label: 'Work', href: '/#work' },
+    { label: 'Services', href: '/#services' },
+    { label: 'Impact', href: '/#stats' },
     { label: 'About', href: '/about' },
-    { label: 'Team', href: '#team' },
-    { label: 'Contact', href: '#cta' },
+    { label: 'Team', href: '/#team' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   return (

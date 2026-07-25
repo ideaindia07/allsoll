@@ -82,7 +82,7 @@ export default function CustomCursor() {
     <>
       {/* Outer trailing ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full z-[10000] pointer-events-none -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+        className="fixed top-0 left-0 rounded-full z-[99999] pointer-events-none -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
         style={{
           x: cursorX,
           y: cursorY,
@@ -106,7 +106,7 @@ export default function CustomCursor() {
 
       {/* Inner instant solid yellow dot */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full z-[10000] pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-brand-yellow"
+        className="fixed top-0 left-0 rounded-full z-[99999] pointer-events-none -translate-x-1/2 -translate-y-1/2 bg-accent"
         style={{
           x: mouseX,
           y: mouseY,

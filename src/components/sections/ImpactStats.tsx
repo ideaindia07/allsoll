@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useInView, useMotionValue, useSpring, motion, useScroll, useTransform } from 'framer-motion';
+import { useInView, useMotionValue, useSpring, motion } from 'framer-motion';
 
 export function NumberTicker({
   value,
@@ -81,25 +81,13 @@ const cinematicEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 function StatRow({ stat, index }: { stat: Stat; index: number }) {
   const rowRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: rowRef,
-    offset: ["start end", "end start"]
-  });
-
-  const yNum = useTransform(scrollYProgress, [0, 1], [30, -30]);
-  const yDesc = useTransform(scrollYProgress, [0, 1], [50, -50]);
-
-  const opacityOut = useTransform(scrollYProgress, [0.65, 1], [1, 0]);
-  const scaleOut = useTransform(scrollYProgress, [0.65, 1], [1, 0.95]);
-
   const blockVariants = {
-    hidden: { opacity: 0, y: 120, scale: 0.8, filter: 'blur(18px)' },
+    hidden: { opacity: 0, y: 80, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      filter: 'blur(0px)',
-      transition: { duration: 1.2, ease: cinematicEase }
+      transition: { duration: 1, ease: cinematicEase }
     }
   };
 
@@ -116,9 +104,8 @@ function StatRow({ stat, index }: { stat: Stat; index: number }) {
   const formattedIndex = `0${index + 1} / IMPACT`;
 
   return (
-    <motion.div
+    <div
       ref={rowRef}
-      style={{ opacity: opacityOut, scale: scaleOut }}
       className="relative w-full max-sm:min-h-[15vh] min-h-[45vh] md:min-h-[35vh] flex flex-col justify-center select-none overflow-visible"
     >
       <motion.div
@@ -131,64 +118,66 @@ function StatRow({ stat, index }: { stat: Stat; index: number }) {
 
       <div className="flex flex-col max-sm:gap-2 max-sm:py-2 md:flex-row md:items-center justify-between gap-12 md:gap-8 w-full py-16 md:py-0">
 
-        <motion.div
-          style={{ y: yNum }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-15%" }}
-          variants={blockVariants}
-          className="font-display text-[22vw] sm:text-[18vw] md:text-[14vw] lg:text-[12vw] font-bold leading-[0.85] tracking-tighter text-white flex items-baseline group"
-        >
+        <div className="flex-shrink-0">
           <motion.div
-            whileHover={{ scale: 1.02, filter: 'brightness(1.1)' }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="flex items-baseline cursor-default"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-15%" }}
+            variants={blockVariants}
+            className="font-display text-[22vw] sm:text-[18vw] md:text-[14vw] lg:text-[12vw] font-bold leading-[0.85] tracking-tighter text-white flex items-baseline group"
           >
-            <NumberTicker value={stat.target} delay={0.2} />
-            <motion.span
-              variants={suffixVariants}
-              className="text-accent ml-2 md:ml-4 font-light text-[16vw] sm:text-[14vw] md:text-[10vw]"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="flex items-baseline cursor-default"
             >
-              {stat.suffix}
-            </motion.span>
+              <NumberTicker value={stat.target} delay={0.2} />
+              <motion.span
+                variants={suffixVariants}
+                className="text-accent ml-2 md:ml-4 font-light text-[16vw] sm:text-[14vw] md:text-[10vw]"
+              >
+                {stat.suffix}
+              </motion.span>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          style={{ y: yDesc }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-15%" }}
-          variants={blockVariants}
-          className="max-w-[420px] flex flex-col gap-4 md:gap-6 w-full group pt-8 md:pt-0"
-        >
-          <motion.span
-            whileHover={{ scale: 1.02, x: 5 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="font-body text-xs md:text-sm font-bold tracking-[0.3em] text-accent uppercase cursor-default"
+        <div className="w-full md:w-auto flex md:justify-end">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-15%" }}
+            variants={blockVariants}
+            className="max-w-[420px] flex flex-col gap-4 md:gap-6 w-full group pt-8 md:pt-0"
           >
-            {formattedIndex}
-          </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.02, x: 5 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="font-body text-xs md:text-sm font-bold tracking-[0.3em] text-accent uppercase cursor-default"
+            >
+              {formattedIndex}
+            </motion.span>
 
-          <motion.h3
-            whileHover={{ scale: 1.02, x: 5 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-white tracking-tight cursor-default"
-          >
-            {stat.label}
-          </motion.h3>
+            <motion.h3
+              whileHover={{ scale: 1.02, x: 5 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-white tracking-tight cursor-default"
+            >
+              {stat.label}
+            </motion.h3>
 
-          <motion.p
-            whileHover={{ scale: 1.01, filter: 'brightness(1.2)' }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="font-body text-base md:text-lg text-white/50 leading-relaxed font-light cursor-default"
-          >
-            {stat.description}
-          </motion.p>
-        </motion.div>
+            <motion.p
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="font-body text-base md:text-lg text-white/50 leading-relaxed font-light cursor-default"
+            >
+              {stat.description}
+            </motion.p>
+          </motion.div>
+        </div>
 
       </div>
-    </motion.div>
+    </div>
   );
 }
 

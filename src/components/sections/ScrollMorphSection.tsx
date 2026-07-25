@@ -66,7 +66,7 @@ export default function ScrollMorphSection() {
         <div className="absolute top-0 left-[8%] right-[8%] h-[1px] bg-white/5 z-20" />
 
         {/* Heading */}
-        <div className="absolute top-[6%] left-0 right-0 z-20 text-center pointer-events-none px-6">
+        <div className="absolute top-[4%] left-0 right-0 z-20 text-center pointer-events-none px-6">
           <p className="text-[10px] md:text-xs font-bold tracking-[0.3em] text-[#FFD43B] uppercase mb-2 md:mb-3">
             // The Work
           </p>
@@ -81,7 +81,7 @@ export default function ScrollMorphSection() {
         </div>
 
         {/* 3-D Ellipse Carousel */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 translate-y-12 md:translate-y-16">
           <MotionCarousel rotations={rotations} isMobile={isMobile} />
         </div>
 

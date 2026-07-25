@@ -1,12 +1,16 @@
 'use client';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
+
 export default function Footer() {
   return (
-    <footer className="w-full bg-bg-primary border-t border-border-custom py-16 md:py-[100px] pb-10 md:pb-[50px] relative z-20">
+    <footer id="contact" className="w-full bg-bg-primary border-t border-border-custom py-16 md:py-[100px] pb-10 md:pb-[50px] relative z-20">
       <div className="max-w-[1800px] mx-auto px-[8%]">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-20 mb-12 md:mb-20">
           <div className="flex flex-col gap-4">
-            <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl tracking-widest">ALLSOLL</h2>
+            <div className="-ml-3 mb-2">
+              <img src={`${basePath}/AllSoll_logo.png`} alt="AllSoll" className="h-24 md:h-32 w-auto object-contain" />
+            </div>
             <p className="font-body text-[15px] text-text-secondary max-w-[300px]">
               Orchestrating omnipresence for ambitious, future-forward brands.
             </p>
