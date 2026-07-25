@@ -14,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased scroll-smooth">
-      <body className="min-h-full bg-bg-primary text-text-primary selection:bg-accent selection:text-bg-primary">
+    <html lang="en" className="h-full antialiased scroll-smooth overflow-x-hidden">
+      <body className="min-h-full bg-bg-primary text-text-primary selection:bg-accent selection:text-bg-primary overflow-x-hidden">
         {/* Film grain noise texture overlay */}
         <div className="noise-overlay" />
         {/* Ambient radial glow behind content */}

@@ -32,7 +32,7 @@ export default function Footer() {
               Socials
             </span>
             <div className="flex flex-col gap-3">
-              {['LinkedIn', 'Instagram', 'Twitter / X', 'YouTube'].map((item) => (
+              {['LinkedIn', 'Instagram', 'YouTube'].map((item) => (
                 <a
                   key={item}
                   href="#"
@@ -48,10 +48,10 @@ export default function Footer() {
               Connect
             </span>
             <a
-              href="mailto:presence@allsoll.com"
+              href="mailto:tanishka@allsoll.com"
               className="font-display text-lg md:text-xl lg:text-2xl font-medium text-text-primary hover:text-accent transition-colors duration-300 w-fit cursor-none break-all"
             >
-              presence@allsoll.com
+              tanishka@allsoll.com
             </a>
             <p className="font-body text-[15px] text-text-secondary mt-1">
               An IDEA India Product

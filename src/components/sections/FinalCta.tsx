@@ -69,7 +69,7 @@ export default function FinalCta() {
         <div className="inline-block">
           <a
             ref={btnRef}
-            href="mailto:presence@allsoll.com"
+            href="mailto:tanishka@allsoll.com"
             className="group btn-large flex items-center justify-center w-[200px] h-[200px] md:w-[280px] md:h-[280px] rounded-full border border-white/15 text-text-primary font-display text-[14px] md:text-[16px] font-semibold tracking-wider uppercase relative overflow-hidden transition-colors duration-500 hover:border-accent cursor-none"
           >
             <span className="relative z-10 transition-colors duration-500 group-hover:text-bg-primary max-w-[140px] md:max-w-[180px] text-center leading-snug">

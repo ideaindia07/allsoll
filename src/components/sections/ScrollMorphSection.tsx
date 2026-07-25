@@ -46,9 +46,18 @@ export default function ScrollMorphSection() {
       ref={sectionRef}
       id="scroll-morph"
       aria-label="Portfolio carousel showcase"
-      className="relative w-full bg-bg-primary overflow-hidden"
+      className="sticky top-0 w-full bg-bg-primary overflow-hidden z-0"
       style={{ height: isMobile ? "80vh" : "100vh" }}
     >
+      {/* Checkered background */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)",
+          backgroundSize: "120px 120px",
+          backgroundPosition: "center center"
+        }}
+      />
       <motion.div
         className="relative w-full h-full flex flex-col items-center"
         style={{ opacity }}
@@ -62,12 +71,13 @@ export default function ScrollMorphSection() {
             // The Work
           </p>
           <h2 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-            Presence is the new{" "}
-            <span className="text-[#FFD43B]">Market Share.</span>
+            We don't manage channel
           </h2>
-          <p className="mt-2 md:mt-3 text-xs md:text-base text-white/40 max-w-sm md:max-w-lg mx-auto leading-relaxed font-body">
-            Scroll to explore our curated work.
-          </p>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            We {" "}
+            <span className="text-[#FFD43B]">Orchestrate Presence</span>
+          </h2>
+
         </div>
 
         {/* 3-D Ellipse Carousel */}
@@ -75,13 +85,7 @@ export default function ScrollMorphSection() {
           <MotionCarousel rotations={rotations} isMobile={isMobile} />
         </div>
 
-        {/* Scroll cue */}
-        <div className="absolute bottom-5 md:bottom-7 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none select-none">
-          <div className="w-[1px] h-8 md:h-10 bg-white/20 relative overflow-hidden scroll-line-fill" />
-          <span className="text-[9px] md:text-[10px] font-bold tracking-[0.25em] text-white/30 uppercase">
-            Scroll
-          </span>
-        </div>
+        {/* Scroll cue removed */}
       </motion.div>
     </section>
   );

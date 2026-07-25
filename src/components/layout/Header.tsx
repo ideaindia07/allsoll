@@ -101,7 +101,7 @@ export default function Header() {
           {/* Right: Contact (desktop) + Hamburger (mobile) */}
           <div className="flex items-center gap-6">
             <div className="hidden md:flex items-center gap-6">
-              <span className="text-sm font-medium bg-transparent text-white">India | 10:33 am</span>
+              {/* <span className="text-sm font-medium bg-transparent text-white">India | 10:33 am</span> */}
               <a
                 ref={rightLinkRef}
                 href="/contact"
@@ -165,13 +165,13 @@ export default function Header() {
             ))}
 
             <motion.a
-              href="mailto:presence@allsoll.com"
+              href="mailto:tanishka@allsoll.com"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.45 }}
               className="mt-4 text-xs font-body tracking-[0.2em] text-white/30 uppercase"
             >
-              presence@allsoll.com
+              tanishka@allsoll.com
             </motion.a>
           </motion.div>
         )}

@@ -52,7 +52,7 @@ const Contact = () => {
       {/* Ambient glows mimicking global design */}
       <div className="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-accent/5 blur-[150px] rounded-full pointer-events-none z-0" />
       <div className="absolute bottom-[-10%] left-[-5%] w-[800px] h-[800px] bg-[#3b82f6]/5 blur-[150px] rounded-full pointer-events-none z-0" />
-      
+
       <Header />
 
       <main className="pt-24 min-h-screen flex flex-col md:flex-row relative z-10">
@@ -77,7 +77,7 @@ const Contact = () => {
                 <div className="space-y-8">
                   <div>
                     <p className="text-xs font-bold tracking-[0.2em] text-muted-foreground mb-2 uppercase">Email</p>
-                    <a href="mailto:hello@allsol.com" className="text-text-primary font-serif text-2xl hover:text-accent transition-colors">tanishkapatel1707@gmail.com</a>
+                    <a href="mailto:hello@allsol.com" className="text-text-primary font-serif text-2xl hover:text-accent transition-colors">tanishka@allsoll.com</a>
                   </div>
                   <div>
                     <p className="text-xs font-bold tracking-[0.2em] text-muted-foreground mb-2 uppercase">Phone</p>
@@ -96,17 +96,13 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4">
-              <a href="#" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
+              <a href="" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
                 <Linkedin size={18} />
                 <span className="sr-only">LinkedIn</span>
               </a>
               <a href="#" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
                 <Instagram size={18} />
                 <span className="sr-only">Instagram</span>
-              </a>
-              <a href="#" className="w-12 h-12 rounded-full border border-gray-400/30 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
-                <Twitter size={18} />
-                <span className="sr-only">Twitter</span>
               </a>
             </div>
 

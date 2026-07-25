@@ -6,21 +6,22 @@ const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
 
 // ─── Real client logos from /public ──────────────────────────────────────────
 const LOGOS = [
-  "/BharatVenture Logo.png",
-  "/Fair BNB logo.png",
-  "/Infinity Logo white.png",
-  "/Panacea logo.png",
-  "/SAS logo.png",
+  "/Webicon _6(1).jpg",
+  "/Webicon_6(2).png",
+  "/Webicon_6(3).png",
+  "/Webicon_6(4).png",
+  "/Webicon_6(5).png",
+  "/Webicon_6(6).png",
 ].map(path => `${basePath}${path}`);
 
-// Cycle logos to fill all 10 cards
-const IMAGES = Array.from({ length: 10 }, (_, i) => LOGOS[i % LOGOS.length]);
+// Use exactly the 6 images
+const IMAGES = LOGOS;
 const TOTAL = IMAGES.length;
 
 // ─── Responsive ellipse radii (set via CSS var below, overridden on mobile) ──
-const CARD_W = 130;
-const CARD_H = 180;
-const RX = 500; // horizontal radius — wide ellipse
+const CARD_W = 280;
+const CARD_H = 280;
+const RX = 360; // horizontal radius — wide ellipse
 const RY = 90;  // vertical squish → depth illusion
 
 // ─── Carousel ─────────────────────────────────────────────────────────────────
@@ -31,9 +32,9 @@ export default function EllipseCarousel({
   scrollProgress: number;
   isMobile?: boolean;
 }) {
-  const rx = isMobile ? 200 : RX;
+  const rx = isMobile ? 130 : RX;
   const ry = isMobile ? 50 : RY;
-  const cardW = isMobile ? 90 : CARD_W;
+  const cardW = isMobile ? 120 : CARD_W;
   const cardH = isMobile ? 120 : CARD_H;
 
   const baseAngleDeg = scrollProgress * 360;
@@ -54,7 +55,7 @@ export default function EllipseCarousel({
   return (
     <div
       className="relative w-full h-full flex items-center justify-center"
-      style={{ paddingTop: isMobile ? "30%" : "18%" }}
+      style={{ paddingTop: isMobile ? "10%" : "5%" }}
     >
       {sorted.map(({ i, x, y, scale, zIndex, depthT }) => (
         <motion.div
@@ -72,27 +73,31 @@ export default function EllipseCarousel({
           >
             {/* Front — dark card with logo centered */}
             <div
-              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/30 bg-[#0f0f0f] flex items-center justify-center p-4"
-              // className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/60 bg-[#ffffff] flex items-center justify-center p-4"
+              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center"
               style={{ backfaceVisibility: "hidden" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={IMAGES[i]}
                 alt={`client-${i}`}
-                className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-lg"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               {/* subtle vignette */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 group-hover:opacity-0 transition-opacity duration-300 rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 group-hover:opacity-0 transition-opacity duration-300 rounded-2xl" />
             </div>
 
             {/* Back */}
             <div
-              className="absolute inset-0 rounded-2xl shadow-2xl bg-[#FFD43B] border border-[#FFD43B]/30 flex flex-col items-center justify-center gap-1"
+              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center"
               style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
             >
-              <p className="text-[10px] font-bold tracking-[0.25em] text-[#090909] uppercase">View</p>
-              <p className="text-sm font-semibold text-[#090909]">Work</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={IMAGES[i]}
+                alt={`client-${i}-back`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 group-hover:opacity-0 transition-opacity duration-300 rounded-2xl" />
             </div>
           </motion.div>
         </motion.div>

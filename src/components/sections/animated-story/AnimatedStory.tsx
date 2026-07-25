@@ -30,7 +30,7 @@ function getBreakpoint(): Breakpoint {
   const width = window.innerWidth;
 
   if (width < 640) {
-    return { count: 6, radius: 125 };
+    return { count: 6, radius: 150 };
   }
 
   if (width < 1024) {
@@ -85,8 +85,8 @@ export default function AnimatedStory({ logoSrc }: { logoSrc?: string }) {
           absolute
           left-1/2
           top-1/2
-          h-[340px]
-          w-[340px]
+          h-[420px]
+          w-[420px]
           -translate-x-1/2
           -translate-y-1/2
           sm:h-[520px]

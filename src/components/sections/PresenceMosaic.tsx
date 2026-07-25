@@ -5,8 +5,6 @@ import Image from 'next/image';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
 
-// Edit this array to change images, copy, or layout classes (t1..t5 control
-// size/rotation in the CSS below). Put real image files in /public/assets.
 const ADS = [
   {
     id: 'designers',
@@ -60,18 +58,86 @@ export default function PresenceMosaic() {
   const backdropRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const trustRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const restRect = useRef<any>(null);
   const resizeHandler = useRef<any>(null);
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const active = ADS.find((a) => a.id === activeId) || null;
 
-  const isMobile = () => window.innerWidth <= 900;
+  // Ref to store previous focus to restore after modal closes
+  const prevFocusRef = useRef<HTMLElement | null>(null);
+
+  // Ref to store scroll lock state
+  const scrollLockRef = useRef<{
+    scrollY: number;
+    overflow: string;
+    bodyOverflow: string;
+    paddingRight: string;
+  } | null>(null);
+
+  const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 900;
+
+  function lockScroll() {
+    if (typeof window === 'undefined' || scrollLockRef.current) return;
+    const scrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    scrollLockRef.current = {
+      scrollY,
+      overflow: document.documentElement.style.overflow,
+      bodyOverflow: document.body.style.overflow,
+      paddingRight: document.body.style.paddingRight,
+    };
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+  }
+
+  function unlockScroll() {
+    if (typeof window === 'undefined' || !scrollLockRef.current) return;
+    
+    document.documentElement.style.overflow = scrollLockRef.current.overflow;
+    document.body.style.overflow = scrollLockRef.current.bodyOverflow;
+    document.body.style.paddingRight = scrollLockRef.current.paddingRight;
+    
+    window.scrollTo(0, scrollLockRef.current.scrollY);
+    scrollLockRef.current = null;
+  }
+
+  // Cleanup scroll lock on unmount
+  useEffect(() => {
+    return () => {
+      unlockScroll();
+    };
+  }, []);
+
+  // Globally prevent wheel/touch scroll (specifically for smooth scrollers like Lenis)
+  useEffect(() => {
+    if (!activeId) return;
+    const preventScroll = (e: Event) => {
+       e.preventDefault();
+    };
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+    return () => {
+       window.removeEventListener('wheel', preventScroll);
+       window.removeEventListener('touchmove', preventScroll);
+    };
+  }, [activeId]);
 
   function open(ad: any) {
-    if (activeId) return;
+    if (activeId) return; // Do not allow another tile to open while one is active
     const tile = tileRefs.current[ad.id];
     if (!tile) return;
+
+    prevFocusRef.current = document.activeElement as HTMLElement;
+
+    lockScroll();
+
     const rect = tile.getBoundingClientRect();
     const cs = getComputedStyle(tile).transform;
     restRect.current = {
@@ -95,10 +161,52 @@ export default function PresenceMosaic() {
     void tile.offsetWidth; // force reflow
     tile.style.transform = 'none';
 
-    const targetH = isMobile() ? window.innerHeight * 0.42 : Math.min(window.innerHeight * 0.62, 480);
-    const targetW = targetH * (rect.width / rect.height);
-    const targetLeft = isMobile() ? (window.innerWidth - targetW) / 2 : window.innerWidth / 2 - targetW - 40;
-    const targetTop = isMobile() ? window.innerHeight * 0.12 : (window.innerHeight - targetH) / 2;
+    // Calculate dimensions
+    const mobile = isMobile();
+    
+    let targetH, targetW, targetLeft, targetTop, trustW;
+    const aspect = rect.width / rect.height;
+
+    if (mobile) {
+      // Mobile: Image above text box, fit within viewport vertically
+      const paddingY = 40;
+      const availableH = window.innerHeight - paddingY * 2;
+      
+      // Assume text box takes roughly 300px height or similar on mobile
+      const textH = 260;
+      targetH = Math.min(availableH - textH - 20, window.innerHeight * 0.4);
+      targetW = targetH * aspect;
+
+      // Ensure width doesn't exceed screen
+      if (targetW > window.innerWidth * 0.85) {
+        targetW = window.innerWidth * 0.85;
+        targetH = targetW / aspect;
+      }
+
+      targetLeft = (window.innerWidth - targetW) / 2;
+      targetTop = paddingY + (availableH - (targetH + 20 + textH)) / 2;
+      if (targetTop < paddingY) targetTop = paddingY;
+
+    } else {
+      // Desktop: Center the composition (Image + Gap + TextBox)
+      trustW = 280;
+      const gap = 40;
+      
+      targetH = Math.min(window.innerHeight * 0.65, 520);
+      targetW = targetH * aspect;
+      
+      // Ensure the whole composition fits horizontally
+      let totalW = targetW + gap + trustW;
+      if (totalW > window.innerWidth * 0.9) {
+        targetW = window.innerWidth * 0.9 - gap - trustW;
+        targetH = targetW / aspect;
+        totalW = targetW + gap + trustW;
+      }
+
+      const startX = (window.innerWidth - totalW) / 2;
+      targetLeft = startX;
+      targetTop = (window.innerHeight - targetH) / 2;
+    }
 
     requestAnimationFrame(() => {
       tile.style.top = targetTop + 'px';
@@ -109,16 +217,22 @@ export default function PresenceMosaic() {
 
     setActiveId(ad.id);
 
-    // position the trust card once it's mounted (see useEffect below)
-    resizeHandler.current = () => placeTrustCard(targetLeft, targetW);
+    // position the trust card
+    resizeHandler.current = () => placeTrustCard(targetLeft, targetW, targetTop, targetH);
   }
 
-  function placeTrustCard(targetLeft: number, targetW: number) {
+  function placeTrustCard(targetLeft: number, targetW: number, targetTop: number, targetH: number) {
     const wrap = trustRef.current;
     if (!wrap) return;
-    if (isMobile()) return; // mobile positions via CSS
-    wrap.style.left = targetLeft + targetW + 40 + 'px';
-    wrap.style.top = window.innerHeight / 2 + 'px';
+    if (isMobile()) {
+       wrap.style.left = '50%';
+       wrap.style.top = (targetTop + targetH + 20) + 'px';
+       wrap.style.transform = 'translate(-50%, 0)';
+    } else {
+       wrap.style.left = targetLeft + targetW + 40 + 'px';
+       wrap.style.top = window.innerHeight / 2 + 'px';
+       wrap.style.transform = 'translate(0, -50%)';
+    }
   }
 
   useEffect(() => {
@@ -134,6 +248,14 @@ export default function PresenceMosaic() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeId]);
 
+  // Focus trap / focus management
+  useEffect(() => {
+    if (activeId && closeButtonRef.current) {
+       // A small timeout ensures the element is fully mounted and focusable
+       setTimeout(() => closeButtonRef.current?.focus(), 100);
+    }
+  }, [activeId]);
+
   function close() {
     if (!activeId) return;
     const tile = tileRefs.current[activeId];
@@ -142,7 +264,12 @@ export default function PresenceMosaic() {
     if (wrap) wrap.classList.remove('show');
     if (backdropRef.current) backdropRef.current.classList.remove('show');
 
-    if (!tile) return;
+    if (!tile) {
+       setActiveId(null);
+       unlockScroll();
+       return;
+    }
+    
     const r = restRect.current;
     tile.style.top = r.top + 'px';
     tile.style.left = r.left + 'px';
@@ -162,16 +289,14 @@ export default function PresenceMosaic() {
       tile.style.transform = '';
       tile.removeEventListener('transitionend', onEnd);
       setActiveId(null);
+      unlockScroll();
+      
+      if (prevFocusRef.current) {
+         prevFocusRef.current.focus();
+      }
     };
     tile.addEventListener('transitionend', onEnd);
   }
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeId]);
 
   return (
     <section className="presence">
@@ -199,41 +324,71 @@ export default function PresenceMosaic() {
               tileRefs.current[ad.id] = el;
             }}
             className={`tile ${ad.className}`}
-            onMouseEnter={() => open(ad)}
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              if (activeId === ad.id) close();
+              else open(ad);
+            }}
+            onMouseEnter={() => {
+              if (!activeId) open(ad);
+            }}
+            onKeyDown={(e) => {
+               if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  open(ad);
+               }
+            }}
+            aria-label={`Open ${ad.title}`}
           >
             <Image src={`${basePath}${encodeURI(ad.src)}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
           </div>
         ))}
       </div>
 
-      <div className="backdrop" ref={backdropRef} onClick={close} />
+      <div className="backdrop" ref={backdropRef} aria-hidden="true" onClick={close} />
 
       {active && (
-        <div className="trust-wrap" ref={trustRef}>
-          <div className="trust-card relative">
+        <div 
+          className="trust-wrap" 
+          ref={trustRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.title}
+          onClick={close}
+        >
+          <div className="trust-card relative" onClick={(e) => e.stopPropagation()}>
             <Image 
               src={`${basePath}${encodeURI(active.textBox)}`} 
-              alt={active.title} 
+              alt={`${active.title} Text Box`} 
               width={400} 
               height={400} 
               className="w-full h-auto drop-shadow-2xl" 
             />
             {/* Transparent overlay for Download button */}
-            <a 
-              href="#" 
-              onClick={(e) => e.stopPropagation()}
-              className="absolute left-0 bottom-0 w-[60%] h-[25%] z-20 cursor-pointer"
-              title="Download"
-            ></a>
-            {/* Transparent overlay for Close button - Made larger and stopProp so it doesn't fail */}
             <button 
-              className="absolute right-0 bottom-0 w-[40%] h-[30%] z-20 cursor-pointer" 
+              type="button"
+              className="absolute left-[10%] bottom-[8%] w-[50%] h-[18%] z-[75] cursor-pointer outline-none"
+              title="Download"
+              aria-label="Download"
               onClick={(e) => {
+                 e.stopPropagation();
+                 // Add real download logic later
+                 console.log("Download clicked");
+              }}
+            ></button>
+            {/* Transparent overlay for Close button */}
+            <button 
+              ref={closeButtonRef}
+              type="button"
+              className="absolute right-[5%] bottom-[5%] w-[25%] h-[25%] z-[75] cursor-pointer rounded-full outline-none" 
+              onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 close();
               }}
               title="Close"
-              aria-label="Close"
+              aria-label="Close active image"
             ></button>
           </div>
         </div>
@@ -247,11 +402,6 @@ export default function PresenceMosaic() {
           background: #000;
           color: #f2f1ed;
           overflow-x: hidden;
-        }
-        .rule {
-          border: none;
-          border-top: 1px solid rgba(242, 241, 237, 0.35);
-          margin: 0 0 46px;
         }
         h1 {
           font-family: var(--font-caveat), cursive;
@@ -290,34 +440,28 @@ export default function PresenceMosaic() {
           pointer-events: none;
         }
         .tile:hover {
-          transform: translateY(-6px) scale(1.015);
+          transform: scale(1.015);
           box-shadow: 0 24px 44px rgba(0, 0, 0, 0.6);
-          z-index: 10 !important;
         }
-        /* t1 = designers (bottom-mid) */
         .tile.t1 { left: 300px; bottom: 0; width: 320px; height: 320px; z-index: 2; }
-        /* t2 = brand (top-mid) */
         .tile.t2 { left: 300px; top: 0; width: 320px; height: 320px; z-index: 3; }
-        /* t3 = ctrl (top-right) */
         .tile.t3 { left: 640px; top: 0; width: 340px; height: 410px; z-index: 2; }
-        /* t4 = person (bottom-left) */
         .tile.t4 { left: 0; bottom: 0; width: 280px; height: 340px; z-index: 1; }
-        /* t5 = adore (bottom-right) */
         .tile.t5 { left: 640px; bottom: 0; width: 340px; height: 230px; z-index: 1; }
 
         :global(.tile.flying) {
           position: fixed !important;
-          z-index: 70;
+          z-index: 70 !important;
           transition: top 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
             width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-            transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
           filter: none !important;
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7) !important;
         }
         .backdrop {
           position: fixed;
           inset: 0;
-          background: transparent;
+          background: rgba(0, 0, 0, 0.55);
           opacity: 0;
           pointer-events: none;
           transition: opacity 0.4s ease;
@@ -332,13 +476,11 @@ export default function PresenceMosaic() {
           z-index: 71;
           width: 280px;
           opacity: 0;
-          transform: translate(-16px, -50%);
           transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
           pointer-events: none;
         }
         :global(.trust-wrap.show) {
           opacity: 1;
-          transform: translate(0, -50%);
           pointer-events: auto;
         }
         .trust-card {
@@ -373,13 +515,6 @@ export default function PresenceMosaic() {
           }
           .trust-wrap {
             width: min(84vw, 300px);
-            left: 8vw !important;
-            top: auto !important;
-            bottom: 22px;
-            transform: translateY(20px) !important;
-          }
-          :global(.trust-wrap.show) {
-            transform: translateY(0) !important;
           }
         }
       `}</style>

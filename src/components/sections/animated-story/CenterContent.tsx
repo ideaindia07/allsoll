@@ -37,7 +37,9 @@ export default function CenterContent({
 
       // Sentence 1 — line by line, opacity + blur + upward drift.
       tl.set([lines1, lines2], { opacity: 0, filter: 'blur(12px)', y: 24 });
-      tl.set(logoRef.current, { opacity: 0, scale: 0.8 });
+      if (logoRef.current) {
+        tl.set(logoRef.current, { opacity: 0, scale: 0.8 });
+      }
 
       tl.to(lines1, {
         opacity: 1,
@@ -103,15 +105,15 @@ export default function CenterContent({
         top-1/2
         z-20
         flex
-        w-[180px]
+        w-[220px]
         -translate-x-1/2
         -translate-y-1/2
         flex-col
         items-center
         justify-center
         text-center
-        sm:w-[220px]
-        md:w-[260px]
+        sm:w-[260px]
+        md:w-[300px]
         ${!revealed ? 'opacity-0' : ''}
       `}
     >
@@ -135,7 +137,7 @@ export default function CenterContent({
             <span
               key={line}
               data-line="one"
-              className="block font-[700] text-white leading-[1.1] text-[18px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
+              className="block font-[700] text-white leading-[1.1] text-[24px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
               style={{ fontFamily: "'General Sans', sans-serif" }}
             >
               {line}
@@ -148,7 +150,7 @@ export default function CenterContent({
             <span
               key={line}
               data-line="two"
-              className="block font-[700] text-white leading-[1.1] text-[18px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
+              className="block font-[700] text-white leading-[1.1] text-[24px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
               style={{ fontFamily: "'General Sans', sans-serif" }}
             >
               {line}
@@ -156,7 +158,7 @@ export default function CenterContent({
           ))}
           <span
             data-line="two"
-            className="block bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text font-[700] leading-[1.1] text-[18px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight text-transparent"
+            className="block bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text font-[700] leading-[1.1] text-[24px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight text-transparent"
             style={{ fontFamily: "'General Sans', sans-serif" }}
           >
             {SENTENCE_TWO_ACCENT}
@@ -165,7 +167,7 @@ export default function CenterContent({
             <span
               key={line}
               data-line="two"
-              className="block font-[700] text-white leading-[1.1] text-[18px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
+              className="block font-[700] text-white leading-[1.1] text-[24px] sm:text-[22px] md:text-[28px] lg:text-[32px] tracking-tight"
               style={{ fontFamily: "'General Sans', sans-serif" }}
             >
               {line}

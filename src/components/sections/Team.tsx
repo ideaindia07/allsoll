@@ -16,7 +16,7 @@ const teamData: Member[] = [
   {
     name: 'Shree Verma',
     role: 'Founder & Presence Strategist',
-    img: '/team1(1).png',
+    img: '/team1(3).png',
     bio: 'Pioneering presence architecture to build long-term, indestructible digital authority.',
   },
   {
@@ -35,7 +35,7 @@ const teamData: Member[] = [
   {
     name: 'Sofia Rao',
     role: 'Creative Director',
-    img: '/team1(3).png',
+    img: '/team1(1).png',
     bio: 'Directing cinematic guidelines across platforms to evoke luxury perception at first glance.',
   },
   {
@@ -81,6 +81,12 @@ const teamData: Member[] = [
     img: '/team1(6).png',
     bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
   },
+  {
+    name: 'Leo Martins',
+    role: 'Influence & Partnerships',
+    img: '/team1(14).jpeg',
+    bio: 'Bridging creators and active networks to orchestrate raw, peer-to-peer brand advocacy.',
+  },
 ];
 
 const basePath = process.env.NODE_ENV === 'production' ? '/allsoll' : '';
@@ -115,11 +121,11 @@ export default function Team() {
     <section
       ref={containerRef}
       id="team"
-      className="relative w-full py-24 md:py-36 bg-primary z-20"
+      className="relative w-full py-24 max-sm:py-2 md:py-36 bg-primary z-20"
     >
-      <div className="max-w-[1800px] mx-auto px-[8%]">
+      <div className="max-w-[1800px] max-sm:px-[4%] mx-auto px-[8%]">
         {/* Header Block */}
-        <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6 select-none">
+        <div className="mb-16 max-sm:mb-2 flex flex-col md:flex-row md:items-end md:justify-between gap-6 select-none">
           <div>
             <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter max-w-2xl text-white">
               OUR <span className="text-accent">TEAM</span>
@@ -131,7 +137,7 @@ export default function Team() {
         </div>
 
         {/* Mapped Team Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-[1600px] mx-auto">
           {teamData.map((member, i) => (
             <motion.div
               key={`${member.name}-${i}`}
