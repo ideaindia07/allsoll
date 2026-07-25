@@ -162,49 +162,50 @@ export default function PresenceMosaic() {
     tile.style.transform = 'none';
 
     // Calculate dimensions
-    const mobile = isMobile();
+    const padding = 24;
+    const gap = 24;
+    const trustW = Math.min(280, window.innerWidth - padding * 2); 
+    const shouldStack = window.innerWidth < 850; 
     
-    let targetH, targetW, targetLeft, targetTop, trustW;
+    let targetH, targetW, targetLeft, targetTop;
     const aspect = rect.width / rect.height;
 
-    if (mobile) {
+    if (shouldStack) {
       // Mobile: Image above text box, fit within viewport vertically
-      const paddingY = 40;
-      const availableH = window.innerHeight - paddingY * 2;
+      const textH = 300; // estimated height of the text box
+      const availableH = window.innerHeight - padding * 2;
       
-      // Assume text box takes roughly 300px height or similar on mobile
-      const textH = 260;
-      targetH = Math.min(availableH - textH - 20, window.innerHeight * 0.4);
+      targetH = Math.min(availableH - textH - gap, window.innerHeight * 0.45);
+      if (targetH < 150) targetH = 150; // minimum reasonable height
       targetW = targetH * aspect;
 
-      // Ensure width doesn't exceed screen
-      if (targetW > window.innerWidth * 0.85) {
-        targetW = window.innerWidth * 0.85;
+      if (targetW > window.innerWidth - padding * 2) {
+        targetW = window.innerWidth - padding * 2;
         targetH = targetW / aspect;
       }
 
       targetLeft = (window.innerWidth - targetW) / 2;
-      targetTop = paddingY + (availableH - (targetH + 20 + textH)) / 2;
-      if (targetTop < paddingY) targetTop = paddingY;
+      targetTop = (window.innerHeight - (targetH + gap + textH)) / 2;
+      if (targetTop < padding) targetTop = padding;
 
     } else {
-      // Desktop: Center the composition (Image + Gap + TextBox)
-      trustW = 280;
-      const gap = 40;
+      // Desktop / Tablet: Center the composition (Image + Gap + TextBox)
+      const availableW = window.innerWidth - padding * 2;
+      const availableH = window.innerHeight - padding * 2;
       
-      targetH = Math.min(window.innerHeight * 0.65, 520);
+      targetH = Math.min(availableH, 560);
       targetW = targetH * aspect;
       
-      // Ensure the whole composition fits horizontally
       let totalW = targetW + gap + trustW;
-      if (totalW > window.innerWidth * 0.9) {
-        targetW = window.innerWidth * 0.9 - gap - trustW;
+      
+      // Ensure the whole composition fits horizontally
+      if (totalW > availableW) {
+        targetW = availableW - gap - trustW;
         targetH = targetW / aspect;
         totalW = targetW + gap + trustW;
       }
 
-      const startX = (window.innerWidth - totalW) / 2;
-      targetLeft = startX;
+      targetLeft = (window.innerWidth - totalW) / 2;
       targetTop = (window.innerHeight - targetH) / 2;
     }
 
@@ -218,19 +219,19 @@ export default function PresenceMosaic() {
     setActiveId(ad.id);
 
     // position the trust card
-    resizeHandler.current = () => placeTrustCard(targetLeft, targetW, targetTop, targetH);
+    resizeHandler.current = () => placeTrustCard(targetLeft, targetW, targetTop, targetH, shouldStack);
   }
 
-  function placeTrustCard(targetLeft: number, targetW: number, targetTop: number, targetH: number) {
+  function placeTrustCard(targetLeft: number, targetW: number, targetTop: number, targetH: number, shouldStack: boolean) {
     const wrap = trustRef.current;
     if (!wrap) return;
-    if (isMobile()) {
+    if (shouldStack) {
        wrap.style.left = '50%';
-       wrap.style.top = (targetTop + targetH + 20) + 'px';
+       wrap.style.top = (targetTop + targetH + 24) + 'px';
        wrap.style.transform = 'translate(-50%, 0)';
     } else {
-       wrap.style.left = targetLeft + targetW + 40 + 'px';
-       wrap.style.top = window.innerHeight / 2 + 'px';
+       wrap.style.left = (targetLeft + targetW + 24) + 'px';
+       wrap.style.top = '50%';
        wrap.style.transform = 'translate(0, -50%)';
     }
   }
@@ -304,15 +305,13 @@ export default function PresenceMosaic() {
 
       <div className="copy">
         <p>
-          We share our expertise on effective strategies and techniques to help you learn digital
-          marketing in easy way. Whether you&apos;re a digital pro or just getting started, our blog
-          is your go-to guide for practical tips, cool ideas, and the latest trends in digital
-          marketing. We share our expertise on effective strategies and techniques to help you learn
-          digital marketing in easy way.
+          We share our expertise on <span className="text-[#FFD43B]">effective strategies</span> and <span className="text-[#FFD43B]">techniques</span> to help you learn <span className="text-[#FFD43B]">digital marketing</span> in easy way. Whether you&apos;re a <span className="text-[#FFD43B]">digital pro</span> or just getting started, our blog
+          is your go-to guide for <span className="text-[#FFD43B]">practical tips</span>, <span className="text-[#FFD43B]">cool ideas</span>, and the <span className="text-[#FFD43B]">latest trends</span> in <span className="text-[#FFD43B]">digital marketing</span>. We share our expertise on <span className="text-[#FFD43B]">effective strategies</span> and <span className="text-[#FFD43B]">techniques</span> to help you learn
+          <span className="text-[#FFD43B]">digital marketing</span> in easy way.
         </p>
         <p>
-          Whether you&apos;re a digital pro or just getting started, our blog is your go-to guide for
-          practical tips, cool ideas, and the latest trends in digital marketing.
+          Whether you&apos;re a <span className="text-[#FFD43B]">digital pro</span> or just getting started, our blog is your go-to guide for
+          <span className="text-[#FFD43B]">practical tips</span>, <span className="text-[#FFD43B]">cool ideas</span>, and the <span className="text-[#FFD43B]">latest trends</span> in <span className="text-[#FFD43B]">digital marketing</span>.
         </p>
       </div>
 
