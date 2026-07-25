@@ -92,9 +92,8 @@ export default function Header() {
             href="/"
             className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer"
           >
-            <div className="relative flex">
-              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none font-bold text-white">All</span>
-              <span className="font-serif text-3xl md:text-5xl tracking-normal leading-none -mt-[2px] md:-mt-1 text-brand-yellow drop-shadow-sm mix-blend-difference font-bold">Soll</span>
+            <div className="relative flex items-center justify-center">
+              <img src={`${basePath}/AllSoll_logo.png`} alt="AllSoll" className="h-30 md:h-36 w-auto object-contain" />
             </div>
           </a>
 
