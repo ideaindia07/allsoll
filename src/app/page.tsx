@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import CustomCursor from "@/components/ui/CustomCursor";
-import Hero from "@/components/Hero";
+import Hero from "@/components/sections/Hero";
 import ScrollMorphSection from "@/components/sections/ScrollMorphSection";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Touchpoints from "@/components/sections/Touchpoints";
@@ -15,7 +15,6 @@ import { DemoOne } from "@/components/sections/demo";
 import AnimatedStory from "@/components/sections/animated-story/AnimatedStory";
 import PurposeHero from "@/components/purpose-magic/Hero";
 import PurposeGridCarousel from "@/components/purpose-magic/GridCarousel";
-import PurposeServicesSection from "@/components/purpose-magic/ServicesSection";
 
 export default function Home() {
   return (

@@ -76,7 +76,7 @@ const statsData: Stat[] = [
   },
 ];
 
-const cinematicEase = [0.16, 1, 0.3, 1];
+const cinematicEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function StatRow({ stat, index }: { stat: Stat; index: number }) {
   const rowRef = useRef<HTMLDivElement>(null);
