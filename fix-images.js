@@ -26,7 +26,7 @@ function processDirectory(dir) {
       } else if (content.includes('<img ') || content.includes('<img\n') || content.match(/src=\{\s*["'`]\//)) {
          
          // Replace static src strings in img tags
-         // e.g. src="/AllSoll_logo.png" -> src={`${basePath}/AllSoll_logo.png`}
+         // e.g. src="/AllSoll_logo.webp" -> src={`${basePath}/AllSoll_logo.png`}
          const regexStr = /src=(["'])\/([^"']+)["']/g;
          if (regexStr.test(content)) {
             content = content.replace(regexStr, 'src={`\${basePath}/$2`}');
@@ -34,7 +34,7 @@ function processDirectory(dir) {
          }
          
          // Replace dynamic src that might contain absolute paths
-         // Actually, dynamic src is usually like src={project.image} where project.image is '/img.png'
+         // Actually, dynamic src is usually like src={project.image} where project.image is '/img.webp'
          // We should probably check the arrays instead!
       }
 

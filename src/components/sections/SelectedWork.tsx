@@ -11,14 +11,14 @@ interface Project {
 }
 
 const mobileProjects: Project[] = [
-  { title: 'Aaroma', tag: 'Growth Story', img: '/Growth Stories_1.png' },
-  { title: 'Panacea', tag: 'Growth Story', img: '/Growth Stories_2.png' },
-  { title: 'SAS', tag: 'Growth Story', img: '/Growth Stories_3.png' },
-  { title: 'Morski', tag: 'Growth Story', img: '/Growth Stories_4.png' },
-  { title: 'Infinity', tag: 'Growth Story', img: '/Growth Stories_5.png' },
-  { title: 'Vicinity', tag: 'Growth Story', img: '/Growth Stories_6.png' },
-  { title: 'Empiras', tag: 'Growth Story', img: '/Growth Stories_7.png' },
-  { title: 'Archana', tag: 'Growth Story', img: '/Growth Stories_8.png' },
+  { title: 'Aaroma', tag: 'Growth Story', img: '/Growth Stories_1.webp' },
+  { title: 'Panacea', tag: 'Growth Story', img: '/Growth Stories_2.webp' },
+  { title: 'SAS', tag: 'Growth Story', img: '/Growth Stories_3.webp' },
+  { title: 'Morski', tag: 'Growth Story', img: '/Growth Stories_4.webp' },
+  { title: 'Infinity', tag: 'Growth Story', img: '/Growth Stories_5.webp' },
+  { title: 'Vicinity', tag: 'Growth Story', img: '/Growth Stories_6.webp' },
+  { title: 'Empiras', tag: 'Growth Story', img: '/Growth Stories_7.webp' },
+  { title: 'Archana', tag: 'Growth Story', img: '/Growth Stories_8.webp' },
 ];
 
 const basePath = '';

@@ -10,12 +10,12 @@ export interface StoryCard {
 }
 
 const CARDS: StoryCard[] = [
-  { id: '1', src: '/Webicon _6(1).jpg' },
-  { id: '2', src: '/Webicon_6(2).png' },
-  { id: '3', src: '/Webicon_6(3).png' },
-  { id: '4', src: '/Webicon_6(4).png' },
-  { id: '5', src: '/Webicon_6(5).png' },
-  { id: '6', src: '/Webicon_6(6).png' },
+  { id: '1', src: '/Webicon _6(1).webp' },
+  { id: '2', src: '/Webicon_6(2).webp' },
+  { id: '3', src: '/Webicon_6(3).webp' },
+  { id: '4', src: '/Webicon_6(4).webp' },
+  { id: '5', src: '/Webicon_6(5).webp' },
+  { id: '6', src: '/Webicon_6(6).webp' },
 ];
 
 const basePath = '';

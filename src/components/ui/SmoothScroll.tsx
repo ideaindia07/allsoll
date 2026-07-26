@@ -7,31 +7,43 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Register ScrollTrigger inside client mount
     gsap.registerPlugin(ScrollTrigger);
 
+    // Skip Lenis when user prefers reduced motion — keep native scroll
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      return;
+    }
+
     const lenis = new Lenis({
-      duration: 1.5,
+      // Shorter duration feels snappier and costs less compositor work
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.05,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.2,
+      // Avoid fighting native touch inertia on mobile
+      syncTouch: false,
     });
 
-    // Synchronize ScrollTrigger calculations
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Bind Lenis updates to GSAP animation frame tickers
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    // Allow GSAP to drop frames under load instead of stacking catch-up work
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       lenis.destroy();
       gsap.ticker.remove(updateTicker);
+      gsap.ticker.lagSmoothing(500, 33);
     };
   }, []);
 

@@ -2,6 +2,9 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const basePath = '';
 
@@ -9,8 +12,8 @@ const ADS = [
   {
     id: 'designers',
     className: 't1',
-    src: '/Ads_4.png',
-    textBox: '/Text Box_4.png',
+    src: '/Ads_4.webp',
+    textBox: '/Text Box_4.webp',
     alt: 'Designers vs Clients',
     title: 'Perspective',
     desc: "Designers and clients don't always see eye to eye — the best work happens when both sides learn to look through the same lens.",
@@ -18,8 +21,8 @@ const ADS = [
   {
     id: 'brand',
     className: 't2',
-    src: '/Ads_1.png',
-    textBox: '/Text Box_1.png',
+    src: '/Ads_1.webp',
+    textBox: '/Text Box_1.webp',
     alt: 'Be the Brand',
     title: 'Visibility',
     desc: 'Be the brand they all notice in the crowd — powered by creative excellence and a strategy built to stand out.',
@@ -27,8 +30,8 @@ const ADS = [
   {
     id: 'ctrl',
     className: 't3',
-    src: '/Ads_2.png',
-    textBox: '/Text Box_2.png',
+    src: '/Ads_2.webp',
+    textBox: '/Text Box_2.webp',
     alt: 'Brand Chaos Under Ctrl',
     title: 'Control',
     desc: 'Your brand chaos is under Ctrl — structured strategy turns scattered messaging into one clear voice.',
@@ -36,8 +39,8 @@ const ADS = [
   {
     id: 'person',
     className: 't4',
-    src: '/Ads_3.png',
-    textBox: '/Text Box_3.png',
+    src: '/Ads_3.webp',
+    textBox: '/Text Box_3.webp',
     alt: 'If Your Brand Was A Person',
     title: 'Personality',
     desc: "If your brand was a person, who would it be? People don't connect with brands — they connect with personalities.",
@@ -45,8 +48,8 @@ const ADS = [
   {
     id: 'adore',
     className: 't5',
-    src: '/Ads_5.png',
-    textBox: '/Text Box_5.png',
+    src: '/Ads_5.webp',
+    textBox: '/Text Box_5.webp',
     alt: 'Adore Campaign',
     title: 'Elegance',
     desc: 'Timeless, editorial, unmistakable — a print campaign built to be adored at first glance.',
@@ -300,49 +303,109 @@ export default function PresenceMosaic() {
   }
 
   return (
-    <section className="presence">
-      <h1>Presence is the new Market</h1>
+    <section className="presence" id="presence">
+      <div className="presence-inner">
+        <motion.header
+          className="intro"
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.9, ease: easeOut }}
+        >
+          <div className="intro-top">
+            <p className="eyebrow">
+              <span className="eyebrow-mark" aria-hidden />
+              Manifesto
+            </p>
+            <span className="intro-index">01 — Presence</span>
+          </div>
 
-      <div className="copy">
-        <p>
-          We share our expertise on <span className="text-[#FFD43B]">effective strategies</span> and <span className="text-[#FFD43B]">techniques</span> to help you learn <span className="text-[#FFD43B]">digital marketing</span> in easy way. Whether you&apos;re a <span className="text-[#FFD43B]">digital pro</span> or just getting started, our blog
-          is your go-to guide for <span className="text-[#FFD43B]">practical tips</span>, <span className="text-[#FFD43B]">cool ideas</span>, and the <span className="text-[#FFD43B]">latest trends</span> in <span className="text-[#FFD43B]">digital marketing</span>. We share our expertise on <span className="text-[#FFD43B]">effective strategies</span> and <span className="text-[#FFD43B]">techniques</span> to help you learn
-          <span className="text-[#FFD43B]">digital marketing</span> in easy way.
-        </p>
-        <p>
-          Whether you&apos;re a <span className="text-[#FFD43B]">digital pro</span> or just getting started, our blog is your go-to guide for
-          <span className="text-[#FFD43B]">practical tips</span>, <span className="text-[#FFD43B]">cool ideas</span>, and the <span className="text-[#FFD43B]">latest trends</span> in <span className="text-[#FFD43B]">digital marketing</span>.
-        </p>
-      </div>
+          <h2 className="headline">
+            <span className="headline-line">Presence is the</span>
+            <span className="headline-accent">new Market</span>
+          </h2>
+        </motion.header>
 
-      <div className="mosaic" ref={mosaicRef}>
-        {ADS.map((ad) => (
-          <div
-            key={ad.id}
-            ref={(el) => {
-              tileRefs.current[ad.id] = el;
-            }}
-            className={`tile ${ad.className}`}
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              if (activeId === ad.id) close();
-              else open(ad);
-            }}
-            onKeyDown={(e) => {
-               if (e.key === 'Enter' || e.key === ' ') {
+        <motion.div
+          className="copy"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.85, delay: 0.1, ease: easeOut }}
+        >
+          <p className="copy-lead">
+            We don&apos;t chase fleeting attention — we architect{' '}
+            <span className="accent">omnipresence</span>. From cinematic narratives
+            to creator networks and digital PR, every signal is designed so your
+            brand becomes impossible to ignore.
+          </p>
+          <p className="copy-aside">
+            Click any frame below to explore how we turn culture, craft, and
+            strategy into lasting <span className="accent">market gravity</span>.
+          </p>
+        </motion.div>
+
+        {/* <motion.ul
+          className="pillars"
+          aria-label="Presence pillars"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.75, delay: 0.18, ease: easeOut }}
+        >
+          <li>
+            <span className="pillar-num">01</span>
+            Visibility
+          </li>
+          <li>
+            <span className="pillar-num">02</span>
+            Credibility
+          </li>
+          <li>
+            <span className="pillar-num">03</span>
+            Influence
+          </li>
+          <li>
+            <span className="pillar-num">04</span>
+            Impact
+          </li>
+        </motion.ul> */}
+
+        <div className="mosaic" ref={mosaicRef}>
+          {ADS.map((ad) => (
+            <div
+              key={ad.id}
+              ref={(el) => {
+                tileRefs.current[ad.id] = el;
+              }}
+              className={`tile ${ad.className}`}
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                if (activeId === ad.id) close();
+                else open(ad);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   open(ad);
-               }
-            }}
-            aria-label={`Open ${ad.title}`}
-          >
-            <Image src={`${basePath}${encodeURI(ad.src)}`} alt={ad.alt} fill sizes="50vw" style={{ objectFit: 'cover' }} />
-            <div className="hover-overlay" aria-hidden="true">
-              <span>Click to view</span>
+                }
+              }}
+              aria-label={`Open ${ad.title}`}
+            >
+              <Image
+                src={`${basePath}${encodeURI(ad.src)}`}
+                alt={ad.alt}
+                fill
+                sizes="50vw"
+                style={{ objectFit: 'cover' }}
+              />
+              <div className="hover-overlay" aria-hidden="true">
+                <span>Click to view</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="backdrop" ref={backdropRef} aria-hidden="true" onClick={close} />
@@ -395,38 +458,147 @@ export default function PresenceMosaic() {
 
       <style jsx>{`
         .presence {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 48px 48px 90px;
+          width: 100%;
           background: #000;
           color: #f2f1ed;
           overflow-x: hidden;
         }
-        h1 {
-          font-family: var(--font-caveat), cursive;
+        .presence-inner {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 120px 48px 110px;
+        }
+        .intro {
+          margin: 0 0 56px;
+        }
+        .intro-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          margin-bottom: 28px;
+        }
+        .eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          margin: 0;
+          font-family: var(--font-body), sans-serif;
+          font-size: 11px;
           font-weight: 700;
-          font-size: clamp(38px, 4vw, 54px);
-          margin: 0 0 40px;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: #ffd43b;
+        }
+        .eyebrow-mark {
+          width: 8px;
+          height: 8px;
+          background: #ffd43b;
+          box-shadow: 10px 0 0 #ffd43b;
+        }
+        .intro-index {
+          font-family: var(--font-display), sans-serif;
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.35);
+        }
+        .headline {
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          font-family: var(--font-display), sans-serif;
+          font-weight: 700;
+          font-size: clamp(3rem, 7.2vw, 6rem);
+          line-height: 1.02;
+          letter-spacing: -0.045em;
+          color: #fff;
+        }
+        .headline-line {
+          display: block;
+        }
+        .headline-accent {
+          display: block;
+          color: #ffd43b;
         }
         .copy {
           display: grid;
-          grid-template-columns: 1.1fr 1fr;
+          grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
           gap: 80px;
-          margin-bottom: 80px;
-          padding-top: 40px;
+          align-items: start;
+          padding: 48px 0 0;
+          margin-bottom: 64px;
           border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .copy p {
+        .copy-lead,
+        .copy-aside {
           margin: 0;
-          font-size: 18px;
+          font-family: var(--font-body), sans-serif;
           line-height: 1.8;
-          color: rgba(255, 255, 255, 0.75);
-          font-weight: 300;
-          max-width: 600px;
+          font-weight: 400;
+        }
+        .copy-lead {
+          font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+          color: rgba(255, 255, 255, 0.78);
+          max-width: 34rem;
+        }
+        .copy-aside {
+          font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+          color: rgba(255, 255, 255, 0.5);
+          max-width: 22rem;
+          padding-top: 4px;
+          border-left: 1px solid rgba(255, 212, 59, 0.35);
+          padding-left: 32px;
+        }
+        .copy :global(.accent) {
+          color: #ffd43b;
+          font-weight: 500;
+        }
+        .pillars {
+          list-style: none;
+          margin: 0 0 88px;
+          padding: 28px 0;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 0;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pillars li {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 8px 28px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.7);
+          border-right: 1px solid rgba(255, 255, 255, 0.08);
+          transition: color 0.25s ease;
+        }
+        .pillars li:first-child {
+          padding-left: 0;
+        }
+        .pillars li:last-child {
+          border-right: none;
+          padding-right: 0;
+        }
+        .pillar-num {
+          font-size: 11px;
+          letter-spacing: 0.2em;
+          color: #ffd43b;
+          opacity: 0.85;
+        }
+        .pillars li:hover {
+          color: #ffd43b;
         }
         .mosaic {
           position: relative;
           width: 1000px;
+          max-width: 100%;
           height: 660px;
           margin: 0 auto;
         }
@@ -436,7 +608,7 @@ export default function PresenceMosaic() {
           border-radius: 2px;
           overflow: hidden;
           box-shadow: 0 18px 34px rgba(0, 0, 0, 0.55);
-          transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.5s ease;
+          transition: transform 0.35s ease, box-shadow 0.35s ease;
           background: #111;
         }
         .mosaic.active :global(.tile:not(.flying)) {
@@ -458,16 +630,14 @@ export default function PresenceMosaic() {
           z-index: 10;
         }
         .hover-overlay span {
-          color: white;
-          font-family: inherit;
-          font-size: 13px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 12px;
           font-weight: 600;
-          letter-spacing: 1px;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          padding: 8px 18px;
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          border-radius: 30px;
-          backdrop-filter: blur(4px);
+          padding: 10px 18px;
+          border: 1px solid rgba(255, 212, 59, 0.55);
+          color: #ffd43b;
           transform: translateY(10px);
           transition: transform 0.3s ease, background-color 0.3s ease;
         }
@@ -476,7 +646,7 @@ export default function PresenceMosaic() {
         }
         .tile:hover .hover-overlay span {
           transform: translateY(0);
-          background-color: rgba(0, 0, 0, 0.2);
+          background-color: rgba(0, 0, 0, 0.35);
         }
         :global(.tile.flying) .hover-overlay {
           opacity: 0 !important;
@@ -534,20 +704,55 @@ export default function PresenceMosaic() {
             transition: none !important;
           }
         }
+        @media (max-width: 1024px) {
+          .presence-inner { padding: 96px 36px 90px; }
+          .copy { gap: 48px; }
+          .pillars li { padding: 8px 18px; font-size: 12px; }
+        }
         @media (max-width: 900px) {
-          .presence { padding: 32px 22px 70px; }
-          .copy { 
-            grid-template-columns: 1fr; 
-            gap: 28px; 
-            padding-top: 24px;
-            margin-bottom: 50px;
+          .presence-inner { padding: 72px 22px 80px; }
+          .intro { margin-bottom: 40px; }
+          .intro-top { margin-bottom: 22px; }
+          .headline { font-size: clamp(2.5rem, 11vw, 3.5rem); }
+          .copy {
+            grid-template-columns: 1fr;
+            gap: 28px;
+            padding-top: 36px;
+            margin-bottom: 48px;
           }
-          .mosaic { 
-            width: 100%; 
-            height: auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 16px; 
+          .copy-aside {
+            border-left: none;
+            padding-left: 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: none;
+          }
+          .pillars {
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 56px;
+            padding: 8px 0;
+          }
+          .pillars li {
+            padding: 20px 16px;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          }
+          .pillars li:nth-child(2n) {
+            border-right: none;
+          }
+          .pillars li:nth-child(n + 3) {
+            border-bottom: none;
+          }
+          .pillars li:first-child {
+            padding-left: 16px;
+          }
+          .mosaic {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
           }
           .tile {
             position: relative !important;

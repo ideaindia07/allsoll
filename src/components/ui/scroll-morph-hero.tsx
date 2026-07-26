@@ -6,12 +6,12 @@ const basePath = '';
 
 // ─── Real client logos from /public ──────────────────────────────────────────
 const LOGOS = [
-  "/Webicon _6(1).jpg",
-  "/Webicon_6(2).png",
-  "/Webicon_6(3).png",
-  "/Webicon_6(4).png",
-  "/Webicon_6(5).png",
-  "/Webicon_6(6).png",
+  "/Webicon _6(1).webp",
+  "/Webicon_6(2).webp",
+  "/Webicon_6(3).webp",
+  "/Webicon_6(4).webp",
+  "/Webicon_6(5).webp",
+  "/Webicon_6(6).webp",
 ].map(path => `${basePath}${path}`);
 
 // Use exactly the 6 images

@@ -2,23 +2,22 @@
 import { Skiper30 } from './Skiper30'
 import React from 'react'
 
-const basePath = '';
-
 const GridCarousel = () => {
+    // WebP versions (~0.5MB total vs ~19MB PNG) — same art, far cheaper to decode/paint
     const image = [
-        "/images/grid-carousel/art.png",
-        "/images/grid-carousel/culture.png",
-        "/images/grid-carousel/gramo.png",
-        "/images/grid-carousel/rainbow.png",
-        "/images/grid-carousel/stamp.png",
-        "/images/grid-carousel/ticket.png",
-        "/images/grid-carousel/art.png",
-        "/images/grid-carousel/culture.png",
-        "/images/grid-carousel/gramo.png",
-        "/images/grid-carousel/rainbow.png",
-        "/images/grid-carousel/stamp.png",
-        "/images/grid-carousel/ticket.png",
-    ].map(path => `${basePath}${path}`);
+        "/images/grid-carousel/art.webp",
+        "/images/grid-carousel/culture.webp",
+        "/images/grid-carousel/gramo.webp",
+        "/images/grid-carousel/rainbow.webp",
+        "/images/grid-carousel/stamp.webp",
+        "/images/grid-carousel/ticket.webp",
+        "/images/grid-carousel/art.webp",
+        "/images/grid-carousel/culture.webp",
+        "/images/grid-carousel/gramo.webp",
+        "/images/grid-carousel/rainbow.webp",
+        "/images/grid-carousel/stamp.webp",
+        "/images/grid-carousel/ticket.webp",
+    ];
     return (
         <div>
             <Skiper30 img={image} />

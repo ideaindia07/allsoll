@@ -28,15 +28,31 @@ export default function CustomCursor() {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
-      
-      // Update global CSS document variable to animate background ambient light gradients
-      const pctX = (e.clientX / window.innerWidth) * 100;
-      const pctY = (e.clientY / window.innerHeight) * 100;
-      document.documentElement.style.setProperty('--mouse-x', `${pctX}%`);
-      document.documentElement.style.setProperty('--mouse-y', `${pctY}%`);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // Throttle CSS ambient glow vars — don't write to DOM every pointer event
+    let glowRaf = 0;
+    let lastX = 0;
+    let lastY = 0;
+    const handleGlowMove = (e: MouseEvent) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (glowRaf) return;
+      glowRaf = requestAnimationFrame(() => {
+        glowRaf = 0;
+        document.documentElement.style.setProperty(
+          '--mouse-x',
+          `${(lastX / window.innerWidth) * 100}%`,
+        );
+        document.documentElement.style.setProperty(
+          '--mouse-y',
+          `${(lastY / window.innerHeight) * 100}%`,
+        );
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousemove', handleGlowMove, { passive: true });
 
     // Event Delegation for hover binds (handles static & dynamic routing trees)
     const handleMouseEnter = (e: MouseEvent) => {
@@ -70,7 +86,9 @@ export default function CustomCursor() {
     document.addEventListener('mouseout', handleMouseLeave, true);
 
     return () => {
+      cancelAnimationFrame(glowRaf);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleGlowMove);
       document.removeEventListener('mouseover', handleMouseEnter, true);
       document.removeEventListener('mouseout', handleMouseLeave, true);
     };
@@ -88,9 +106,8 @@ export default function CustomCursor() {
           y: cursorY,
           width: isHovered ? (cursorText ? 80 : 40) : 32,
           height: isHovered ? (cursorText ? 80 : 40) : 32,
-          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.12)' : 'transparent',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.35)' : '1.5px solid #FFD43B',
-          backdropFilter: isHovered ? 'blur(3px)' : 'none',
         }}
         animate={{
           scale: isHovered ? 1.05 : 1,

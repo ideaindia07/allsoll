@@ -236,8 +236,10 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7, crowdLimit }: CrowdCanvasProps)
             availablePeeps.push(peep);
         };
 
+        const devicePixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+
         const render = () => {
-            if (!canvas) return;
+            if (!canvas || !tickerActive) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
             ctx.scale(devicePixelRatio, devicePixelRatio);
@@ -267,29 +269,55 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7, crowdLimit }: CrowdCanvasProps)
             initCrowd();
         };
 
+        let tickerActive = false;
+        let visible = true;
+
+        const setTicker = (on: boolean) => {
+            if (on === tickerActive) return;
+            tickerActive = on;
+            if (on) {
+                gsap.ticker.add(render);
+                crowd.forEach((peep) => peep.walk?.play?.());
+            } else {
+                gsap.ticker.remove(render);
+                crowd.forEach((peep) => peep.walk?.pause?.());
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        };
+
         const init = () => {
             createPeeps();
             resize();
-            gsap.ticker.add(render);
+            setTicker(visible);
         };
 
         img.onload = init;
         img.src = config.src;
-        img.crossOrigin = "anonymous"; // Important for canvas tainted issues
+        img.crossOrigin = "anonymous";
 
         const handleResize = () => resize();
-        window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleResize, { passive: true });
+
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                visible = entry.isIntersecting;
+                setTicker(visible);
+            },
+            { rootMargin: "10% 0px", threshold: 0 },
+        );
+        io.observe(canvas);
 
         return () => {
             window.removeEventListener("resize", handleResize);
-            gsap.ticker.remove(render);
+            io.disconnect();
+            setTicker(false);
             crowd.forEach((peep) => {
                 if (peep.walk) peep.walk.kill();
             });
         };
-    }, [src, rows, cols]); // Added dependency array
+    }, [src, rows, cols, crowdLimit]);
     return (
-        <canvas ref={canvasRef} className="absolute bottom-0 h-[90vh] w-full" />
+        <canvas ref={canvasRef} className="absolute bottom-0 h-[90vh] w-full" aria-hidden />
     );
 };
 

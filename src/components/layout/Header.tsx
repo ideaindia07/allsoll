@@ -12,6 +12,7 @@ export default function Header() {
   const logoLinkRef = useRef<HTMLAnchorElement>(null);
   const rightLinkRef = useRef<HTMLAnchorElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoShifted, setLogoShifted] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -22,9 +23,9 @@ export default function Header() {
         ease: 'power4.out',
       });
 
-      // Magnetic hover — desktop only
-      const elements = [leftLinkRef.current, logoLinkRef.current, rightLinkRef.current];
-      const cleanups = elements.map(el => {
+      // Magnetic hover — About / Contact only (logo has its own one-way shift)
+      const elements = [leftLinkRef.current, rightLinkRef.current];
+      const cleanups = elements.map((el) => {
         if (!el) return null;
         const handleMouseMove = (e: MouseEvent) => {
           const rect = el.getBoundingClientRect();
@@ -44,7 +45,7 @@ export default function Header() {
       });
 
       return () => {
-        cleanups.forEach(cleanup => cleanup && cleanup());
+        cleanups.forEach((cleanup) => cleanup && cleanup());
       };
     }, headerRef);
 
@@ -56,7 +57,9 @@ export default function Header() {
   // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [menuOpen]);
 
   const navLinks = [
@@ -72,62 +75,115 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className="fixed top-0 left-0 right-0 z-40 px-6 py-5 md:px-10 md:py-6 transition-all duration-300 w-full max-w-[100vw] overflow-x-hidden "
+        className="fixed top-0 left-0 right-0 z-40 px-5 py-4 md:px-10 md:py-5 w-full pointer-events-none"
       >
-        <nav className="flex items-center justify-between max-w-[1800px] mx-auto">
+        <nav className="relative flex items-center justify-between max-w-[1800px] mx-auto pointer-events-auto">
           {/* Left: About (desktop only) */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center z-10">
             <a
               ref={leftLinkRef}
               href="/about"
-              className="px-5 py-2 rounded-full bg-secondary text-sm font-medium hover:bg-secondary/80 transition-colors flex items-center gap-2"
+              className="group relative inline-flex items-center gap-2.5 px-5 py-2.5
+                rounded-full border border-white/20 bg-white/5
+                text-[13px] font-display font-semibold tracking-wide text-white
+                backdrop-blur-md
+                shadow-[3px_3px_0_0_rgba(255,212,59,0.35)]
+                transition-all duration-300 ease-out
+                hover:border-[#FFD43B]/70 hover:bg-[#FFD43B]/10 hover:text-[#FFD43B]
+                hover:shadow-[5px_5px_0_0_#FFD43B] hover:-translate-y-0.5
+                active:translate-y-0 active:shadow-[2px_2px_0_0_#FFD43B]"
             >
-              <span className="w-4 h-4 text-xs flex items-center justify-center">👓</span> About
+              <span
+                className="flex h-5 w-5 items-center justify-center rounded-full
+                  border border-white/25 bg-white/10 text-[10px] leading-none
+                  transition-colors group-hover:border-[#FFD43B]/60 group-hover:bg-[#FFD43B]/15"
+                aria-hidden
+              >
+                ✦
+              </span>
+              About
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full
+                  opacity-0 transition-opacity duration-300
+                  group-hover:opacity-100
+                  bg-[radial-gradient(circle_at_30%_20%,rgba(255,212,59,0.18),transparent_55%)]"
+              />
             </a>
           </div>
 
-          {/* Center: Logo */}
+          {/* Center: Logo — one-way hover: shift right & stay */}
           <a
             ref={logoLinkRef}
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer"
+            onMouseEnter={() => setLogoShifted(true)}
+            className={`absolute left-1/2 top-1/2 -translate-y-1/2
+              flex items-center justify-center cursor-pointer z-0
+              transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
+              will-change-transform
+              ${logoShifted ? '-translate-x-[38%] md:-translate-x-[42%]' : '-translate-x-1/2'}`}
           >
-            <div className="relative flex items-center justify-center">
-              <img src={`${basePath}/AllSoll_logo.png`} alt="AllSoll" className="h-30 md:h-36 w-auto object-contain" />
-            </div>
+            <img
+              src={`${basePath}/AllSoll_logo.webp`}
+              alt="AllSoll"
+              className={`h-24 sm:h-28 md:h-36 lg:h-40 w-auto object-contain select-none
+                transition-[object-position] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
+                ${logoShifted ? 'object-right' : 'object-center'}`}
+              draggable={false}
+            />
           </a>
 
           {/* Right: Contact (desktop) + Hamburger (mobile) */}
-          <div className="flex items-center gap-6">
-            <div className="hidden md:flex items-center gap-6">
-              {/* <span className="text-sm font-medium bg-transparent text-white">India | 10:33 am</span> */}
+          <div className="flex items-center gap-4 ml-auto z-10">
+            <div className="hidden md:flex items-center">
               <a
                 ref={rightLinkRef}
                 href="/contact"
-                className="px-6 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors flex items-center gap-2 text-black bg-white"
+                className="group relative inline-flex items-center gap-2.5 px-6 py-2.5
+                  rounded-full bg-[#FFD43B] text-black
+                  text-[13px] font-display font-bold tracking-wide
+                  border-2 border-black
+                  shadow-[4px_4px_0_0_#fff]
+                  transition-all duration-300 ease-out
+                  hover:shadow-[6px_6px_0_0_#fff] hover:-translate-x-0.5 hover:-translate-y-0.5
+                  hover:bg-[#ffe066]
+                  active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0_0_#fff]"
               >
-                <span className="w-4 h-4 bg-black/10 rounded-full flex items-center justify-center text-[8px]">✉️</span> Contact
+                <span
+                  className="relative flex h-5 w-5 items-center justify-center overflow-hidden
+                    rounded-full bg-black text-[#FFD43B] text-[9px] leading-none"
+                  aria-hidden
+                >
+                  <span className="transition-transform duration-300 group-hover:scale-110">→</span>
+                </span>
+                Contact
+                <span
+                  className="pointer-events-none absolute -inset-px rounded-full
+                    opacity-0 blur-md transition-opacity duration-300
+                    group-hover:opacity-60 bg-[#FFD43B]/50"
+                />
               </a>
             </div>
 
             {/* Hamburger button — mobile only */}
             <button
-              className="md:hidden flex flex-col justify-center items-center gap-[5px] w-8 h-8 relative z-[60]"
-              onClick={() => setMenuOpen(v => !v)}
+              className="md:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10
+                rounded-full border border-white/20 bg-white/5 backdrop-blur-md
+                relative z-[60]"
+              onClick={() => setMenuOpen((v) => !v)}
               aria-label="Toggle menu"
             >
               <motion.span
-                className="block w-6 h-[1.5px] bg-white origin-center"
+                className="block w-5 h-[1.5px] bg-white origin-center"
                 animate={menuOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.3 }}
               />
               <motion.span
-                className="block w-6 h-[1.5px] bg-white origin-center"
+                className="block w-5 h-[1.5px] bg-white origin-center"
                 animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
                 transition={{ duration: 0.2 }}
               />
               <motion.span
-                className="block w-6 h-[1.5px] bg-white origin-center"
+                className="block w-5 h-[1.5px] bg-white origin-center"
                 animate={menuOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.3 }}
               />
@@ -144,9 +200,8 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-bg-primary flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-40 bg-bg-primary flex flex-col items-center justify-center gap-8 md:hidden overflow-y-auto"
           >
-            {/* Accent glow blob */}
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full bg-[#FFD43B]/5 blur-3xl pointer-events-none" />
 
             {navLinks.map((link, i) => (

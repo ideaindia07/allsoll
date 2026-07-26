@@ -8,19 +8,19 @@ const basePath = '';
 const panelsData = [
   {
     id: 'visibility',
-    image: '/Strip_1.png',
+    image: '/Strip_1.webp',
   },
   {
     id: 'credibility',
-    image: '/Strip_2.png',
+    image: '/Strip_2.webp',
   },
   {
     id: 'influence',
-    image: '/Strip_3.png',
+    image: '/Strip_3.webp',
   },
   {
     id: 'impact',
-    image: '/Strip_4.png',
+    image: '/Strip_4.webp',
   },
 ];
 
@@ -117,19 +117,19 @@ export default function Touchpoints() {
 // const panelsData = [
 //   {
 //     id: 'visibility',
-//     image: '/Strip_1.png',
+//     image: '/Strip_1.webp',
 //   },
 //   {
 //     id: 'credibility',
-//     image: '/Strip_2.png',
+//     image: '/Strip_2.webp',
 //   },
 //   {
 //     id: 'influence',
-//     image: '/Strip_3.png',
+//     image: '/Strip_3.webp',
 //   },
 //   {
 //     id: 'impact',
-//     image: '/Strip_4.png',
+//     image: '/Strip_4.webp',
 //   },
 // ];
 

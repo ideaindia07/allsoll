@@ -97,21 +97,21 @@ export default function About() {
 
         <div className="absolute top-[10%] right-[5%] w-20 md:w-32 opacity-40 float-slow">
           <img
-            src={`${basePath}/assets/blob-yellow.png`}
+            src={`${basePath}/assets/blob-yellow.webp`}
             alt="yellow blob"
             className="w-full h-full object-cover object-center opacity-40 mix-blend-screen animate-blob-slow blur-[80px]"
           />
         </div>
         <div className="absolute top-[50%] left-[3%] w-16 md:w-24 opacity-40 float-medium">
           <img
-            src={`${basePath}/assets/blob-purple.png`}
+            src={`${basePath}/assets/blob-purple.webp`}
             alt="purple blob"
             className="w-full h-full object-cover object-center opacity-40 mix-blend-screen animate-blob-slower blur-[80px]"
           />
         </div>
         <div className="absolute bottom-[15%] right-[20%] w-14 md:w-20 opacity-40 float-fast">
           <img
-            src={`${basePath}/assets/blob-red.png`}
+            src={`${basePath}/assets/blob-red.webp`}
             alt="red blob"
             className="w-full h-full object-cover object-center opacity-30 mix-blend-screen animate-blob-slowest blur-[80px]"
           />

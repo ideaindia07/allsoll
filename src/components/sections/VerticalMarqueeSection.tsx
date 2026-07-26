@@ -5,17 +5,17 @@ import { motion } from "framer-motion";
 const basePath = process.env.NODE_ENV === "production" ? "/allsoll" : "";
 
 const imagesCol1 = [
-  "/Growth Stories_1.png",
-  "/Growth Stories_2.png",
-  "/Growth Stories_3.png",
-  "/Growth Stories_4.png",
+  "/Growth Stories_1.webp",
+  "/Growth Stories_2.webp",
+  "/Growth Stories_3.webp",
+  "/Growth Stories_4.webp",
 ];
 
 const imagesCol2 = [
-  "/Growth Stories_1.2.png",
-  "/Growth Stories_2.2.png",
-  "/Growth Stories_3.2.png",
-  "/Growth Stories_4.2.png", 
+  "/Growth Stories_1.2.webp",
+  "/Growth Stories_2.2.webp",
+  "/Growth Stories_3.2.webp",
+  "/Growth Stories_4.2.webp", 
 ];
 
 export default function VerticalMarqueeSection() {

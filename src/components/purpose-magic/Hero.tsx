@@ -43,7 +43,7 @@ const Hero = () => {
                 {/* Big Typography "WORK THAT MATTERS" */}
                 <motion.div
                     style={{ y: y2 }}
-                    className="relative z-20 flex flex-col items-center leading-[0.85] font-serif mix-blend-difference"
+                    className="relative z-20 flex flex-col items-center leading-[0.85] font-serif"
                 >
                     {/* WORK */}
                     <div className=' mb-[-2vw]'> <DynamicText /> </div>
@@ -101,8 +101,8 @@ const Hero = () => {
                 </div>
 
             </div>
-            <div className="absolute bottom-0 h-screen z-10 w-full pointer-events-none opacity-30">
-                <CrowdCanvas crowdLimit={45} src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png' rows={15} cols={7} />
+            <div className="absolute bottom-0 h-screen z-10 w-full pointer-events-none opacity-30 hidden md:block">
+                <CrowdCanvas crowdLimit={18} src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png' rows={15} cols={7} />
             </div>
 
 

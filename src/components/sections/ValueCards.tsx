@@ -3,11 +3,11 @@ import Link from "next/link";
 const basePath = '';
 
 const cards = [
-  { id: "trust", title: "Trust", image: "/Text Box_2.png", link: "/trust" },
-  { id: "attention", title: "Attention", image: "/Text Box_1.png", link: "/attention" },
-  { id: "experience", title: "Experience", image: "/Text Box_4.png", link: "/experience" },
-  { id: "culture", title: "Culture", image: "/Text Box_3.png", link: "/culture" },
-  { id: "growth", title: "Growth", image: "/Text Box_5.png", link: "/growth" },
+  { id: "trust", title: "Trust", image: "/Text Box_2.webp", link: "/trust" },
+  { id: "attention", title: "Attention", image: "/Text Box_1.webp", link: "/attention" },
+  { id: "experience", title: "Experience", image: "/Text Box_4.webp", link: "/experience" },
+  { id: "culture", title: "Culture", image: "/Text Box_3.webp", link: "/culture" },
+  { id: "growth", title: "Growth", image: "/Text Box_5.webp", link: "/growth" },
 ];
 
 export default function ValueCards() {
