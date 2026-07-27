@@ -19,7 +19,7 @@ const GridCarousel = () => {
         "/images/grid-carousel/ticket.webp",
     ];
     return (
-        <div>
+        <div className="-mb-6 md:mb-0">
             <Skiper30 img={image} />
         </div>
     )

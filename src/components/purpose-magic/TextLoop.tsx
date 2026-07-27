@@ -63,6 +63,8 @@ export function TextLoop({
                     exit='exit'
                     transition={transition}
                     variants={variants || motionVariants}
+                    className="inline-block"
+                    style={{ transformOrigin: 'center bottom' }}
                 >
                     {items[currentIndex]}
                 </motion.div>

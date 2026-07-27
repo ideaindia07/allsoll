@@ -22,26 +22,28 @@ const image = [
 
 const Skiper30 = ({ img = image }: { img?: string[] }) => {
     const gallery = useRef<HTMLDivElement>(null);
-    const [dimension, setDimension] = useState({ width: 0, height: 0 });
+    const [height, setHeight] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: gallery,
         offset: ["start end", "end start"],
     });
 
-    const { height } = dimension;
-    // Slightly gentler parallax distances = fewer large paint regions per frame
-    const y = useTransform(scrollYProgress, [0, 1], [0, height * 1.6]);
-    const y2 = useTransform(scrollYProgress, [0, 1], [0, height * 2.4]);
-    const y3 = useTransform(scrollYProgress, [0, 1], [0, height * 1.1]);
-    const y4 = useTransform(scrollYProgress, [0, 1], [0, height * 2.2]);
+    // Same travel distance both sides — opposite direction only
+    const travel = height * (isMobile ? 1.15 : 1.5);
+    const y1 = useTransform(scrollYProgress, [0, 1], [0, -travel]);
+    const y2 = useTransform(scrollYProgress, [0, 1], [0, travel]);
+    const y3 = useTransform(scrollYProgress, [0, 1], [0, -travel * 0.9]);
+    const y4 = useTransform(scrollYProgress, [0, 1], [0, travel * 1.1]);
 
     useEffect(() => {
         let raf = 0;
         const resize = () => {
             cancelAnimationFrame(raf);
             raf = requestAnimationFrame(() => {
-                setDimension({ width: window.innerWidth, height: window.innerHeight });
+                setHeight(Math.max(window.innerHeight, 1));
+                setIsMobile(window.innerWidth < 768);
             });
         };
 
@@ -59,16 +61,21 @@ const Skiper30 = ({ img = image }: { img?: string[] }) => {
             style={{
                 background: "radial-gradient(125% 125% at 50% 90%, #000000 40%, #0d1a36 100%)",
             }}
-            className="w-full text-black"
+            className="w-full text-black pb-0"
         >
-            <div className="font-sans flex h-[80vh] items-center justify-center gap-2">
-                <div className="text-white text-5xl md:text-8xl gap-3 md:gap-10 grid grid-cols-2 w-full">
-                    <div className="flex justify-end">
-                        <p>THE</p>
-                    </div>
-
+            <div className="relative font-sans h-[55vh] md:h-[75vh] w-full">
+                <h2
+                    className="absolute left-1/2 top-1/2 m-0 flex -translate-x-1/2 -translate-y-1/2
+                      flex-row flex-nowrap items-center justify-center gap-[0.3em]
+                      whitespace-nowrap px-4
+                      text-white text-[clamp(1.75rem,8vw,5.5rem)] md:text-8xl
+                      font-semibold tracking-tight leading-none"
+                    style={{ perspective: 1000 }}
+                >
+                    <span className="shrink-0 text-white">THE</span>
                     <TextLoop
-                        className="overflow-y-clip text-amber-300"
+                        className="!relative !inline-block shrink-0 overflow-hidden text-amber-300"
+                        mode="wait"
                         transition={{
                             type: "spring",
                             stiffness: 900,
@@ -76,38 +83,44 @@ const Skiper30 = ({ img = image }: { img?: string[] }) => {
                             mass: 10,
                         }}
                         variants={{
-                            initial: {
-                                y: 20,
-                                rotateX: 90,
-                                opacity: 0,
-                            },
-                            animate: {
-                                y: 0,
-                                rotateX: 0,
-                                opacity: 1,
-                            },
-                            exit: {
-                                y: -20,
-                                rotateX: -90,
-                                opacity: 0,
-                            },
+                            initial: { y: "0.35em", rotateX: 80, opacity: 0 },
+                            animate: { y: 0, rotateX: 0, opacity: 1 },
+                            exit: { y: "-0.35em", rotateX: -80, opacity: 0 },
                         }}
                     >
-                        <span>WORK</span>
-                        <span>MYTH</span>
-                        <span>LEGEND</span>
+                        <span className="inline-block">WORK</span>
+                        <span className="inline-block">MYTH</span>
+                        <span className="inline-block">LEGEND</span>
                     </TextLoop>
-                </div>
+                </h2>
             </div>
 
             <div
                 ref={gallery}
-                className="relative box-border flex h-[175vh] gap-[2vw] overflow-hidden p-[2vw] [contain:layout_paint]"
+                className="relative box-border flex h-[110vh] md:h-[155vh] gap-[2vw] overflow-hidden px-[2vw] pt-[2vw] pb-0"
             >
-                <Column images={[img[0], img[1], img[2]]} y={y} />
-                <Column images={[img[3], img[4], img[5]]} y={y2} />
-                <Column images={[img[6], img[7], img[8]]} y={y3} className="hidden md:flex" />
-                <Column images={[img[9], img[10], img[11]]} y={y4} className="hidden md:flex" />
+                <Column
+                    images={[img[0], img[1], img[2]]}
+                    y={y1}
+                    offsetClass="top-[-32%] md:top-[-45%]"
+                />
+                <Column
+                    images={[img[3], img[4], img[5]]}
+                    y={y2}
+                    offsetClass="top-[-52%] md:top-[-95%]"
+                />
+                <Column
+                    images={[img[6], img[7], img[8]]}
+                    y={y3}
+                    offsetClass="top-[-45%]"
+                    className="hidden md:flex"
+                />
+                <Column
+                    images={[img[9], img[10], img[11]]}
+                    y={y4}
+                    offsetClass="top-[-75%]"
+                    className="hidden md:flex"
+                />
             </div>
         </main>
     );
@@ -116,19 +129,21 @@ const Skiper30 = ({ img = image }: { img?: string[] }) => {
 type ColumnProps = {
     images: string[];
     y: MotionValue<number>;
+    offsetClass: string;
     className?: string;
 };
 
-const Column = ({ images, y, className }: ColumnProps) => {
+const Column = ({ images, y, offsetClass, className }: ColumnProps) => {
     return (
         <motion.div
-            className={`relative -top-[45%] flex h-full w-1/2 md:w-1/4 min-w-[0px] md:min-w-[250px] flex-col gap-[2vw] will-change-transform first:top-[-45%] [&:nth-child(2)]:top-[-95%] [&:nth-child(3)]:top-[-45%] [&:nth-child(4)]:top-[-75%] ${className ?? ""}`}
+            className={`relative flex h-[130%] w-1/2 md:w-1/4 min-w-0 md:min-w-[250px] flex-col gap-[2vw] will-change-transform [backface-visibility:hidden] ${offsetClass} ${className ?? ""}`}
             style={{ y }}
+            transformTemplate={(_, generated) => `${generated} translateZ(0)`}
         >
             {images.map((src, i) => (
                 <div
                     key={`${src}-${i}`}
-                    className="relative h-full w-full overflow-hidden rounded-sm [transform:translateZ(0)]"
+                    className="relative min-h-0 flex-1 w-full overflow-hidden rounded-sm"
                 >
                     <img
                         src={src}

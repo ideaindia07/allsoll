@@ -101,8 +101,13 @@ const Hero = () => {
                 </div>
 
             </div>
-            <div className="absolute bottom-0 h-screen z-10 w-full pointer-events-none opacity-30 hidden md:block">
-                <CrowdCanvas crowdLimit={18} src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png' rows={15} cols={7} />
+            <div className="absolute bottom-0 left-0 z-10 w-full h-[55vh] md:h-screen pointer-events-none opacity-45 md:opacity-30">
+                <CrowdCanvas
+                    crowdLimit={14}
+                    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/open-peeps-sheet.png"
+                    rows={15}
+                    cols={7}
+                />
             </div>
 
 
