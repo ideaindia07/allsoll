@@ -33,6 +33,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     lenis.on('scroll', ScrollTrigger.update);
 
+    // Keep Lenis aligned with native scroll (hash links, refresh, back/forward)
+    lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
     };

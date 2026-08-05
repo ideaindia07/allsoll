@@ -54,17 +54,20 @@ export function TextLoop({
     };
 
     return (
-        <div className={`relative inline-block whitespace-nowrap ${className || ''}`}>
+        <div
+            className={`relative inline-block whitespace-nowrap ${className || ''}`}
+            style={{ perspective: 1000 }}
+        >
             <AnimatePresence mode={mode} initial={false}>
                 <motion.div
                     key={currentIndex}
-                    initial='initial'
-                    animate='animate'
-                    exit='exit'
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
                     transition={transition}
                     variants={variants || motionVariants}
                     className="inline-block"
-                    style={{ transformOrigin: 'center bottom' }}
+                    style={{ transformOrigin: 'center bottom', transformStyle: 'preserve-3d' }}
                 >
                     {items[currentIndex]}
                 </motion.div>

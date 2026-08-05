@@ -10,63 +10,72 @@ const basePath = '';
 
 const ADS = [
   {
-    id: 'designers',
+    id: 'immersion',
     className: 't1',
-    src: '/Ads_4.webp',
-    textBox: '/Text Box_4.webp',
-    alt: 'Designers vs Clients',
-    title: 'Perspective',
-    desc: "Designers and clients don't always see eye to eye — the best work happens when both sides learn to look through the same lens.",
+    src: '/grid-1 (1).webp',
+    alt: 'Immersive brand experience',
+    title: 'Experience',
+    body: `People remember how a brand made them feel.
+
+A brand isn't experienced through a logo.
+It's experienced through every interaction.
+
+From digital journeys to physical spaces, launches to communities, every touchpoint shapes perception. We design experiences that people don't simply consume, they remember, share, and return to.
+
+Because memorable experiences create lasting presence.`,
+    accent: '#2F5BFF',
   },
   {
-    id: 'brand',
+    id: 'story',
     className: 't2',
-    src: '/Ads_1.webp',
-    textBox: '/Text Box_1.webp',
-    alt: 'Be the Brand',
-    title: 'Visibility',
-    desc: 'Be the brand they all notice in the crowd — powered by creative excellence and a strategy built to stand out.',
+    src: '/grid-1 (2).webp',
+    alt: 'Brand storytelling frame',
+    title: 'Trust',
+    body: `Visibility starts conversations. Trust closes them.
+
+People don't buy from the loudest brand.
+They buy from the one they've seen enough times to believe.
+
+Every collaboration, testimonial, founder story, media feature, community interaction, and customer experience compounds into credibility. Trust isn't built through campaigns. It's accumulated through consistent presence.`,
+    accent: '#2F5BFF',
   },
   {
-    id: 'ctrl',
+    id: 'craft',
     className: 't3',
-    src: '/Ads_2.webp',
-    textBox: '/Text Box_2.webp',
-    alt: 'Brand Chaos Under Ctrl',
-    title: 'Control',
-    desc: 'Your brand chaos is under Ctrl — structured strategy turns scattered messaging into one clear voice.',
+    src: '/grid-1 (3).webp',
+    alt: 'Brand craft and identity system',
+    title: 'Attention',
+    body: `Attention isn't captured. It's earned.
+
+Every brand competes for the same scroll, the same second, the same glance. Winning isn't about being louder, it's about being impossible to overlook.
+
+We engineer attention through narrative, timing, creator ecosystems, visual systems, and moments people choose to engage with. Because the brands that consistently appear become the brands people naturally remember.`,
+    accent: '#2F5BFF',
   },
   {
-    id: 'person',
+    id: 'presence',
     className: 't4',
-    src: '/Ads_3.webp',
-    textBox: '/Text Box_3.webp',
-    alt: 'If Your Brand Was A Person',
-    title: 'Personality',
-    desc: "If your brand was a person, who would it be? People don't connect with brands — they connect with personalities.",
-  },
-  {
-    id: 'adore',
-    className: 't5',
-    src: '/Ads_5.webp',
-    textBox: '/Text Box_5.webp',
-    alt: 'Adore Campaign',
-    title: 'Elegance',
-    desc: 'Timeless, editorial, unmistakable — a print campaign built to be adored at first glance.',
+    src: '/grid-1 (4).webp',
+    alt: 'Omnipresent brand moments',
+    title: 'Culture',
+    body: `The strongest brands become part of culture.
+
+Products solve problems.
+Culture creates belonging.
+
+When people reference your brand in conversations, create content around it, recommend it without incentives, or identify with what it represents, you've moved beyond marketing.
+
+We help brands shift from participation to influence, becoming part of the communities and conversations that define tomorrow.`,
+    accent: '#2F5BFF',
   },
 ];
 
 export default function PresenceMosaic() {
-  const mosaicRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
-  const tileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const trustRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const restRect = useRef<any>(null);
-  const resizeHandler = useRef<any>(null);
-
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isNarrow, setIsNarrow] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const active = ADS.find((a) => a.id === activeId) || null;
+  const isOpen = Boolean(activeId);
 
   // Ref to store previous focus to restore after modal closes
   const prevFocusRef = useRef<HTMLElement | null>(null);
@@ -79,7 +88,19 @@ export default function PresenceMosaic() {
     paddingRight: string;
   } | null>(null);
 
-  const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 900;
+  useEffect(() => {
+    // Clear any stale scroll-lock styles from HMR / interrupted sessions
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    scrollLockRef.current = null;
+
+    const check = () => setIsNarrow(window.innerWidth <= 900);
+    check();
+    setMounted(true);
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   function lockScroll() {
     if (typeof window === 'undefined' || scrollLockRef.current) return;
@@ -100,214 +121,100 @@ export default function PresenceMosaic() {
     }
   }
 
-  function unlockScroll() {
+  function releaseScrollStyles() {
     if (typeof window === 'undefined' || !scrollLockRef.current) return;
-    
+
     document.documentElement.style.overflow = scrollLockRef.current.overflow;
     document.body.style.overflow = scrollLockRef.current.bodyOverflow;
     document.body.style.paddingRight = scrollLockRef.current.paddingRight;
-    
-    window.scrollTo(0, scrollLockRef.current.scrollY);
     scrollLockRef.current = null;
   }
 
-  // Cleanup scroll lock on unmount
+  function unlockScroll() {
+    if (typeof window === 'undefined' || !scrollLockRef.current) return;
+
+    const scrollY = scrollLockRef.current.scrollY;
+    releaseScrollStyles();
+    requestAnimationFrame(() => window.scrollTo(0, scrollY));
+  }
+
+  // Cleanup scroll lock on unmount without forcing scroll position
   useEffect(() => {
     return () => {
-      unlockScroll();
+      releaseScrollStyles();
     };
   }, []);
 
-  // Globally prevent wheel/touch scroll (specifically for smooth scrollers like Lenis)
+  // Escape to close
+  useEffect(() => {
+    if (!activeId) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeId]);
+
+  // Prevent background scroll while open (desktop fly + mobile modal)
   useEffect(() => {
     if (!activeId) return;
     const preventScroll = (e: Event) => {
-       e.preventDefault();
+      // Allow scrolling inside the mobile modal sheet
+      const target = e.target as HTMLElement | null;
+      if (target?.closest?.('.mobile-modal') || target?.closest?.('.desktop-modal')) return;
+      e.preventDefault();
     };
     window.addEventListener('wheel', preventScroll, { passive: false });
     window.addEventListener('touchmove', preventScroll, { passive: false });
     return () => {
-       window.removeEventListener('wheel', preventScroll);
-       window.removeEventListener('touchmove', preventScroll);
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
     };
   }, [activeId]);
 
-  function open(ad: any) {
-    if (activeId) return; // Do not allow another tile to open while one is active
-    const tile = tileRefs.current[ad.id];
-    if (!tile) return;
-
+  function open(ad: (typeof ADS)[number]) {
+    if (activeId) return;
     prevFocusRef.current = document.activeElement as HTMLElement;
-
     lockScroll();
 
-    const rect = tile.getBoundingClientRect();
-    const cs = getComputedStyle(tile).transform;
-    restRect.current = {
-      top: rect.top,
-      left: rect.left,
-      width: rect.width,
-      height: rect.height,
-      transform: cs === 'none' ? 'none' : cs,
-    };
-
-    tile.style.top = rect.top + 'px';
-    tile.style.left = rect.left + 'px';
-    tile.style.width = rect.width + 'px';
-    tile.style.height = rect.height + 'px';
-    tile.style.transform = restRect.current.transform;
-    tile.classList.add('flying');
-
-    if (mosaicRef.current) mosaicRef.current.classList.add('active');
-    if (backdropRef.current) backdropRef.current.classList.add('show');
-
-    void tile.offsetWidth; // force reflow
-    tile.style.transform = 'none';
-
-    // Calculate dimensions
-    const padding = 24;
-    const gap = 24;
-    const trustW = Math.min(280, window.innerWidth - padding * 2); 
-    const shouldStack = window.innerWidth < 850; 
-    
-    let targetH, targetW, targetLeft, targetTop;
-    const aspect = rect.width / rect.height;
-
-    if (shouldStack) {
-      // Mobile: Image above text box, fit within viewport vertically
-      const textH = 300; // estimated height of the text box
-      const availableH = window.innerHeight - padding * 2;
-      
-      targetH = Math.min(availableH - textH - gap, window.innerHeight * 0.45);
-      if (targetH < 150) targetH = 150; // minimum reasonable height
-      targetW = targetH * aspect;
-
-      if (targetW > window.innerWidth - padding * 2) {
-        targetW = window.innerWidth - padding * 2;
-        targetH = targetW / aspect;
-      }
-
-      targetLeft = (window.innerWidth - targetW) / 2;
-      targetTop = (window.innerHeight - (targetH + gap + textH)) / 2;
-      if (targetTop < padding) targetTop = padding;
-
-    } else {
-      // Desktop / Tablet: Center the composition (Image + Gap + TextBox)
-      const availableW = window.innerWidth - padding * 2;
-      const availableH = window.innerHeight - padding * 2;
-      
-      targetH = Math.min(availableH, 560);
-      targetW = targetH * aspect;
-      
-      let totalW = targetW + gap + trustW;
-      
-      // Ensure the whole composition fits horizontally
-      if (totalW > availableW) {
-        targetW = availableW - gap - trustW;
-        targetH = targetW / aspect;
-        totalW = targetW + gap + trustW;
-      }
-
-      targetLeft = (window.innerWidth - totalW) / 2;
-      targetTop = (window.innerHeight - targetH) / 2;
-    }
-
-    requestAnimationFrame(() => {
-      tile.style.top = targetTop + 'px';
-      tile.style.left = targetLeft + 'px';
-      tile.style.width = targetW + 'px';
-      tile.style.height = targetH + 'px';
-    });
-
+    const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
+    setIsNarrow(narrow);
     setActiveId(ad.id);
-
-    // position the trust card
-    resizeHandler.current = () => placeTrustCard(targetLeft, targetW, targetTop, targetH, shouldStack);
   }
-
-  function placeTrustCard(targetLeft: number, targetW: number, targetTop: number, targetH: number, shouldStack: boolean) {
-    const wrap = trustRef.current;
-    if (!wrap) return;
-    if (shouldStack) {
-       wrap.style.left = '50%';
-       wrap.style.top = (targetTop + targetH + 24) + 'px';
-       wrap.style.transform = 'translate(-50%, 0)';
-    } else {
-       wrap.style.left = (targetLeft + targetW + 24) + 'px';
-       wrap.style.top = '50%';
-       wrap.style.transform = 'translate(0, -50%)';
-    }
-  }
-
-  useEffect(() => {
-    if (!activeId) return;
-    // trust card just mounted — place it, then fade it in
-    const wrap = trustRef.current;
-    if (resizeHandler.current) resizeHandler.current();
-    requestAnimationFrame(() => wrap && wrap.classList.add('show'));
-    if (resizeHandler.current) {
-      window.addEventListener('resize', resizeHandler.current);
-      return () => window.removeEventListener('resize', resizeHandler.current);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeId]);
-
-  // Focus trap / focus management
-  useEffect(() => {
-    if (activeId && closeButtonRef.current) {
-       // A small timeout ensures the element is fully mounted and focusable
-       setTimeout(() => closeButtonRef.current?.focus(), 100);
-    }
-  }, [activeId]);
 
   function close() {
     if (!activeId) return;
-    const tile = tileRefs.current[activeId];
-    const wrap = trustRef.current;
 
-    if (wrap) wrap.classList.remove('show');
-    if (backdropRef.current) backdropRef.current.classList.remove('show');
-
-    if (!tile) {
-       setActiveId(null);
-       unlockScroll();
-       return;
-    }
-    
-    const r = restRect.current;
-    tile.style.top = r.top + 'px';
-    tile.style.left = r.left + 'px';
-    tile.style.width = r.width + 'px';
-    tile.style.height = r.height + 'px';
-    tile.style.transform = r.transform;
-
-    if (mosaicRef.current) mosaicRef.current.classList.remove('active');
-
-    const onEnd = (e: any) => {
-      if (e.target !== tile || e.propertyName !== 'left') return;
-      tile.classList.remove('flying');
-      tile.style.top = '';
-      tile.style.left = '';
-      tile.style.width = '';
-      tile.style.height = '';
-      tile.style.transform = '';
-      tile.removeEventListener('transitionend', onEnd);
-      setActiveId(null);
-      unlockScroll();
-      
-      if (prevFocusRef.current) {
-         prevFocusRef.current.focus();
-      }
-    };
-    tile.addEventListener('transitionend', onEnd);
+    setActiveId(null);
+    unlockScroll();
+    prevFocusRef.current?.focus();
   }
+
+  const DetailPanel = active ? (
+    <div className="presence-detail-panel" onClick={(e) => e.stopPropagation()}>
+      <article
+        className="presence-detail-bubble"
+        style={{ backgroundColor: active.accent, ['--bubble' as string]: active.accent }}
+      >
+        <h3 className="presence-detail-title">{active.title}</h3>
+        <div className="presence-detail-body-wrap">
+          {active.body.split('\n\n').map((paragraph, i) => (
+            <p key={i} className="presence-detail-body">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </article>
+    </div>
+  ) : null;
 
   return (
     <section className="presence" id="presence">
       <div className="presence-inner">
         <motion.header
           className="intro"
-          initial={{ opacity: 0, y: 36 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.9, ease: easeOut }}
@@ -328,7 +235,7 @@ export default function PresenceMosaic() {
 
         <motion.div
           className="copy"
-          initial={{ opacity: 0, y: 28 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.85, delay: 0.1, ease: easeOut }}
@@ -371,13 +278,10 @@ export default function PresenceMosaic() {
           </li>
         </motion.ul> */}
 
-        <div className="mosaic" ref={mosaicRef}>
+        <div className={`mosaic ${mounted ? 'is-ready' : ''} ${isOpen ? 'active' : ''}`}>
           {ADS.map((ad) => (
             <div
               key={ad.id}
-              ref={(el) => {
-                tileRefs.current[ad.id] = el;
-              }}
               className={`tile ${ad.className}`}
               role="button"
               tabIndex={0}
@@ -408,50 +312,47 @@ export default function PresenceMosaic() {
         </div>
       </div>
 
-      <div className="backdrop" ref={backdropRef} aria-hidden="true" onClick={close} />
+      <div
+        className={`backdrop ${isOpen ? 'show' : ''}`}
+        aria-hidden="true"
+        onClick={close}
+      />
 
-      {active && (
-        <div 
-          className="trust-wrap" 
-          ref={trustRef}
+      {/* Desktop centered modal (image + detail card) */}
+      {mounted && active && !isNarrow && (
+        <div
+          className="desktop-modal"
           role="dialog"
           aria-modal="true"
           aria-label={active.title}
-          onClick={close}
         >
-          <div className="trust-card relative" onClick={(e) => e.stopPropagation()}>
-            <Image 
-              src={`${basePath}${encodeURI(active.textBox)}`} 
-              alt={`${active.title} Text Box`} 
-              width={400} 
-              height={400} 
-              className="w-full h-auto drop-shadow-2xl" 
-            />
-            {/* Transparent overlay for Download button */}
-            <button 
-              type="button"
-              className="absolute left-[10%] bottom-[8%] w-[50%] h-[18%] z-[75] cursor-pointer outline-none"
-              title="Download"
-              aria-label="Download"
-              onClick={(e) => {
-                 e.stopPropagation();
-                 // Add real download logic later
-                 console.log("Download clicked");
-              }}
-            ></button>
-            {/* Transparent overlay for Close button */}
-            <button 
-              ref={closeButtonRef}
-              type="button"
-              className="absolute right-[5%] bottom-[5%] w-[25%] h-[25%] z-[75] cursor-pointer rounded-full outline-none" 
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                close();
-              }}
-              title="Close"
-              aria-label="Close active image"
-            ></button>
+          <div className="desktop-modal-composer" onClick={(e) => e.stopPropagation()}>
+            <div className="desktop-modal-image">
+              <Image
+                src={`${basePath}${encodeURI(active.src)}`}
+                alt={active.alt}
+                fill
+                sizes="(min-width: 901px) 420px, 0px"
+                style={{ objectFit: 'cover' }}
+                priority
+              />
+            </div>
+            {DetailPanel}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile full-screen scrollable modal */}
+      {mounted && active && isNarrow && (
+        <div
+          className="mobile-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.title}
+        >
+          <button type="button" className="mobile-modal-scrim" aria-label="Close" onClick={close} />
+          <div className="mobile-modal-sheet">
+            {DetailPanel}
           </div>
         </div>
       )}
@@ -599,8 +500,13 @@ export default function PresenceMosaic() {
           position: relative;
           width: 1000px;
           max-width: 100%;
-          height: 660px;
+          height: 640px;
           margin: 0 auto;
+          opacity: 0;
+          transition: opacity 0.25s ease;
+        }
+        .mosaic.is-ready {
+          opacity: 1;
         }
         .tile {
           position: absolute;
@@ -611,7 +517,7 @@ export default function PresenceMosaic() {
           transition: transform 0.35s ease, box-shadow 0.35s ease;
           background: #111;
         }
-        .mosaic.active :global(.tile:not(.flying)) {
+        .mosaic.active :global(.tile) {
           pointer-events: none;
         }
         .tile:hover {
@@ -648,25 +554,12 @@ export default function PresenceMosaic() {
           transform: translateY(0);
           background-color: rgba(0, 0, 0, 0.35);
         }
-        :global(.tile.flying) .hover-overlay {
-          opacity: 0 !important;
-          transition: none;
-        }
-        .tile.t1 { left: 300px; bottom: 0; width: 320px; height: 320px; z-index: 2; }
-        .tile.t2 { left: 300px; top: 0; width: 320px; height: 320px; z-index: 3; }
-        .tile.t3 { left: 640px; top: 0; width: 340px; height: 410px; z-index: 2; }
-        .tile.t4 { left: 0; bottom: 0; width: 280px; height: 340px; z-index: 1; }
-        .tile.t5 { left: 640px; bottom: 0; width: 340px; height: 230px; z-index: 1; }
+        /* 4-tile centered bento: tall left + landscape top + two portraits bottom-right */
+        .tile.t1 { left: 0; top: 0; width: 340px; height: 640px; z-index: 2; }
+        .tile.t2 { left: 360px; top: 0; width: 640px; height: 310px; z-index: 2; }
+        .tile.t3 { left: 360px; top: 330px; width: 310px; height: 310px; z-index: 1; }
+        .tile.t4 { left: 690px; top: 330px; width: 310px; height: 310px; z-index: 1; }
 
-        :global(.tile.flying) {
-          position: fixed !important;
-          z-index: 70 !important;
-          transition: top 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-            width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-            transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-          filter: none !important;
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7) !important;
-        }
         .backdrop {
           position: fixed;
           inset: 0;
@@ -676,27 +569,94 @@ export default function PresenceMosaic() {
           transition: opacity 0.4s ease;
           z-index: 60;
         }
-        :global(.backdrop.show) {
+        .backdrop.show {
           opacity: 1;
           pointer-events: auto;
         }
-        .trust-wrap {
+        .desktop-modal {
           position: fixed;
-          z-index: 71;
-          width: 280px;
-          opacity: 0;
-          transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+          inset: 0;
+          z-index: 70;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
           pointer-events: none;
         }
-        :global(.trust-wrap.show) {
-          opacity: 1;
+        .desktop-modal-composer {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          align-items: flex-start;
+          gap: 20px;
+          max-width: min(760px, calc(100vw - 48px));
+          max-height: calc(100vh - 48px);
           pointer-events: auto;
         }
-        .trust-card {
+        .desktop-modal-image {
           position: relative;
-          background: transparent;
-          border-radius: 0;
-          padding: 0;
+          flex: 0 0 auto;
+          width: min(340px, 38vw);
+          height: min(480px, calc(100vh - 48px));
+          border-radius: 6px;
+          overflow: hidden;
+          background: #111;
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+        .desktop-modal :global(.presence-detail-panel) {
+          flex: 0 0 min(340px, calc(100vw - 48px));
+          max-height: calc(100vh - 48px);
+          overflow-y: auto;
+        }
+        .mobile-modal {
+          display: none;
+        }
+        :global(.presence-detail-panel) {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          width: 100%;
+        }
+        :global(.presence-detail-bubble) {
+          position: relative;
+          border-radius: 32px;
+          padding: 30px 26px 34px;
+          color: #fff;
+          box-shadow: 0 22px 48px rgba(0, 0, 0, 0.45);
+        }
+        :global(.presence-detail-bubble::before) {
+          content: '';
+          position: absolute;
+          left: -14px;
+          top: 48%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-top: 14px solid transparent;
+          border-bottom: 14px solid transparent;
+          border-right: 16px solid var(--bubble, #2F5BFF);
+        }
+        :global(.presence-detail-title) {
+          margin: 0 0 16px;
+          font-family: var(--font-display), sans-serif;
+          font-size: clamp(1.75rem, 4vw, 2.5rem);
+          font-weight: 700;
+          letter-spacing: -0.03em;
+          line-height: 1.08;
+          color: #fff;
+        }
+        :global(.presence-detail-body-wrap) {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        :global(.presence-detail-body) {
+          margin: 0;
+          font-family: var(--font-body), sans-serif;
+          font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+          line-height: 1.62;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.96);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -750,9 +710,9 @@ export default function PresenceMosaic() {
           .mosaic {
             width: 100%;
             height: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
           }
           .tile {
             position: relative !important;
@@ -760,10 +720,76 @@ export default function PresenceMosaic() {
             top: 0 !important;
             bottom: auto !important;
             width: 100% !important;
-            height: 300px !important;
+            height: 220px !important;
+            touch-action: manipulation;
           }
-          .trust-wrap {
-            width: min(84vw, 300px);
+          .tile.t1 {
+            grid-row: span 2;
+            height: 452px !important;
+          }
+          .tile.t2 {
+            height: 220px !important;
+          }
+          .backdrop {
+            display: none;
+          }
+          .desktop-modal {
+            display: none !important;
+          }
+          .mobile-modal {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            padding: max(12px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+          }
+          .mobile-modal-scrim {
+            position: absolute;
+            inset: 0;
+            border: none;
+            background: rgba(0, 0, 0, 0.72);
+            cursor: pointer;
+          }
+          .mobile-modal-sheet {
+            position: relative;
+            z-index: 1;
+            max-width: 440px;
+            max-height: calc(100dvh - 28px);
+            margin: 0 auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding-bottom: 8px;
+          }
+          :global(.presence-detail-bubble) {
+            border-radius: 22px;
+            padding: 22px 18px 24px;
+          }
+          :global(.presence-detail-bubble::before) {
+            display: none;
+          }
+          :global(.presence-detail-title) {
+            font-size: 1.65rem;
+            margin-bottom: 12px;
+          }
+          :global(.presence-detail-body) {
+            font-size: 0.9rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .tile {
+            height: 160px !important;
+          }
+          .tile.t1 {
+            height: 332px !important;
+          }
+          .tile.t2 {
+            height: 160px !important;
           }
         }
       `}</style>
