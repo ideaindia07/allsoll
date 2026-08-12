@@ -10,6 +10,7 @@ import PresenceMosaic from "@/components/sections/PresenceMosaic";
 import { DemoOne } from "@/components/sections/demo";
 import PurposeHero from "@/components/purpose-magic/Hero";
 import PurposeGridCarousel from "@/components/purpose-magic/GridCarousel";
+import ServicesGrid from "@/components/sections/ServicesGrid";
 
 export default function Home() {
   return (
@@ -31,6 +32,7 @@ export default function Home() {
 
         {/* Section 2: Presence Mosaic */}
         <PresenceMosaic />
+        <ServicesGrid />
         <ScrollMorphSection />
 
         {/* Section 3: Selected Work */}

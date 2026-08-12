@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 import SmoothScroll from '@/components/ui/SmoothScroll';
 import CustomCursor from '@/components/ui/CustomCursor';
 import SplitText from '@/components/ui/SplitText';
+import ServicesGrid from '@/components/sections/ServicesGrid';
 
 export default function AboutPage() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -112,43 +113,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Services Grid */}
-        <section className="w-full py-40 px-[8%] border-t border-border-custom">
-          <div className="max-w-[1800px] mx-auto">
-            <span className="font-body text-[11px] font-semibold tracking-[0.3em] text-text-secondary uppercase block mb-5">
-              // What We Do
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl font-semibold leading-tight tracking-tight mb-20 max-w-[600px]">
-              Full-spectrum brand orchestration.
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-              {[
-                { title: 'Branding', desc: 'Complete brand identity systems that define how the world perceives you.' },
-                { title: 'Brand Consultation & Strategy', desc: 'Strategic frameworks for market positioning and competitive advantage.' },
-                { title: 'Expert Social Media', desc: 'Transforming your online presence into result-driven, omnipresent channels.' },
-                { title: 'Website Design & Development', desc: 'Immersive, luxury digital experiences that convert visitors into believers.' },
-                { title: 'Luxury Marketing', desc: 'Premium campaigns that elevate brand perception and drive exclusivity.' },
-                { title: 'Brand Photoshoots', desc: 'Visual storytelling that captures your brand\'s essence with cinematic precision.' },
-              ].map((service, i) => (
-                <div
-                  key={service.title}
-                  className="p-10 border border-border-custom hover:bg-white/[0.02] transition-colors duration-500 group"
-                >
-                  <span className="font-body text-[11px] font-bold tracking-widest text-accent mb-6 block">
-                    0{i + 1}
-                  </span>
-                  <h3 className="font-display text-xl font-semibold mb-4 group-hover:text-accent transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="font-body text-sm text-text-secondary leading-relaxed">
-                    {service.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ServicesGrid />
 
         {/* Values */}
         <section className="w-full py-40 px-[8%]">

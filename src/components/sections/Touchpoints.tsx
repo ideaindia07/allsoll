@@ -37,7 +37,7 @@ export default function Touchpoints() {
   }, []);
 
   if (!hasMounted) {
-    return <section id="services" className="relative w-full min-h-screen bg-bg-primary z-20" />;
+    return <section id="touchpoints" className="relative w-full min-h-screen bg-bg-primary z-20" />;
   }
 
   // Smaller travel distance on mobile so the entrance doesn't overshoot/clip
@@ -47,7 +47,7 @@ export default function Touchpoints() {
   const viewportAmount = isMobile ? 0.1 : 0.2;
 
   return (
-    <section id="services" className="relative w-full max-sm:py-4 bg-bg-primary z-20 py-24 px-6 md:px-12 lg:px-10 max-sm:px-4 shadow-[0_-10px_30px_rgba(0,0,0,0.6)]">
+    <section id="touchpoints" className="relative w-full max-sm:py-4 bg-bg-primary z-20 py-24 px-6 md:px-12 lg:px-10 max-sm:px-4 shadow-[0_-10px_30px_rgba(0,0,0,0.6)]">
       {/* Centered Text Header */}
       {/* <div className="flex flex-col items-center text-center mb-24 max-sm:mb-4 mt-10">
 

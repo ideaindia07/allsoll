@@ -75,11 +75,10 @@ export default function ScrollMorphSection() {
             // The Work
           </p>
           <h2 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-            We don't manage channel
+            Most agencies rent you attention.
           </h2>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-            We {" "}
-            <span className="text-[#FFD43B]">Orchestrate Presence</span>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+            <span className="text-[#FFD43B]">We build you equity.</span>
           </h2>
 
         </div>
