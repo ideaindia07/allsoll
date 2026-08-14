@@ -12,21 +12,20 @@ export default function Footer() {
               <img src={`${basePath}/AllSoll_logo.webp`} alt="AllSoll" className="h-24 md:h-32 w-auto object-contain" />
             </div>
             <p className="font-body text-[15px] text-text-secondary max-w-[300px]">
-              Branding and digital marketing agency in Jaipur, serving ambitious brands across India.
+              Orchestrating omnipresence for ambitious, future-forward brands.
             </p>
           </div>
           <div className="flex flex-col gap-4">
             <span className="font-display text-[11px] font-semibold uppercase tracking-widest text-text-tertiary">
-              Services
+              Navigation
             </span>
             <div className="flex flex-col gap-3">
               {[
-                { label: 'Branding', href: '/services/branding/' },
-                { label: 'Brand Strategy', href: '/services/brand-consultation-strategy/' },
-                { label: 'Social Media', href: '/services/expert-social-media/' },
-                { label: 'Website Design', href: '/services/website-design-development/' },
-                { label: 'Luxury Marketing', href: '/services/luxury-marketing/' },
-                { label: 'Brand Photoshoots', href: '/services/brand-photoshoots/' },
+                { label: 'Work', href: '/#work' },
+                { label: 'Services', href: '/services/' },
+                { label: 'About', href: '/about/' },
+                { label: 'Team', href: '/#team' },
+                { label: 'Contact', href: '/contact/' },
               ].map((item) => (
                 <a
                   key={item.label}
@@ -70,40 +69,16 @@ export default function Footer() {
             >
               tanishka@allsoll.com
             </a>
-            <a
-              href="/about/"
-              className="font-body text-[15px] text-text-secondary hover:text-accent transition-colors duration-300 w-fit cursor-none"
-            >
-              About
-            </a>
-            <a
-              href="/contact/"
-              className="font-body text-[15px] text-text-secondary hover:text-accent transition-colors duration-300 w-fit cursor-none"
-            >
-              Contact
-            </a>
             <p className="font-body text-[15px] text-text-secondary mt-1">
-              Jaipur, Rajasthan · An IDEA India Product
+              An IDEA India Product
             </p>
           </div>
         </div>
-        <div className="border-t border-border-custom pt-10 flex flex-col gap-8 font-body text-xs text-text-tertiary">
-          <nav aria-label="Service locations" className="flex flex-wrap gap-x-4 gap-y-2 leading-relaxed">
-            <a href="/services/branding/" className="hover:text-accent transition-colors">Branding agency in Jaipur</a>
-            <a href="/services/branding/" className="hover:text-accent transition-colors">Branding agency in India</a>
-            <a href="/services/brand-consultation-strategy/" className="hover:text-accent transition-colors">Marketing agency in Jaipur</a>
-            <a href="/services/expert-social-media/" className="hover:text-accent transition-colors">Digital marketing agency in Jaipur</a>
-            <a href="/services/website-design-development/" className="hover:text-accent transition-colors">Website design Jaipur</a>
-            <a href="/services/luxury-marketing/" className="hover:text-accent transition-colors">Luxury marketing India</a>
-            <a href="/services/brand-photoshoots/" className="hover:text-accent transition-colors">Brand photoshoots Jaipur</a>
-            <a href="/services/" className="hover:text-accent transition-colors">Creative agency India</a>
-          </nav>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p>&copy; {new Date().getFullYear()} ALLSOLL. All rights reserved. An IDEA India Product.</p>
-            <div className="flex gap-[30px]">
-              <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Privacy Policy</a>
-              <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Terms of Engagement</a>
-            </div>
+        <div className="border-t border-border-custom pt-10 flex flex-col md:flex-row justify-between items-center gap-6 font-body text-xs text-text-tertiary">
+          <p>&copy; {new Date().getFullYear()} ALLSOLL. All rights reserved. An IDEA India Product.</p>
+          <div className="flex gap-[30px]">
+            <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Privacy Policy</a>
+            <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Terms of Engagement</a>
           </div>
         </div>
       </div>

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import CustomCursor from '@/components/ui/CustomCursor';
 import FluidBackground from '@/components/ui/FluidBackground';
 import JsonLd from '@/components/seo/JsonLd';
+import SeoCrawlLinks from '@/components/seo/SeoCrawlLinks';
 import { SEO_KEYWORDS, SITE_URL, organizationJsonLd } from '@/lib/seo';
+
+const GA_MEASUREMENT_ID = "G-P4HK9F1ZYE";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,6 +40,9 @@ export const metadata: Metadata = {
     title: "ALLSOLL — Branding Agency in Jaipur, India",
     description:
       "Creative and performance marketing agency in Jaipur. Branding, social, websites and luxury campaigns for India.",
+  },
+  verification: {
+    google: "o8pX7520hJVgvd7KgsGs_ix47XqZxOXFsRP7T9GekU8",
   },
   robots: {
     index: true,
@@ -75,6 +82,18 @@ export default function RootLayout({
   return (
     <html lang="en-IN" className="h-full antialiased overflow-x-hidden">
       <body className="min-h-full bg-bg-primary text-text-primary selection:bg-accent selection:text-bg-primary overflow-x-hidden">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         {/* Film grain noise texture overlay */}
         <div className="noise-overlay" />
         {/* Ambient radial glow behind content */}
@@ -84,6 +103,7 @@ export default function RootLayout({
         
         <CustomCursor />
         <JsonLd data={organizationJsonLd()} />
+        <SeoCrawlLinks />
         {children}
       </body>
     </html>

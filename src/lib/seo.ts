@@ -36,6 +36,36 @@ export const SEO_KEYWORDS = [
   'Allsoll India',
 ];
 
+/** Crawlable footer links — visually hidden, kept in DOM for search engines */
+export const FOOTER_CRAWL_LINKS: { label: string; href: string }[] = [
+  { label: 'Branding agency in Jaipur', href: '/services/branding/' },
+  { label: 'Branding agency in India', href: '/services/branding/' },
+  { label: 'Best branding agency in India', href: '/services/branding/' },
+  { label: 'Top branding agencies in India', href: '/services/branding/' },
+  { label: 'Top 10 branding companies in India', href: '/services/branding/' },
+  { label: 'Brand identity design Jaipur', href: '/services/branding/' },
+  { label: 'Marketing agency in Jaipur', href: '/services/brand-consultation-strategy/' },
+  { label: 'Brand strategy India', href: '/services/brand-consultation-strategy/' },
+  { label: 'Performance marketing expert India', href: '/services/brand-consultation-strategy/' },
+  { label: 'Performance marketing management', href: '/services/brand-consultation-strategy/' },
+  { label: 'Digital marketing agency in Jaipur', href: '/services/expert-social-media/' },
+  { label: 'Digital marketing agency in India', href: '/services/expert-social-media/' },
+  { label: 'Social media agency Jaipur', href: '/services/expert-social-media/' },
+  { label: 'Social media marketing India', href: '/services/expert-social-media/' },
+  { label: 'Website design company Jaipur', href: '/services/website-design-development/' },
+  { label: 'Website development India', href: '/services/website-design-development/' },
+  { label: 'Digital marketing agency for startups', href: '/services/website-design-development/' },
+  { label: 'Luxury marketing agency India', href: '/services/luxury-marketing/' },
+  { label: 'Best ad agencies in India', href: '/services/luxury-marketing/' },
+  { label: 'Brand photoshoot Jaipur', href: '/services/brand-photoshoots/' },
+  { label: 'Creative agency Jaipur', href: '/services/' },
+  { label: 'Creative agency India', href: '/services/' },
+  { label: 'Advertising agency Jaipur', href: '/services/' },
+  { label: 'Performance marketing agency Jaipur', href: '/services/' },
+  { label: 'Allsoll Jaipur', href: '/about/' },
+  { label: 'Allsoll India', href: '/about/' },
+];
+
 export const SERVICE_SEO: Record<
   string,
   { title: string; description: string; keywords: string[] }
