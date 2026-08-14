@@ -5,18 +5,17 @@ import CustomCursor from '@/components/ui/CustomCursor';
 import FluidBackground from '@/components/ui/FluidBackground';
 import JsonLd from '@/components/seo/JsonLd';
 import SeoCrawlLinks from '@/components/seo/SeoCrawlLinks';
-import { SEO_KEYWORDS, SITE_URL, organizationJsonLd } from '@/lib/seo';
+import { SEO_KEYWORDS, SITE_URL, organizationJsonLd, HOME_SEO_TITLE, HOME_SEO_DESCRIPTION } from '@/lib/seo';
 
 const GA_MEASUREMENT_ID = "G-P4HK9F1ZYE";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ALLSOLL — Branding & Digital Marketing Agency in Jaipur, India",
+    default: HOME_SEO_TITLE,
     template: "%s | ALLSOLL",
   },
-  description:
-    "ALLSOLL is a branding and digital marketing agency in Jaipur serving brands across India. Brand identity, strategy, social media, websites, luxury marketing and photoshoots.",
+  description: HOME_SEO_DESCRIPTION,
   keywords: SEO_KEYWORDS,
   authors: [{ name: "ALLSOLL" }],
   creator: "ALLSOLL",
@@ -30,16 +29,14 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "ALLSOLL",
-    title: "ALLSOLL — Branding & Digital Marketing Agency in Jaipur, India",
-    description:
-      "Branding agency in Jaipur and India. We build identity, strategy, social, digital and luxury campaigns that compound — not rented attention.",
+    title: HOME_SEO_TITLE,
+    description: HOME_SEO_DESCRIPTION,
     images: [{ url: "/AllSoll_logo.webp", alt: "ALLSOLL — branding agency in Jaipur, India" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ALLSOLL — Branding Agency in Jaipur, India",
-    description:
-      "Creative and performance marketing agency in Jaipur. Branding, social, websites and luxury campaigns for India.",
+    title: HOME_SEO_TITLE,
+    description: HOME_SEO_DESCRIPTION,
   },
   verification: {
     google: "o8pX7520hJVgvd7KgsGs_ix47XqZxOXFsRP7T9GekU8",

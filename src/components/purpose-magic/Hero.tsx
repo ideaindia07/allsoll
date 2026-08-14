@@ -47,9 +47,9 @@ const Hero = () => {
                 >
                     {/* WORK */}
                     <div className=' mb-[-2vw]'> <DynamicText /> </div>
-                    <h1 className="text-[5rem] md:text-[8rem] lg:text-[11rem] text-[#fbf8f3] transform -rotate-2 origin-bottom-right tracking-tighter hover:text-accent transition-colors duration-500 cursor-default">
+                    <p className="text-[5rem] md:text-[8rem] lg:text-[11rem] text-[#fbf8f3] transform -rotate-2 origin-bottom-right tracking-tighter hover:text-accent transition-colors duration-500 cursor-default">
                         WORK
-                    </h1>
+                    </p>
 
                     {/* THAT MATTERS Container */}
                     <div className="flex flex-col md:flex-row items-center md:items-baseline gap-4 md:-mt-4">

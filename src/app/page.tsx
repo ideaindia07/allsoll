@@ -11,6 +11,24 @@ import { DemoOne } from "@/components/sections/demo";
 import PurposeHero from "@/components/purpose-magic/Hero";
 import PurposeGridCarousel from "@/components/purpose-magic/GridCarousel";
 import ServicesGrid from "@/components/sections/ServicesGrid";
+import { HOME_SEO_DESCRIPTION, HOME_SEO_TITLE } from "@/lib/seo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: HOME_SEO_TITLE,
+  },
+  description: HOME_SEO_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: HOME_SEO_TITLE,
+    description: HOME_SEO_DESCRIPTION,
+  },
+  twitter: {
+    title: HOME_SEO_TITLE,
+    description: HOME_SEO_DESCRIPTION,
+  },
+};
 
 export default function Home() {
   return (
@@ -24,6 +42,18 @@ export default function Home() {
       <main className="relative w-full overflow-x-hidden bg-bg-primary">
         {/* Purpose Clone Magic Top 3 Sections */}
         <PurposeHero />
+
+        <section className="relative z-10 w-full bg-bg-primary px-[6%] py-16 md:px-[8%] md:py-20">
+          <div className="mx-auto max-w-[900px] text-center">
+            <h1 className="font-display text-3xl font-bold tracking-tight text-white md:text-5xl">
+              Branding &amp; Digital Marketing Agency in India | Allsoll
+            </h1>
+            <p className="mt-6 font-body text-base leading-relaxed text-text-secondary md:text-lg">
+              Allsoll is a branding and digital marketing agency in India, helping brands grow with creative strategy, performance marketing, and digital solutions.
+            </p>
+          </div>
+        </section>
+
         <PurposeGridCarousel />
         {/* <PurposeServicesSection /> */}
 

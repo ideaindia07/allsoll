@@ -7,6 +7,11 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://allsoll.co
 
 export const SITE_NAME = 'ALLSOLL';
 
+export const HOME_SEO_TITLE =
+  'Branding & Digital Marketing Agency in India | Allsoll';
+export const HOME_SEO_DESCRIPTION =
+  'Allsoll is a branding and digital marketing agency in India, helping brands grow with creative strategy, performance marketing, and digital solutions.';
+
 export const SEO_KEYWORDS = [
   'branding agency in Jaipur',
   'branding agency in India',
