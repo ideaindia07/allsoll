@@ -77,7 +77,7 @@ export default function Footer() {
         <div className="border-t border-border-custom pt-10 flex flex-col md:flex-row justify-between items-center gap-6 font-body text-xs text-text-tertiary">
           <p>&copy; {new Date().getFullYear()} ALLSOLL. All rights reserved. An IDEA India Product.</p>
           <div className="flex gap-[30px]">
-            <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Privacy Policy</a>
+            <a href="/privacy-policy/" className="hover:text-text-secondary transition-colors cursor-none">Privacy Policy</a>
             <a href="#" className="hover:text-text-secondary transition-colors cursor-none">Terms of Engagement</a>
           </div>
         </div>

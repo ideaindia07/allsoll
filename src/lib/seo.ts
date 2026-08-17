@@ -164,6 +164,7 @@ export const SITE_PAGES = [
   { path: '/about/', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/services/', changeFrequency: 'weekly' as const, priority: 0.9 },
   { path: '/contact/', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/privacy-policy/', changeFrequency: 'yearly' as const, priority: 0.4 },
   ...SERVICES.map((service) => ({
     path: `/services/${service.slug}/`,
     changeFrequency: 'monthly' as const,
